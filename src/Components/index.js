@@ -4,6 +4,7 @@ import App from "./App";
 import { GeistProvider, CssBaseline } from "@geist-ui/core";
 import "inter-ui/inter.css";
 import "../styles/styles.scss";
+import "../styles/utils.css";
 
 function Index() {
   return (
