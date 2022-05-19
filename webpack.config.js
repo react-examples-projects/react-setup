@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   mode: "development",
-  entry: path.join(__dirname, "src", "index.js"),
+  entry: path.join(__dirname, "src/Components", "index.js"),
   output: {
     path: path.resolve(__dirname, "dist"),
   },
@@ -25,6 +25,10 @@ module.exports = {
         use: ["style-loader", "css-loader"],
       },
       {
+        test: /\.s[ac]ss$/i,
+        use: ["style-loader", "css-loader", "sass-loader"],
+      },
+      {
         test: /\.(png|jp(e*)g|svg|gif)$/,
         use: ["file-loader"],
       },
@@ -37,7 +41,7 @@ module.exports = {
 
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, "src", "index.html"),
+      template: path.join(__dirname, "src/public", "index.html"),
     }),
   ],
 };
