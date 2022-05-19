@@ -1,14 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import img from "./test.jpg";
+import { GeistProvider, CssBaseline } from "@geist-ui/core";
 import "./styles.css";
+import "inter-ui/inter.css";
+
+function Home() {
+  return (
+    <div>
+      <h1>Home Component</h1>
+    </div>
+  );
+}
 
 function App() {
   return (
-    <div>
-      <img src={img} />
-      <h1>Hello eWorld</h1>
-    </div>
+    <GeistProvider themeType="dark">
+      <CssBaseline />
+      <Home />
+    </GeistProvider>
   );
 }
 
