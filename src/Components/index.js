@@ -6,9 +6,10 @@ import "inter-ui/inter.css";
 import "../styles/styles.scss";
 import "../styles/utils.css";
 
+
 function Index() {
   return (
-    <GeistProvider themeType="dark">
+    <GeistProvider>
       <CssBaseline />
       <App />
     </GeistProvider>
