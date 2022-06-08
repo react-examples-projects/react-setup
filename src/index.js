@@ -1,28 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
+import Routers from "./Routers";
 import { GeistProvider, CssBaseline } from "@geist-ui/core";
 import "inter-ui/inter.css";
-import "../styles/styles.scss";
-import "../styles/utils.css";
-
-
-function Index() {
-  return (
-    <GeistProvider>
-      <CssBaseline />
-      <App />
-    </GeistProvider>
-  );
-}
+import "./styles/styles.scss";
+import "./styles/utils.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
-    <CssBaseline />
     <GeistProvider>
-      <Index />
+      <CssBaseline />
+      <Routers />
     </GeistProvider>
   </React.StrictMode>
 );

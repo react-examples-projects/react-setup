@@ -1,7 +1,15 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { Text } from "@geist-ui/core";
-import { FiUsers, FiList, FiSettings, FiFile, FiPackage } from "react-icons/fi";
+import {
+  FiUsers,
+  FiList,
+  FiSettings,
+  FiFile,
+  FiTrello,
+  FiPackage,
+} from "react-icons/fi";
 
 const Nav = styled.nav`
   display: flex;
@@ -10,7 +18,7 @@ const Nav = styled.nav`
   border-right: 1px solid #eee;
 `;
 
-const NavItem = styled.a`
+const NavItem = styled(Link)`
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -18,6 +26,7 @@ const NavItem = styled.a`
   padding: 0.5rem 1rem;
   border-radius: 5px;
   margin-bottom: 8px;
+  font-size: 14px;
 
   &:hover {
     background-color: #ebeffd;
@@ -25,24 +34,48 @@ const NavItem = styled.a`
   }
 `;
 
-const options = [
-  {
-    text: "Usuarios",
-    icon: FiUsers,
-  },
-  {
-    text: "Roles",
-    icon: FiList,
-  },
-  {
-    text: "Gestión",
-    icon: FiSettings,
-  },
-  {
-    text: "Respaldo",
-    icon: FiFile,
-  },
-];
+const NavSection = styled.div`
+  font-size: 0.7rem;
+  margin-top: 0.8rem;
+  color: #2b5bfc !important;
+  margin-bottom: 0.5rem;
+  position: relative;
+`;
+
+const ops = {
+  Inicio: [
+    {
+      text: "General",
+      path: "/",
+      icon: FiTrello,
+    },
+  ],
+  Usuarios: [
+    {
+      text: "Usuarios",
+      path: "users",
+      icon: FiUsers,
+    },
+    {
+      text: "Roles",
+      path: "roles",
+      icon: FiList,
+    },
+  ],
+
+  Administración: [
+    {
+      text: "Gestión",
+      path: "management",
+      icon: FiSettings,
+    },
+    {
+      text: "Respaldo",
+      path: "backup",
+      icon: FiFile,
+    },
+  ],
+};
 
 export default function SideMenu() {
   return (
@@ -55,12 +88,23 @@ export default function SideMenu() {
         <FiPackage className="me-1" />
       </Text>
       <Nav>
-        {options.map(({ text, icon: Icon }) => (
-          <NavItem>
-            <Icon className="d-block me-2" />
-            <Text className="m-0">{text}</Text>
-          </NavItem>
-        ))}
+        {Object.keys(ops).map((section) => {
+          return (
+            <div key={section}>
+              <NavSection>
+                <Text className="d-inline-block m-0 text-uppercase">
+                  {section}
+                </Text>
+              </NavSection>
+              {ops[section].map(({ text, icon: Icon, path }) => (
+                <NavItem to={path} key={text}>
+                  <Icon className="d-block me-2" />
+                  <Text className="m-0">{text}</Text>
+                </NavItem>
+              ))}
+            </div>
+          );
+        })}
       </Nav>
     </div>
   );
