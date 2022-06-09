@@ -1,5 +1,5 @@
 import React from "react";
-import SideMenu from "./SideMenu";
+import SideMenu from "components/SideMenu";
 import styled from "styled-components";
 import { Outlet } from "react-router-dom";
 

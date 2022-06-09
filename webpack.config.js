@@ -1,5 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
+const Dotenv = require("dotenv-webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
@@ -12,6 +13,16 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
     publicPath: "/",
+  },
+
+  resolve: {
+    extensions: [".js", ".jsx"],
+    alias: {
+      components: path.resolve(__dirname, "src/Components/"),
+      pages: path.resolve(__dirname, "src/Pages/"),
+      styles: path.resolve(__dirname, "src/Styles/"),
+      hooks: path.resolve(__dirname, "src/Hooks/"),
+    },
   },
 
   devServer: {
@@ -63,6 +74,7 @@ module.exports = {
   },
 
   plugins: [
+    new Dotenv(),
     new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "public", "index.html"),
