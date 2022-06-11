@@ -1,6 +1,7 @@
-import React from "react";
 import routers from "config/routers";
 import Layout from "components/Layout";
+import PrivateRoute from "components/Routers/PrivateRoute";
+import RedirectRoute from "components/Routers/RedirectRoute";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 export default function Routers() {

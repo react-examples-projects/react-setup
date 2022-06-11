@@ -1,4 +1,3 @@
-import React from "react";
 import { Text } from "@geist-ui/core";
 
 export default function App() {

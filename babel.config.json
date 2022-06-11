@@ -1,5 +1,6 @@
 {
   "plugins": [
+    "@babel/transform-runtime",
     [
       "babel-plugin-styled-components",
       {
@@ -7,5 +8,6 @@
         "fileName": false
       }
     ]
-  ]
+  ],
+  "presets": ["@babel/preset-env"]
 }

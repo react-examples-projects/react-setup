@@ -1,4 +1,4 @@
-import { api, login, signup, userInfo } from "config/config";
+import { api, login, signup, userInfo } from "config/";
 import { getToken, removeToken, isValidToken } from "helpers/token";
 import axios from "axios";
 

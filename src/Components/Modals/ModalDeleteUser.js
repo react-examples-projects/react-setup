@@ -1,4 +1,3 @@
-import React from "react";
 import { Modal, Input } from "@geist-ui/core";
 
 export default function ModalDeleteUser({ isOpenModal, toggleOpenModal }) {
@@ -14,9 +13,9 @@ export default function ModalDeleteUser({ isOpenModal, toggleOpenModal }) {
       </Modal.Subtitle>
       <Modal.Content>
         <form onSubmit={onDeleteUser} id="delete-user">
-          <Input htmlType="password" id="password" name="password" width="100%">
+          <Input.Password id="password" name="password" width="100%">
             Contraseña
-          </Input>
+          </Input.Password>
         </form>
       </Modal.Content>
       <Modal.Action passive onClick={toggleOpenModal}>

@@ -9,7 +9,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   mode: "development",
-  entry: path.join(__dirname, "src", "index.js"),
+  entry: ["babel-polyfill", path.join(__dirname, "src", "index.js")],
   output: {
     path: path.resolve(__dirname, "dist"),
     publicPath: "/",
@@ -24,6 +24,7 @@ module.exports = {
       hooks: path.resolve(__dirname, "src/Hooks/"),
       config: path.resolve(__dirname, "src/Config/"),
       helpers: path.resolve(__dirname, "src/Helpers/"),
+      context: path.resolve(__dirname, "src/Context/"),
     },
   },
 
@@ -80,6 +81,9 @@ module.exports = {
     new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "public", "index.html"),
+    }),
+    new webpack.ProvidePlugin({
+      React: "react",
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpackDashboard(),

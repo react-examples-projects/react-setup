@@ -1,4 +1,3 @@
-import React from "react";
 import css from "styles/User.module.scss";
 import useToggle from "hooks/useToggle";
 import UserMenu from "./Popovers/UserMenu";

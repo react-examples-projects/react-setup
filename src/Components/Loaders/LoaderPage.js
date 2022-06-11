@@ -1,4 +1,3 @@
-import React from "react";
 import css from "styles/Loaders.module.scss"
 
 export default function LoaderPage() {

@@ -1,4 +1,3 @@
-import React from "react";
 import useBody from "hooks/useBody";
 import { Link } from "react-router-dom";
 import { Button, Text } from "@geist-ui/core";

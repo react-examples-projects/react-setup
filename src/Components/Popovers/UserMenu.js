@@ -1,4 +1,3 @@
-import React from "react";
 import css from "styles/User.module.scss";
 import cls from "classnames";
 import { Text, Popover } from "@geist-ui/core";
