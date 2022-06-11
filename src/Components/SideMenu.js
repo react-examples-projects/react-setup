@@ -53,12 +53,12 @@ const ops = {
   Usuarios: [
     {
       text: "Usuarios",
-      path: "users",
+      path: "/users",
       icon: FiUsers,
     },
     {
       text: "Roles",
-      path: "roles",
+      path: "/roles",
       icon: FiList,
     },
   ],
@@ -66,12 +66,12 @@ const ops = {
   Administración: [
     {
       text: "Gestión",
-      path: "management",
+      path: "/management",
       icon: FiSettings,
     },
     {
       text: "Respaldo",
-      path: "backup",
+      path: "/backup",
       icon: FiFile,
     },
   ],

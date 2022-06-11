@@ -1,17 +1,14 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import UserList from "../Components/UserList";
-import { Text, Grid, Input, Select, Button } from "@geist-ui/core";
+import { Text, Grid, Input, Select } from "@geist-ui/core";
 
 export default function Users() {
   const containerSelect = useRef(null);
-  const [counter, setCounter] = useState(0);
 
   return (
     <>
       <Text h4>Usuarios Registrados</Text>
       <Text p>Página donde se ven los usuarios registrados</Text>
-      <Text>{counter}</Text>
-      <Button onClick={() => setCounter(counter + 1)}>Aumentar</Button>
       
       <Grid.Container gap={1}>
         <Grid xs={24} sm={10} md={10} lg={10} xl={10}>

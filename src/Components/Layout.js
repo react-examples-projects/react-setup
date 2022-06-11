@@ -1,7 +1,6 @@
 import React from "react";
 import SideMenu from "components/SideMenu";
 import styled from "styled-components";
-import { Outlet } from "react-router-dom";
 
 const Grid = styled.div`
   display: flex;
@@ -14,7 +13,7 @@ const Item = styled.div`
   padding: 10px;
 `;
 
-export default function Layout() {
+export default function Layout({ children }) {
   const width = "200px";
   return (
     <div className="container mt-5">
@@ -23,9 +22,7 @@ export default function Layout() {
           <SideMenu />
         </Item>
 
-        <Item width={`calc(100% - ${width})`}>
-          <Outlet />
-        </Item>
+        <Item width={`calc(100% - ${width})`}>{children}</Item>
       </Grid>
     </div>
   );

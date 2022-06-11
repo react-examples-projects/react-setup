@@ -22,6 +22,8 @@ module.exports = {
       pages: path.resolve(__dirname, "src/Pages/"),
       styles: path.resolve(__dirname, "src/Styles/"),
       hooks: path.resolve(__dirname, "src/Hooks/"),
+      config: path.resolve(__dirname, "src/Config/"),
+      helpers: path.resolve(__dirname, "src/Helpers/"),
     },
   },
 

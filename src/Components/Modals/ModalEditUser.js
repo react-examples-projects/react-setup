@@ -33,12 +33,12 @@ export default function ModalEditUser({
           </Input>
 
           <div className="mb-2 position-relative" ref={containerUserRole}>
-            <label className="label">Rol</label>
+            <label className="label">Rango</label>
             <Select
-              placeholder="Rol"
+              placeholder="Rango"
               onChange={null}
-              name="role"
-              id="role"
+              name="rank"
+              id="rank"
               getPopupContainer={() => containerUserRole.current}
               width="100%"
             >
