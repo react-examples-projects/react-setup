@@ -4,6 +4,26 @@
   padding: 0;
 }
 
+::selection {
+  color: #fff !important;
+  background-color: #1970fca6 !important;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(167, 166, 166);
+  border-radius: 10px;
+}
+
 img {
   max-width: 100%;
   height: auto;
@@ -25,4 +45,11 @@ img {
   margin-bottom: 0.5em;
   font-size: 88%;
   line-height: 1.5;
+}
+
+.text-colored {
+  background: -webkit-linear-gradient(to right, #4286f4, #373B44);
+  background: linear-gradient(to right, #4286f4, #373B44);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

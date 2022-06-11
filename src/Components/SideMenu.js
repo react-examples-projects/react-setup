@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { Text } from "@geist-ui/core";
 import {
   FiUsers,
@@ -17,7 +17,7 @@ const Nav = styled.nav`
   border-right: 1px solid #eee;
 `;
 
-const NavItem = styled(Link)`
+const NavItem = styled(NavLink)`
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -27,7 +27,8 @@ const NavItem = styled(Link)`
   margin-bottom: 8px;
   font-size: 15px;
 
-  &:hover {
+  &:hover,
+  &.active {
     background-color: #ebeffd;
     color: #2b5bfc;
   }
@@ -45,10 +46,11 @@ const ops = {
   Inicio: [
     {
       text: "General",
-      path: "/",
+      path: "/dashboard",
       icon: FiTrello,
     },
   ],
+
   Usuarios: [
     {
       text: "Usuarios",
@@ -96,7 +98,13 @@ export default function SideMenu() {
                 </Text>
               </NavSection>
               {ops[section].map(({ text, icon: Icon, path }) => (
-                <NavItem to={path} key={text}>
+                <NavItem
+                  to={path}
+                  key={text}
+                  className={({ isActive }) =>
+                    isActive ? "active" : undefined
+                  }
+                >
                   <Icon className="d-block me-2" />
                   <Text className="m-0">{text}</Text>
                 </NavItem>

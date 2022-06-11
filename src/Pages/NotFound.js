@@ -1,6 +1,7 @@
 import useBody from "hooks/useBody";
 import { Link } from "react-router-dom";
 import { Button, Text } from "@geist-ui/core";
+import useUserInfo from "hooks/useUserInfo";
 
 export default function NotFound() {
   useBody({
@@ -10,6 +11,10 @@ export default function NotFound() {
     alignItems: "center",
     height: "100vh",
   });
+  const { user, isLoading } = useUserInfo();
+  const link = user !== null ? "/dashboard" : "/";
+  if (isLoading) return null;
+
   return (
     <>
       <div
@@ -25,8 +30,8 @@ export default function NotFound() {
         </Text>
 
         <div className="d-flex w-100 justify-content-center">
-          <Link to="/">
-            <Button type="success">Ir al incio</Button>
+          <Link to={link}>
+            <Button type="success">Ir al inicio</Button>
           </Link>
         </div>
       </div>
