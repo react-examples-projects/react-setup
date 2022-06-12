@@ -25,7 +25,7 @@ instance.interceptors.response.use(
       isValidToken() && removeToken();
       window.location.href = "/";
     }
-    return Promise.reject(err.message);
+    return Promise.reject(err);
   }
 );
 

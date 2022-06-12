@@ -9,11 +9,7 @@ export default function ErrorText({
 }) {
   const innerText = typeof text === "string" ? text : getErrorValidation(text);
   return isVisible ? (
-    <div
-      {...props}
-      className="d-flex align-itemces-"
-      style={{ display: "flex", alignContent: "center", marginBottom: "1rem" }}
-    >
+    <div {...props} className="d-flex align-items-center mb-1">
       <BiErrorCircle style={{ fill: "#ff005c" }} />
       <Text
         className="my-0"

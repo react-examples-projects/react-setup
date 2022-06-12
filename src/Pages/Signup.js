@@ -1,6 +1,8 @@
 import useBody from "hooks/useBody";
 import useSignup from "hooks/useSignup";
 import ErrorText from "components/Text/ErrorText";
+import useFormValidation from "hooks/useFormValidation";
+import signupSchema from "helpers/schema/signupSchema";
 import { Button, Input, Text } from "@geist-ui/core";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
@@ -16,8 +18,10 @@ const cssBody = {
 
 export default function Signup() {
   useBody(cssBody);
+
   const signup = useSignup();
   const navigate = useNavigate();
+  const { errors, handleSubmit, register } = useFormValidation(signupSchema);
   const [auth, setAuth] = useState({
     email: "",
     password: "",
@@ -31,8 +35,6 @@ export default function Signup() {
   }
 
   async function handleOnSubmit(e) {
-    console.log(e);
-    e.preventDefault();
     const res = await signup.mutateAsync(auth);
     if (res.ok) {
       navigate("/", { replace: true });
@@ -45,60 +47,80 @@ export default function Signup() {
         Registrate
       </Text>
 
-      <form onSubmit={handleOnSubmit}>
+      <form onSubmit={handleSubmit(handleOnSubmit)}>
         <div className="mb-2">
           <Input
+            {...register("name")}
             iconRight={<BiUser />}
             name="name"
             id="name"
-            placeholder="Name"
+            placeholder="Nombre completo"
             onChange={handleOnChange}
             value={auth.name}
-            autoComplete="on"
+            autoComplete="off"
             width="100%"
-            required
+          />
+          <ErrorText
+            className="mt-2"
+            text={errors.name?.message}
+            isVisible={!!errors.name?.message}
           />
         </div>
 
         <div className="mb-2">
           <Input
+            {...register("email")}
             iconRight={<BiEnvelope />}
             htmlType="email"
             name="email"
             id="email"
-            placeholder="Email"
+            placeholder="Correo Electrónico"
             onChange={handleOnChange}
             value={auth.user}
-            autoComplete="on"
+            autoComplete="off"
             width="100%"
-            required
+          />
+          <ErrorText
+            className="mt-2"
+            text={errors.email?.message}
+            isVisible={!!errors.email?.message}
           />
         </div>
 
         <div className="mb-2">
           <Input.Password
+            {...register("password")}
             iconRight={<BiKey />}
             name="password"
             id="password"
-            placeholder="Password"
+            placeholder="Contraseña"
             value={auth.password}
             onChange={handleOnChange}
-            autoComplete="on"
+            autoComplete="off"
             width="100%"
-            required
+          />
+          <ErrorText
+            className="mt-2"
+            text={errors.password?.message}
+            isVisible={!!errors.password?.message}
           />
         </div>
 
         <div className="mb-2">
           <Input.Password
+            {...register("passwordConfirm")}
             iconRight={<BiKey />}
             name="passwordConfirm"
             id="passwordConfirm"
-            placeholder="Password Confirm"
+            placeholder="Confirmar Contraseña"
             value={auth.passwordConfirm}
             onChange={handleOnChange}
             width="100%"
-            required
+          />
+          <ErrorText
+            className="mt-2"
+            text={errors.passwordConfirm?.message}
+            isVisible={!!errors.passwordConfirm?.message}
           />
         </div>
 

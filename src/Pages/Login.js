@@ -1,14 +1,13 @@
 import useBody from "hooks/useBody";
 import useLogin from "hooks/useLogin";
-import useCurrentUser from "hooks/useCurrentUser";
 import useFormValidation from "hooks/useFormValidation";
-import ErrorText from "components/Text/ErrorText";
 import loginSchema from "helpers/schema/loginSchema";
+import ErrorText from "components/Text/ErrorText";
+import { getErrorValidation } from "helpers/utils";
 import { useNavigate, Link } from "react-router-dom";
 import { Button, Input, Text } from "@geist-ui/core";
 import { useState } from "react";
-import { BiEnvelope, BiKey } from "react-icons/bi";
-import { setToken } from "helpers/token";
+import { BiUser, BiKey } from "react-icons/bi";
 
 const cssBody = {
   height: "100vh",
@@ -22,7 +21,6 @@ export default function Login() {
   const login = useLogin();
   const navigate = useNavigate();
   const { errors, handleSubmit, register } = useFormValidation(loginSchema);
-  const { setUser } = useCurrentUser();
   const [auth, setAuth] = useState({ email: "", password: "" });
 
   function handleOnChange({ target }) {
@@ -31,12 +29,9 @@ export default function Login() {
   }
 
   async function handleOnSubmit(e) {
-    e.preventDefault();
-
     const res = await login.mutateAsync(auth);
     if (res.ok) {
-      setUser(res.data.user);
-      setToken(res.data.token);
+      login.setSession(res.data.token, res.data.user);
       navigate("/dashboard", { replace: true });
     }
   }
@@ -55,14 +50,14 @@ export default function Login() {
         <div className="mb-2">
           <Input
             {...register("email")}
-            iconRight={<BiEnvelope />}
+            iconRight={<BiUser />}
             htmlType="email"
             name="email"
             id="email"
             placeholder="Email"
             onChange={handleOnChange}
             value={auth.user}
-            autoComplete="on"
+            autoComplete="off"
             width="100%"
           />
           <ErrorText
@@ -81,7 +76,7 @@ export default function Login() {
             placeholder="Password"
             value={auth.password}
             onChange={handleOnChange}
-            autoComplete="on"
+            autoComplete="off"
             width="100%"
           />
           <ErrorText
@@ -90,7 +85,7 @@ export default function Login() {
             isVisible={!!errors.password?.message}
           />
         </div>
-        <ErrorText isVisible={login.isError} text={login} />
+        <ErrorText isVisible={login.isError} text={getErrorValidation(login)} />
 
         <div className="mb-2">
           <Button

@@ -31,6 +31,7 @@ export function getErrorValidation(
 ) {
   const objError = mutationRequest?.error?.response?.data;
   if (typeof objError?.data === "string") return objError?.data;
+  console.log(mutationRequest);
 
   return (
     objError?.data?.[0] ||
