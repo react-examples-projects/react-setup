@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import useCurrentUser from "hooks/useCurrentUser";
 import { NavLink } from "react-router-dom";
 import { Text } from "@geist-ui/core";
 import {
@@ -9,6 +10,7 @@ import {
   FiTrello,
   FiPackage,
 } from "react-icons/fi";
+import { BiLogOut } from "react-icons/bi";
 
 const Nav = styled.nav`
   display: flex;
@@ -29,6 +31,38 @@ const NavItem = styled(NavLink)`
 
   &:hover,
   &.active {
+    background-color: #ebeffd;
+    color: #2b5bfc;
+  }
+
+  &.active {
+    position: relative;
+    overflow: hidden;
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 2px;
+      height: 100%;
+      background: #2b5bfc;
+    }
+  }
+`;
+
+const Option = styled.li`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #6c757d;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  margin-bottom: 8px;
+  font-size: 15px;
+
+  &:hover {
     background-color: #ebeffd;
     color: #2b5bfc;
   }
@@ -79,6 +113,8 @@ const ops = {
 };
 
 export default function SideMenu() {
+  const { logout } = useCurrentUser();
+
   return (
     <div>
       <Text
@@ -112,6 +148,11 @@ export default function SideMenu() {
             </div>
           );
         })}
+
+        <Option className="mt-5" onClick={logout}>
+          <BiLogOut className="d-block me-2" />
+          <Text className="m-0">Cerrar sesión</Text>
+        </Option>
       </Nav>
     </div>
   );

@@ -8,7 +8,7 @@ export default function RedirectRoute() {
 
   if (isLoading) return <LoaderPage />;
 
-  if (user && isValidToken()) return <Navigate to="/home" replace />;
+  if (user && isValidToken()) return <Navigate to="/dashboard" replace />;
 
   return <Outlet />;
 }

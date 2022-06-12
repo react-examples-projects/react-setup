@@ -1,6 +1,6 @@
 import useBody from "hooks/useBody";
 import useSignup from "hooks/useSignup";
-import ErrorText from "components/ErrorText";
+import ErrorText from "components/Text/ErrorText";
 import { Button, Input, Text } from "@geist-ui/core";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";

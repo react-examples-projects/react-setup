@@ -19,7 +19,7 @@ export default function ModalEditUser({
       <Modal.Content>
         <form onSubmit={onEditUser} id="edit-user">
           <Input id="username" name="username" width="100%" className="mb-2">
-            Nombre
+            Nombre Completo
           </Input>
 
           <Input
@@ -29,7 +29,7 @@ export default function ModalEditUser({
             width="100%"
             className="mb-2"
           >
-            E-mail
+            Correo Electrónico
           </Input>
 
           <div className="mb-2 position-relative" ref={containerUserRole}>

@@ -1,6 +1,7 @@
 import { BiErrorCircle } from "react-icons/bi";
 import { getErrorValidation } from "helpers/utils";
 import { Text } from "@geist-ui/core";
+
 export default function ErrorText({
   isVisible,
   text = "Ocurrió un error.",

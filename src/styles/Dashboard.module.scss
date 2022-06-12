@@ -1,0 +1,43 @@
+.dashboardCard {
+
+  border-radius: 10px;
+  padding: 2rem;
+  color: #fff;
+
+  &.c1 {
+    background: #8E2DE2;
+    background: -webkit-linear-gradient(to right, #4b00e0bd, #8d2de2bb);
+    background: linear-gradient(to right, #4b00e0bd, #8d2de2bb);
+  }
+
+  &.c2 {
+    background: #36D1DC;
+    background: -webkit-linear-gradient(to right, #5B86E5, #36D1DC);
+    background: linear-gradient(to right, #5b87e5d7, #36d1dcd8);
+  }
+
+  &.c3 {
+    background: #fe8c00;
+    background: -webkit-linear-gradient(to right, #f83600, #fe8c00);
+    background: linear-gradient(to right, #f83600ce, #fe8c00c0);
+  }
+}
+
+.dashboardHero {
+  position: relative;
+  color: #fff;
+  padding: 3rem;
+  margin-bottom: 1rem;
+  background: #36D1DC;
+  background: -webkit-linear-gradient(to right, #5B86E5, #36D1DC);
+  background: url("../Assets/dashboard_pattern.png"), linear-gradient(to right, #5B86E5, #36D1DC);
+  border-radius: 10px;
+}
+
+.dashboardImg {
+  position: absolute;
+  width: 100%;
+  max-width: 280px;
+  right: 0.5rem;
+  top: -2.5rem;
+} 

@@ -11,11 +11,15 @@ export function existsToken() {
 export function isValidToken() {
   if (!existsToken()) return false;
   const token = getToken();
-  const decoded = jwtDecode(token);
+  try {
+    const decoded = jwtDecode(token);
 
-  if (Date.now() >= decoded.exp * 1000) {
-    console.log("The user token is expired!");
-    removeToken();
+    if (Date.now() >= decoded.exp * 1000) {
+      console.log("The user token is expired!");
+      removeToken();
+      return false;
+    }
+  } catch (error) {
     return false;
   }
 

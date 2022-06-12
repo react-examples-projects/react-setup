@@ -1,14 +1,15 @@
 import css from "styles/User.module.scss";
 import useToggle from "hooks/useToggle";
-import UserMenu from "./Popovers/UserMenu";
-import ModalDeleteUser from "./Modals/ModalDeleteUser";
-import ModalEditUser from "./Modals/ModalEditUser";
+import UserMenu from "components/Popovers/UserMenu";
+import ModalDeleteUser from "components/Modals/ModalDeleteUser";
+import ModalEditUser from "components/Modals/ModalEditUser";
 import { Text, Badge } from "@geist-ui/core";
 
 export default function UserItem() {
   const [isOpenMenu, toggleOpenMenu] = useToggle();
   const [isOpenModal, toggleOpenModal] = useToggle();
   const [isOpenModalEdit, toggleOpenModalEdit] = useToggle();
+
   return (
     <li>
       <div className={css.userListDivider}>

@@ -1,7 +1,7 @@
 import useBody from "hooks/useBody";
 import useLogin from "hooks/useLogin";
 import useCurrentUser from "hooks/useCurrentUser";
-import ErrorText from "components/ErrorText";
+import ErrorText from "components/Text/ErrorText";
 import { useNavigate, Link } from "react-router-dom";
 import { Button, Input, Text } from "@geist-ui/core";
 import { useState } from "react";
