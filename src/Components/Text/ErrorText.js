@@ -11,6 +11,7 @@ export default function ErrorText({
   return isVisible ? (
     <div
       {...props}
+      className="d-flex align-itemces-"
       style={{ display: "flex", alignContent: "center", marginBottom: "1rem" }}
     >
       <BiErrorCircle style={{ fill: "#ff005c" }} />

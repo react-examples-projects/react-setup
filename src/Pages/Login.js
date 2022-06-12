@@ -1,7 +1,9 @@
 import useBody from "hooks/useBody";
 import useLogin from "hooks/useLogin";
 import useCurrentUser from "hooks/useCurrentUser";
+import useFormValidation from "hooks/useFormValidation";
 import ErrorText from "components/Text/ErrorText";
+import loginSchema from "helpers/schema/loginSchema";
 import { useNavigate, Link } from "react-router-dom";
 import { Button, Input, Text } from "@geist-ui/core";
 import { useState } from "react";
@@ -19,6 +21,7 @@ export default function Login() {
   useBody(cssBody);
   const login = useLogin();
   const navigate = useNavigate();
+  const { errors, handleSubmit, register } = useFormValidation(loginSchema);
   const { setUser } = useCurrentUser();
   const [auth, setAuth] = useState({ email: "", password: "" });
 
@@ -48,9 +51,10 @@ export default function Login() {
         Necesitas tener una cuenta para acceder al contenido de esta página.
       </Text>
 
-      <form onSubmit={handleOnSubmit}>
+      <form onSubmit={handleSubmit(handleOnSubmit)}>
         <div className="mb-2">
           <Input
+            {...register("email")}
             iconRight={<BiEnvelope />}
             htmlType="email"
             name="email"
@@ -60,12 +64,17 @@ export default function Login() {
             value={auth.user}
             autoComplete="on"
             width="100%"
-            required
+          />
+          <ErrorText
+            className="mt-2"
+            text={errors.email?.message}
+            isVisible={!!errors.email?.message}
           />
         </div>
 
         <div className="mb-2">
           <Input.Password
+            {...register("password")}
             iconRight={<BiKey />}
             name="password"
             id="password"
@@ -74,7 +83,11 @@ export default function Login() {
             onChange={handleOnChange}
             autoComplete="on"
             width="100%"
-            required
+          />
+          <ErrorText
+            className="mt-2"
+            text={errors.password?.message}
+            isVisible={!!errors.password?.message}
           />
         </div>
         <ErrorText isVisible={login.isError} text={login} />
