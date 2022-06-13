@@ -6,7 +6,6 @@ import ErrorText from "components/Text/ErrorText";
 import { getErrorValidation } from "helpers/utils";
 import { useNavigate, Link } from "react-router-dom";
 import { Button, Input, Text } from "@geist-ui/core";
-import { useState } from "react";
 import { BiUser, BiKey } from "react-icons/bi";
 
 const cssBody = {
@@ -20,16 +19,12 @@ export default function Login() {
   useBody(cssBody);
   const login = useLogin();
   const navigate = useNavigate();
-  const { errors, handleSubmit, register } = useFormValidation(loginSchema);
-  const [auth, setAuth] = useState({ email: "", password: "" });
+  const { errors, handleSubmit, register } = useFormValidation(loginSchema, {
+    defaultValues: { email: "", password: "" },
+  });
 
-  function handleOnChange({ target }) {
-    const { name, value } = target;
-    setAuth((a) => ({ ...a, [name]: value }));
-  }
-
-  async function handleOnSubmit() {
-    const res = await login.mutateAsync(auth);
+  async function handleOnSubmit(data) {
+    const res = await login.mutateAsync(data);
     if (res.ok) {
       login.setSession(res.data.token, res.data.user);
       navigate("/dashboard", { replace: true });
@@ -55,8 +50,6 @@ export default function Login() {
             name="email"
             id="email"
             placeholder="Email"
-            onChange={handleOnChange}
-            value={auth.user}
             autoComplete="off"
             width="100%"
           />
@@ -74,8 +67,6 @@ export default function Login() {
             name="password"
             id="password"
             placeholder="Password"
-            value={auth.password}
-            onChange={handleOnChange}
             autoComplete="off"
             width="100%"
           />

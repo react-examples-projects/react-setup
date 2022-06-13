@@ -54,6 +54,10 @@ img {
   -webkit-text-fill-color: transparent;
 }
 
-.text-title{
+.text-title {
   font-family: 'Archivo Black', sans-serif;
+}
+
+.text-capitalize-input input {
+  text-transform: capitalize !important;
 }

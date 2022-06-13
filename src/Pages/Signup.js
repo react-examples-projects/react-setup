@@ -4,7 +4,6 @@ import ErrorText from "components/Text/ErrorText";
 import useFormValidation from "hooks/useFormValidation";
 import signupSchema from "helpers/schema/signupSchema";
 import { Button, Input, Text } from "@geist-ui/core";
-import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { BiUser, BiEnvelope, BiKey } from "react-icons/bi";
 
@@ -21,21 +20,12 @@ export default function Signup() {
 
   const signup = useSignup();
   const navigate = useNavigate();
-  const { errors, handleSubmit, register } = useFormValidation(signupSchema);
-  const [auth, setAuth] = useState({
-    email: "",
-    password: "",
-    passwordConfirm: "",
-    name: "",
+  const { errors, handleSubmit, register } = useFormValidation(signupSchema, {
+    defaultValues: { email: "", password: "", passwordConfirm: "", name: "" },
   });
 
-  function handleOnChange({ target }) {
-    const { name, value } = target;
-    setAuth((a) => ({ ...a, [name]: value }));
-  }
-
-  async function handleOnSubmit() {
-    const res = await signup.mutateAsync(auth);
+  async function handleOnSubmit(data) {
+    const res = await signup.mutateAsync(data);
     if (res.ok) {
       navigate("/", { replace: true });
     }
@@ -54,9 +44,8 @@ export default function Signup() {
             iconRight={<BiUser />}
             name="name"
             id="name"
+            className="text-capitalize-input"
             placeholder="Nombre completo"
-            onChange={handleOnChange}
-            value={auth.name}
             autoComplete="off"
             width="100%"
           />
@@ -75,8 +64,6 @@ export default function Signup() {
             name="email"
             id="email"
             placeholder="Correo Electrónico"
-            onChange={handleOnChange}
-            value={auth.user}
             autoComplete="off"
             width="100%"
           />
@@ -94,8 +81,6 @@ export default function Signup() {
             name="password"
             id="password"
             placeholder="Contraseña"
-            value={auth.password}
-            onChange={handleOnChange}
             autoComplete="off"
             width="100%"
           />
@@ -113,8 +98,6 @@ export default function Signup() {
             name="passwordConfirm"
             id="passwordConfirm"
             placeholder="Confirmar Contraseña"
-            value={auth.passwordConfirm}
-            onChange={handleOnChange}
             width="100%"
           />
           <ErrorText

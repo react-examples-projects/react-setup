@@ -1,6 +1,14 @@
 const { Schema, model } = require("mongoose");
 const UserSchema = new Schema(
   {
+    rank: {
+      type: String,
+      enum: {
+        values: ["admin", "user"],
+        message: "{VALUE} no es un rango válido",
+      },
+      default: "user",
+    },
     email: {
       type: String,
       required: [true, "El e-mail es obligatorio"],
@@ -26,14 +34,6 @@ const UserSchema = new Schema(
       maxLength: 100,
       unique: true,
       trim: true,
-    },
-    rank: {
-      type: String,
-      enum: {
-        values: ["admin", "user"],
-        message: "{VALUE} no es un rango válido",
-      },
-      default: "user",
     },
   },
   { timestamps: true }
