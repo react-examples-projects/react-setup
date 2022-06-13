@@ -19,6 +19,7 @@
     "@geist-ui/core": "^2.3.8",
     "@hookform/resolvers": "^2.9.1",
     "@svgr/webpack": "^6.2.1",
+    "autoprefixer": "^10.4.7",
     "axios": "^0.27.2",
     "babel-loader": "^8.0.0-beta.0",
     "classnames": "^2.3.1",
@@ -29,6 +30,7 @@
     "html-webpack-plugin": "^5.5.0",
     "inter-ui": "^3.19.3",
     "jwt-decode": "^3.1.2",
+    "postcss-loader": "^7.0.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-hook-form": "^7.32.0",
@@ -57,5 +59,19 @@
     "css-minimizer-webpack-plugin": "^4.0.0",
     "mini-css-extract-plugin": "^2.6.0",
     "url-loader": "^4.1.1"
-  }
+  },
+  "browserslist": [
+    "> 1%",
+    "ie >= 8",
+    "edge >= 15",
+    "ie_mob >= 10",
+    "ff >= 45",
+    "chrome >= 45",
+    "safari >= 7",
+    "opera >= 23",
+    "ios >= 7",
+    "android >= 4",
+    "bb >= 10",
+    "last 7 version"
+  ]
 }

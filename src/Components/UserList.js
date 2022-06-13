@@ -2,11 +2,12 @@ import React, { memo } from "react";
 import css from "styles/User.module.scss";
 import UserItem from "components/UserItem";
 import useUserList from "hooks/useUserList";
+import LoaderUserList from "components/Loaders/LoaderUserList";
 
 function UserList() {
   const { data, isLoading, isError } = useUserList();
 
-  if (isLoading) return "Cargando Usuarios...";
+  if (isLoading) return <LoaderUserList />;
 
   if (isError) return "Error al solicitar los usuarios";
 
