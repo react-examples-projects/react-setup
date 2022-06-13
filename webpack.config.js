@@ -4,7 +4,6 @@ const Dotenv = require("dotenv-webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const webpackDashboard = require("webpack-dashboard/plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
@@ -95,7 +94,6 @@ module.exports = {
       React: "react",
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new webpackDashboard(),
     new CleanWebpackPlugin(),
   ],
 };

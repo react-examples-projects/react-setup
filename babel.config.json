@@ -1,6 +1,7 @@
 {
   "plugins": [
     "@babel/transform-runtime",
+    "@babel/plugin-transform-block-scoping",
     [
       "babel-plugin-styled-components",
       {

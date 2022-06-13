@@ -1,10 +1,11 @@
 import React, { useRef, useState } from "react";
 import ErrorText from "components/Text/ErrorText";
 import useFormValidation from "hooks/useFormValidation";
+import useToast from "hooks/useToast";
+import useCreateUser from "hooks/useCreateUser";
 import createUserSchema from "helpers/schema/createUserSchema";
 import UserPlaceholderImg from "../../Assets/user_placeholder.png";
-import { toFormDataObj } from "helpers/utils";
-import { createUser } from "helpers/api";
+import { toFormDataObj, getErrorValidation } from "helpers/utils";
 import { Modal, Input, Select } from "@geist-ui/core";
 import { isValidFile, imageToBase64 } from "helpers/utils";
 
@@ -12,9 +13,11 @@ export default function ModalCreateUser({
   isOpenModalCreate,
   toggleOpenModalCreate,
 }) {
+  const { error, success } = useToast();
   const [userProfile, setUserProfile] = useState(null);
   const [userRank, setUserRank] = useState("user");
-  const { errors, handleSubmit, register } =
+  const { isError, isLoading, ...createUseMutation } = useCreateUser();
+  const { errors, reset, handleSubmit, register } =
     useFormValidation(createUserSchema);
   const containerUserRole = useRef(null);
 
@@ -24,8 +27,15 @@ export default function ModalCreateUser({
       rank: userRank,
       perfil_photo: userProfile,
     });
-    const res = await createUser(data);
-    console.log(res);
+    try {
+      const res = await createUseMutation.mutateAsync(data);
+      reset();
+      setUserProfile(null);
+      success("El usuario se creó correctamente");
+      toggleOpenModalCreate();
+    } catch {
+      error("Ocurrió un error al crear el usuario");
+    }
   };
 
   const onChangeProfile = async (e) => {
@@ -39,7 +49,11 @@ export default function ModalCreateUser({
   };
 
   return (
-    <Modal visible={isOpenModalCreate} onClose={toggleOpenModalCreate}>
+    <Modal
+      visible={isOpenModalCreate}
+      onClose={toggleOpenModalCreate}
+      disableBackdropClick={isLoading}
+    >
       <Modal.Title>Crear Usuario</Modal.Title>
       <Modal.Subtitle className="mt-3">
         Rellene los campos solicitados
@@ -51,7 +65,7 @@ export default function ModalCreateUser({
             id="name"
             name="name"
             width="100%"
-            className="mb-2"
+            className="mb-2 text-capitalize-input"
           >
             Nombre Completo
           </Input>
@@ -142,6 +156,10 @@ export default function ModalCreateUser({
             isVisible={!!errors.perfil_photo?.message}
           />
 
+          <ErrorText
+            isVisible={isError}
+            text={getErrorValidation(createUseMutation)}
+          />
           <img
             src={userProfile || UserPlaceholderImg}
             alt="User Profile"
@@ -150,10 +168,19 @@ export default function ModalCreateUser({
           />
         </form>
       </Modal.Content>
-      <Modal.Action passive onClick={toggleOpenModalCreate}>
+      <Modal.Action
+        disabled={isLoading}
+        onClick={toggleOpenModalCreate}
+        passive
+      >
         Cancelar
       </Modal.Action>
-      <Modal.Action htmlType="submit" form="edit-user">
+      <Modal.Action
+        disabled={isLoading}
+        loading={isLoading}
+        htmlType="submit"
+        form="edit-user"
+      >
         Crear
       </Modal.Action>
     </Modal>
