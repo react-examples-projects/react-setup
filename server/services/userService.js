@@ -18,6 +18,11 @@ class UserService {
     });
   }
 
+  async getUsers() {
+    const users = await this.UserModel.find({}).select("-password").lean();
+    return users;
+  }
+
   async existsUser(email) {
     const user = await this.UserModel.findOne({ email }).lean();
     return user;

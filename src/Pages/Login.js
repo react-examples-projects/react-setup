@@ -1,5 +1,6 @@
 import useBody from "hooks/useBody";
 import useLogin from "hooks/useLogin";
+import useToast from "hooks/useToast";
 import useFormValidation from "hooks/useFormValidation";
 import loginSchema from "helpers/schema/loginSchema";
 import ErrorText from "components/Text/ErrorText";
@@ -19,15 +20,20 @@ export default function Login() {
   useBody(cssBody);
   const login = useLogin();
   const navigate = useNavigate();
+  const { error } = useToast();
   const { errors, handleSubmit, register } = useFormValidation(loginSchema, {
     defaultValues: { email: "", password: "" },
   });
 
   async function handleOnSubmit(data) {
-    const res = await login.mutateAsync(data);
-    if (res.ok) {
-      login.setSession(res.data.token, res.data.user);
-      navigate("/dashboard", { replace: true });
+    try {
+      const res = await login.mutateAsync(data);
+      if (res?.user && res?.token) {
+        login.setSession(res.token, res.user);
+        navigate("/dashboard", { replace: true });
+      }
+    } catch {
+      error("Error al iniciar sesión");
     }
   }
 

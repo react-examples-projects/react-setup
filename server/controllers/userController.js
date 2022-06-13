@@ -60,6 +60,15 @@ class UserController {
       next(err);
     }
   }
+
+  async getAllUsers(req, res, next) {
+    try {
+      const users = await UserService.getUsers();
+      success(res, users);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 module.exports = new UserController();

@@ -1,4 +1,5 @@
 import useBody from "hooks/useBody";
+import useToast from "hooks/useToast";
 import useSignup from "hooks/useSignup";
 import ErrorText from "components/Text/ErrorText";
 import useFormValidation from "hooks/useFormValidation";
@@ -20,14 +21,19 @@ export default function Signup() {
 
   const signup = useSignup();
   const navigate = useNavigate();
+  const { error } = useToast();
   const { errors, handleSubmit, register } = useFormValidation(signupSchema, {
     defaultValues: { email: "", password: "", passwordConfirm: "", name: "" },
   });
 
   async function handleOnSubmit(data) {
-    const res = await signup.mutateAsync(data);
-    if (res.ok) {
-      navigate("/", { replace: true });
+    try {
+      const res = await signup.mutateAsync(data);
+      if (res?.name && res?.email) {
+        navigate("/", { replace: true });
+      }
+    } catch {
+      error("Error al registrar la cuenta");
     }
   }
 

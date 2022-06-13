@@ -16,6 +16,8 @@ router.post(
   userController.createUser
 );
 
+router.get("/users", userController.getAllUsers);
+
 router.post(
   "/perfil-photo",
   validate(perfilPhotoSchemaValidation),

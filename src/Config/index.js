@@ -5,6 +5,7 @@ export const login = "auth/login";
 export const signup = "auth/signup";
 export const userInfo = "user/";
 export const createUser = "user/";
+export const getUsers = "user/users/";
 
 export const queryClient = new QueryClient({
   defaultOptions: {

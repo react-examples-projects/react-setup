@@ -5,7 +5,13 @@ import ModalDeleteUser from "components/Modals/ModalDeleteUser";
 import ModalEditUser from "components/Modals/ModalEditUser";
 import { Text, Badge } from "@geist-ui/core";
 
-export default function UserItem() {
+export default function UserItem({
+  perfil_photo,
+  name,
+  email,
+  rank,
+  updateAt,
+}) {
   const [isOpenMenu, toggleOpenMenu] = useToggle();
   const [isOpenModal, toggleOpenModal] = useToggle();
   const [isOpenModalEdit, toggleOpenModalEdit] = useToggle();
@@ -13,10 +19,10 @@ export default function UserItem() {
   return (
     <li>
       <div className={css.userListDivider}>
-        <img className={css.userProfile} src="https://picsum.photos/50/50" />
-        <Text className="ms-2">Nombre Completo</Text>
-        <Text className="ms-5">libardojesusrengifo@gmail.com</Text>
-        <Text className="ms-5">Usuario</Text>
+        <img className={css.userProfile} src={perfil_photo} />
+        <Text className="ms-2 text-capitalize">{name}</Text>
+        <Text className="ms-5">{email}</Text>
+        <Text className="ms-5">{rank}</Text>
       </div>
       <Badge type="success">Activo</Badge>
 

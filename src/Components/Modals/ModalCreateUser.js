@@ -25,7 +25,7 @@ export default function ModalCreateUser({
     const data = toFormDataObj({
       ...values,
       rank: userRank,
-      perfil_photo: userProfile,
+      ...(userProfile && { perfil_photo: userProfile }),
     });
     try {
       const res = await createUseMutation.mutateAsync(data);

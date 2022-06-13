@@ -3,6 +3,7 @@ import {
   login,
   signup,
   userInfo,
+  getUsers,
   createUser as _createUser,
 } from "config/";
 import { getToken, removeToken, isValidToken } from "helpers/token";
@@ -23,7 +24,7 @@ instance.interceptors.request.use((req) => {
 });
 
 instance.interceptors.response.use(
-  (res) => res,
+  (res) => res?.data?.data,
   (err) => {
     if (err.code === "ERR_NETWORK") return Promise.reject(err.message);
 
@@ -39,26 +40,26 @@ instance.interceptors.response.use(
 );
 
 export async function setLogin(auth) {
-  const data = await instance.post(login, auth);
-  return data?.data;
+  const res = await instance.post(login, auth);
+  return res;
 }
 
 export async function signupUser(payload) {
-  const data = await instance.post(signup, payload);
-  return data?.data;
+  const res = await instance.post(signup, payload);
+  return res;
 }
 
 export async function getUserInfo() {
   const res = await instance.get(userInfo);
-  return res?.data?.data;
+  return res;
 }
 
 export async function createUser(payload) {
   const res = await instance.post(_createUser, payload);
-  return res?.data?.data;
+  return res;
 }
 
-export async function testApi() {
-  const res = await instance.get("/test");
-  return res?.data?.data;
+export async function getAllUsers() {
+  const res = await instance.get(getUsers);
+  return res;
 }
