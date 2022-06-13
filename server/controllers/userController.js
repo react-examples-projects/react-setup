@@ -1,7 +1,7 @@
 const UserService = require("../services/userService");
 const { uploadImages } = require("../helpers/requests");
 const { success, error } = require("../helpers/httpResponses");
-
+const { hashPassword } = require("../helpers/utils");
 class UserController {
   async perfilPhoto(req, res, next) {
     try {
@@ -42,8 +42,20 @@ class UserController {
 
   async createUser(req, res, next) {
     try {
-      const user = await UserService.createUser(req.body);
-      success(res, user);
+      const { email, password, rank, perfil_photo, name } = req.body;
+      const user = await UserService.existsUser(email);
+      if (user) return error(res, "El correo ya está en uso");
+
+      const passwordHashed = hashPassword(password);
+      const userCreated = await UserService.createUser({
+        email,
+        password: passwordHashed,
+        rank,
+        perfil_photo,
+        name,
+      });
+
+      success(res, userCreated);
     } catch (err) {
       next(err);
     }

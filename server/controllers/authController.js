@@ -1,5 +1,5 @@
 const UserService = require("../services/userService");
-const { unauthorized, success, error } = require("../helpers/httpResponses");
+const { success, error } = require("../helpers/httpResponses");
 const {
   hashPassword,
   getTokenFromPayload,
