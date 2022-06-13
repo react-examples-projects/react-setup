@@ -1,4 +1,10 @@
-import { api, login, signup, userInfo } from "config/";
+import {
+  api,
+  login,
+  signup,
+  userInfo,
+  createUser as _createUser,
+} from "config/";
 import { getToken, removeToken, isValidToken } from "helpers/token";
 import axios from "axios";
 
@@ -41,6 +47,11 @@ export async function signupUser(payload) {
 
 export async function getUserInfo() {
   const res = await instance.get(userInfo);
+  return res?.data?.data;
+}
+
+export async function createUser(payload) {
+  const res = await instance.post(_createUser, payload);
   return res?.data?.data;
 }
 

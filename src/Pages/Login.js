@@ -28,7 +28,7 @@ export default function Login() {
     setAuth((a) => ({ ...a, [name]: value }));
   }
 
-  async function handleOnSubmit(e) {
+  async function handleOnSubmit() {
     const res = await login.mutateAsync(auth);
     if (res.ok) {
       login.setSession(res.data.token, res.data.user);

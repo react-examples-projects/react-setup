@@ -1,5 +1,10 @@
 import React, { useRef, useState } from "react";
+import ErrorText from "components/Text/ErrorText";
+import useFormValidation from "hooks/useFormValidation";
+import createUserSchema from "helpers/schema/createUserSchema";
 import UserPlaceholderImg from "../../Assets/user_placeholder.png";
+import { toFormDataObj } from "helpers/utils";
+import { createUser } from "helpers/api";
 import { Modal, Input, Select } from "@geist-ui/core";
 import { isValidFile, imageToBase64 } from "helpers/utils";
 
@@ -7,10 +12,20 @@ export default function ModalCreateUser({
   isOpenModalCreate,
   toggleOpenModalCreate,
 }) {
-  const [userProfile, setUserProfile] = useState(UserPlaceholderImg);
+  const [userProfile, setUserProfile] = useState(null);
+  const [userRank, setUserRank] = useState("user");
+  const { errors, handleSubmit, register } =
+    useFormValidation(createUserSchema);
   const containerUserRole = useRef(null);
-  const onEditUser = (e) => {
-    e.preventDefault();
+
+  const onSubmit = async (values) => {
+    const data = toFormDataObj({
+      ...values,
+      rank: userRank,
+      perfil_photo: userProfile,
+    });
+    const res = await createUser(data);
+    console.log(res);
   };
 
   const onChangeProfile = async (e) => {
@@ -30,12 +45,24 @@ export default function ModalCreateUser({
         Rellene los campos solicitados
       </Modal.Subtitle>
       <Modal.Content>
-        <form onSubmit={onEditUser} id="edit-user">
-          <Input id="username" name="username" width="100%" className="mb-2">
+        <form onSubmit={handleSubmit(onSubmit)} id="edit-user">
+          <Input
+            {...register("name")}
+            id="name"
+            name="name"
+            width="100%"
+            className="mb-2"
+          >
             Nombre Completo
           </Input>
+          <ErrorText
+            className="mt-2"
+            text={errors.name?.message}
+            isVisible={!!errors.name?.message}
+          />
 
           <Input
+            {...register("email")}
             htmlType="email"
             id="email"
             name="email"
@@ -44,8 +71,14 @@ export default function ModalCreateUser({
           >
             Correo Electrónico
           </Input>
+          <ErrorText
+            className="mt-2"
+            text={errors.email?.message}
+            isVisible={!!errors.email?.message}
+          />
 
           <Input.Password
+            {...register("password")}
             id="password"
             name="password"
             width="100%"
@@ -53,26 +86,49 @@ export default function ModalCreateUser({
           >
             Contraseña
           </Input.Password>
+          <ErrorText
+            className="mt-2"
+            text={errors.password?.message}
+            isVisible={!!errors.password?.message}
+          />
+
+          <Input.Password
+            {...register("passwordConfirm")}
+            id="passwordConfirm"
+            name="passwordConfirm"
+            width="100%"
+            className="mb-2"
+          >
+            Confirmar Contraseña
+          </Input.Password>
+          <ErrorText
+            className="mt-2"
+            text={errors.passwordConfirm?.message}
+            isVisible={!!errors.passwordConfirm?.message}
+          />
 
           <div className="mb-2 position-relative" ref={containerUserRole}>
             <label className="label">Rango</label>
             <Select
               placeholder="Rango"
-              onChange={null}
+              onChange={(value) => setUserRank(value)}
+              value={userRank}
               name="rank"
               id="rank"
               getPopupContainer={() => containerUserRole.current}
               width="100%"
+              initialValue={userRank}
             >
-              <Select.Option value="1">Administrador</Select.Option>
-              <Select.Option value="2">Usuario</Select.Option>
+              <Select.Option value="admin">Administrador</Select.Option>
+              <Select.Option value="user">Usuario</Select.Option>
             </Select>
           </div>
 
           <Input
+            {...register("perfil_photo")}
             htmlType="file"
-            id="profile"
-            name="profile"
+            id="perfil_photo"
+            name="perfil_photo"
             accept="image/jpg, image/png, image/svg, image/jpeg"
             width="100%"
             className="mb-2"
@@ -80,9 +136,14 @@ export default function ModalCreateUser({
           >
             Imágen de perfil
           </Input>
+          <ErrorText
+            className="mt-2"
+            text={errors.perfil_photo?.message}
+            isVisible={!!errors.perfil_photo?.message}
+          />
 
           <img
-            src={userProfile}
+            src={userProfile || UserPlaceholderImg}
             alt="User Profile"
             title="User Profile"
             style={{ borderRadius: "5px" }}
@@ -92,8 +153,8 @@ export default function ModalCreateUser({
       <Modal.Action passive onClick={toggleOpenModalCreate}>
         Cancelar
       </Modal.Action>
-      <Modal.Action type="submit" form="edit-user">
-        Editar
+      <Modal.Action htmlType="submit" form="edit-user">
+        Crear
       </Modal.Action>
     </Modal>
   );

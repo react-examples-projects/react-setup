@@ -27,6 +27,14 @@ const UserSchema = new Schema(
       unique: true,
       trim: true,
     },
+    rank: {
+      type: String,
+      enum: {
+        values: ["admin", "user"],
+        message: "{VALUE} no es un rango válido",
+      },
+      default: "user",
+    },
   },
   { timestamps: true }
 );

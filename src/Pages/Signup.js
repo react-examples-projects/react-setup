@@ -34,7 +34,7 @@ export default function Signup() {
     setAuth((a) => ({ ...a, [name]: value }));
   }
 
-  async function handleOnSubmit(e) {
+  async function handleOnSubmit() {
     const res = await signup.mutateAsync(auth);
     if (res.ok) {
       navigate("/", { replace: true });
