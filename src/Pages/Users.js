@@ -40,7 +40,7 @@ export default function Users() {
 
         <Grid xs={24} sm={14} md={14} lg={14} xl={14}>
           <div className="w-100 position-relative" ref={containerSelect}>
-            <label className="label">Filtrar por:</label>
+            <label htmlFor="filter" className="label">Filtrar por:</label>
             <Select
               placeholder="Filtro"
               onChange={null}

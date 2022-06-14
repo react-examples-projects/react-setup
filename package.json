@@ -6,7 +6,8 @@
   "scripts": {
     "start": "npx webpack serve",
     "build": "npx webpack --mode production",
-    "lint": "eslint --fix \"./src/**/*.{js,jsx,ts,tsx,json}\""
+    "lint": "eslint \"src/**/*.{js,jsx}\"",
+    "lint:fix": "eslint \"src/**/*.{js,jsx}\" --fix"
   },
   "keywords": [],
   "author": "",

@@ -7,7 +7,7 @@
     },
     "sourceType": "module"
   },
-  "plugins": ["react", "react-hooks"],
+  "plugins": ["react", "import", "react-hooks", "jsx-a11y"],
   "extends": [
     "plugin:import/typescript",
     "plugin:react/recommended",
@@ -18,11 +18,14 @@
     "plugin:jsx-a11y/recommended"
   ],
   "rules": {
+    "quotes": ["warn", "double"],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "react/prop-types": "off",
     "react/jsx-uses-react": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "import/prefer-default-export": 0,
+    "import/no-unresolved": [2, { "caseSensitive": false }]
   },
   "settings": {
     "react": {

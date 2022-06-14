@@ -19,7 +19,11 @@ export default function UserItem({
   return (
     <li>
       <div className={css.userListDivider}>
-        <img className={css.userProfile} src={perfil_photo} />
+        <img
+          className={css.userProfile}
+          alt={`${name} profile avatar`}
+          src={perfil_photo}
+        />
         <Text className="ms-2 text-capitalize">{name}</Text>
         <Text className="ms-5">{email}</Text>
         <Text className="ms-5">{rank}</Text>

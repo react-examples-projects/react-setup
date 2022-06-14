@@ -33,7 +33,7 @@ export default function ModalEditUser({
           </Input>
 
           <div className="mb-2 position-relative" ref={containerUserRole}>
-            <label className="label">Rango</label>
+            <label htmlFor="rank" className="label">Rango</label>
             <Select
               placeholder="Rango"
               onChange={null}

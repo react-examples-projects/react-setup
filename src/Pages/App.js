@@ -20,7 +20,7 @@ export default function App() {
           12 de enero, 2022
         </Text>
 
-        <img className={css.dashboardImg} src="./img/dashboard.svg" />
+        <img className={css.dashboardImg} alt="dashboard welcome" src="./img/dashboard.svg" />
       </div>
 
       <Grid.Container gap={1}>

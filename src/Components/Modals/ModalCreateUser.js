@@ -148,7 +148,7 @@ export default function ModalCreateUser({
                 className="w-100 mb-2 position-relative"
                 ref={containerUserRole}
               >
-                <label className="label">Rango</label>
+                <label htmlFor="rank" className="label">Rango</label>
                 <Select
                   placeholder="Rango"
                   onChange={(value) => setUserRank(value)}
