@@ -24,5 +24,5 @@ export default function UserProvider({ children }) {
     logout,
   };
 
-  return <UserContext.Provider value={value} children={children} />;
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }

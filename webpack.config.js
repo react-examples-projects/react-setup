@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
+const ESLintPlugin = require("eslint-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
@@ -29,7 +30,6 @@ module.exports = {
   },
 
   devServer: {
-    hot: true,
     port: 3000,
     open: true,
     historyApiFallback: true,
@@ -87,13 +87,16 @@ module.exports = {
     new Dotenv(),
     new CompressionPlugin(),
     new MiniCssExtractPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "public", "index.html"),
     }),
     new webpack.ProvidePlugin({
       React: "react",
     }),
-    new webpack.HotModuleReplacementPlugin(),
-    new CleanWebpackPlugin(),
+    new ESLintPlugin({
+      extensions: ["js", "jsx"],
+    }),
   ],
 };

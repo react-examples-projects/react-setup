@@ -1,5 +1,9 @@
-.c-pointer{
+.c-pointer {
   cursor: pointer !important;
+}
+.img-fluid {
+  max-width: 100%;
+  height: auto;
 }
 .clearfix::after {
   display: block;

@@ -5,9 +5,13 @@ import useToast from "hooks/useToast";
 import useCreateUser from "hooks/useCreateUser";
 import createUserSchema from "helpers/schema/createUserSchema";
 import UserPlaceholderImg from "../../Assets/user_placeholder.png";
-import { toFormDataObj, getErrorValidation } from "helpers/utils";
-import { Modal, Input, Select } from "@geist-ui/core";
-import { isValidFile, imageToBase64 } from "helpers/utils";
+import {
+  toFormDataObj,
+  getErrorValidation,
+  isValidFile,
+  imageToBase64,
+} from "helpers/utils";
+import { Modal, Input, Select, Grid } from "@geist-ui/core";
 
 export default function ModalCreateUser({
   isOpenModalCreate,
@@ -20,7 +24,7 @@ export default function ModalCreateUser({
   const { errors, reset, handleSubmit, register } =
     useFormValidation(createUserSchema);
   const containerUserRole = useRef(null);
-
+ 
   const onSubmit = async (values) => {
     const data = toFormDataObj({
       ...values,
@@ -53,6 +57,7 @@ export default function ModalCreateUser({
       visible={isOpenModalCreate}
       onClose={toggleOpenModalCreate}
       disableBackdropClick={isLoading}
+      width="600px"
     >
       <Modal.Title>Crear Usuario</Modal.Title>
       <Modal.Subtitle className="mt-3">
@@ -60,111 +65,145 @@ export default function ModalCreateUser({
       </Modal.Subtitle>
       <Modal.Content>
         <form onSubmit={handleSubmit(onSubmit)} id="edit-user">
-          <Input
-            {...register("name")}
-            id="name"
-            name="name"
-            width="100%"
-            className="mb-2 text-capitalize-input"
-          >
-            Nombre Completo
-          </Input>
-          <ErrorText
-            className="mt-2"
-            text={errors.name?.message}
-            isVisible={!!errors.name?.message}
-          />
+          <Grid.Container gap={1}>
+            <Grid xs={24} sm={24} md={12} lg={12} xl={12}>
+              <div className="w-100">
+                <Input
+                  {...register("name")}
+                  id="name"
+                  name="name"
+                  width="100%"
+                  className="mb-2 text-capitalize-input"
+                >
+                  Nombre Completo
+                </Input>
+                <ErrorText
+                  className="mt-2"
+                  text={errors.name?.message}
+                  isVisible={!!errors.name?.message}
+                />
+              </div>
+            </Grid>
 
-          <Input
-            {...register("email")}
-            htmlType="email"
-            id="email"
-            name="email"
-            width="100%"
-            className="mb-2"
-          >
-            Correo Electrónico
-          </Input>
-          <ErrorText
-            className="mt-2"
-            text={errors.email?.message}
-            isVisible={!!errors.email?.message}
-          />
+            <Grid xs={24} sm={24} md={12} lg={12} xl={12}>
+              <div className="w-100">
+                <Input
+                  {...register("email")}
+                  htmlType="email"
+                  id="email"
+                  name="email"
+                  width="100%"
+                  className="mb-2"
+                >
+                  Correo Electrónico
+                </Input>
+                <ErrorText
+                  className="mt-2"
+                  text={errors.email?.message}
+                  isVisible={!!errors.email?.message}
+                />
+              </div>
+            </Grid>
 
-          <Input.Password
-            {...register("password")}
-            id="password"
-            name="password"
-            width="100%"
-            className="mb-2"
-          >
-            Contraseña
-          </Input.Password>
-          <ErrorText
-            className="mt-2"
-            text={errors.password?.message}
-            isVisible={!!errors.password?.message}
-          />
+            <Grid xs={24} sm={24} md={12} lg={12} xl={12}>
+              <div className="w-100">
+                <Input.Password
+                  {...register("password")}
+                  id="password"
+                  name="password"
+                  width="100%"
+                  className="mb-2"
+                >
+                  Contraseña
+                </Input.Password>
+                <ErrorText
+                  className="mt-2"
+                  text={errors.password?.message}
+                  isVisible={!!errors.password?.message}
+                />
+              </div>
+            </Grid>
 
-          <Input.Password
-            {...register("passwordConfirm")}
-            id="passwordConfirm"
-            name="passwordConfirm"
-            width="100%"
-            className="mb-2"
-          >
-            Confirmar Contraseña
-          </Input.Password>
-          <ErrorText
-            className="mt-2"
-            text={errors.passwordConfirm?.message}
-            isVisible={!!errors.passwordConfirm?.message}
-          />
+            <Grid xs={24} sm={24} md={12} lg={12} xl={12}>
+              <div className="w-100">
+                <Input.Password
+                  {...register("passwordConfirm")}
+                  id="passwordConfirm"
+                  name="passwordConfirm"
+                  width="100%"
+                  className="mb-2"
+                >
+                  Confirmar Contraseña
+                </Input.Password>
+                <ErrorText
+                  className="mt-2"
+                  text={errors.passwordConfirm?.message}
+                  isVisible={!!errors.passwordConfirm?.message}
+                />
+              </div>
+            </Grid>
 
-          <div className="mb-2 position-relative" ref={containerUserRole}>
-            <label className="label">Rango</label>
-            <Select
-              placeholder="Rango"
-              onChange={(value) => setUserRank(value)}
-              value={userRank}
-              name="rank"
-              id="rank"
-              getPopupContainer={() => containerUserRole.current}
-              width="100%"
-              initialValue={userRank}
-            >
-              <Select.Option value="admin">Administrador</Select.Option>
-              <Select.Option value="user">Usuario</Select.Option>
-            </Select>
-          </div>
+            <Grid xs={24} sm={24} md={12} lg={12} xl={12}>
+              <div
+                className="w-100 mb-2 position-relative"
+                ref={containerUserRole}
+              >
+                <label className="label">Rango</label>
+                <Select
+                  placeholder="Rango"
+                  onChange={(value) => setUserRank(value)}
+                  value={userRank}
+                  name="rank"
+                  id="rank"
+                  getPopupContainer={() => containerUserRole.current}
+                  width="100%"
+                  initialValue={userRank}
+                >
+                  <Select.Option value="admin">Administrador</Select.Option>
+                  <Select.Option value="user">Usuario</Select.Option>
+                </Select>
+              </div>
+            </Grid>
 
-          <Input
-            {...register("perfil_photo")}
-            htmlType="file"
-            id="perfil_photo"
-            name="perfil_photo"
-            accept="image/jpg, image/png, image/svg, image/jpeg"
-            width="100%"
-            className="mb-2"
-            onChange={onChangeProfile}
-          >
-            Imágen de perfil
-          </Input>
-          <ErrorText
-            className="mt-2"
-            text={errors.perfil_photo?.message}
-            isVisible={!!errors.perfil_photo?.message}
-          />
+            <Grid xs={24} sm={24} md={12} lg={12} xl={12}>
+              <div className="w-100">
+                <Input
+                  {...register("perfil_photo")}
+                  htmlType="file"
+                  id="perfil_photo"
+                  name="perfil_photo"
+                  accept="image/jpg, image/png, image/svg, image/jpeg"
+                  width="100%"
+                  className="mb-2"
+                  onChange={onChangeProfile}
+                >
+                  Imágen de perfil
+                </Input>
+                <ErrorText
+                  className="mt-2"
+                  text={errors.perfil_photo?.message}
+                  isVisible={!!errors.perfil_photo?.message}
+                />
+              </div>
+            </Grid>
+          </Grid.Container>
 
           <ErrorText
             isVisible={isError}
             text={getErrorValidation(createUseMutation)}
           />
+
           <img
             src={userProfile || UserPlaceholderImg}
             alt="User Profile"
             title="User Profile"
-            style={{ borderRadius: "5px" }}
+            className="d-block mx-auto mt-1 img-fluid"
+            style={{
+              borderRadius: "50%",
+              width: "200px",
+              height: "200px",
+              objectFit: "cover",
+            }}
           />
         </form>
       </Modal.Content>
