@@ -1,4 +1,4 @@
-import UserContext from "context/UserContext";
+import UserContext from "context/User/UserContext";
 import { useState, useCallback } from "react";
 import { removeToken } from "helpers/token";
 import { useQueryClient } from "react-query";

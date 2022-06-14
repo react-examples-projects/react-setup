@@ -19,6 +19,8 @@
   ],
   "rules": {
     "quotes": ["warn", "double"],
+    "no-unused-vars": "warn",
+    "no-use-before-define": "warn",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "react/prop-types": "off",
@@ -54,7 +56,8 @@
           ["hooks", "./src/Hooks/"],
           ["config", "./src/Config/"],
           ["helpers", "./src/Helpers/"],
-          ["context", "./src/Context/"]
+          ["context", "./src/Context/"],
+          ["assets", "./src/Assets/"]
         ],
         "extensions": [".ts", ".js", ".jsx", ".json"]
       }

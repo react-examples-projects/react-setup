@@ -8,6 +8,10 @@ export function existsToken() {
   return getToken() !== null;
 }
 
+export function removeToken() {
+  localStorage.removeItem("token");
+}
+
 export function isValidToken() {
   if (!existsToken()) return false;
   const token = getToken();
@@ -28,8 +32,4 @@ export function isValidToken() {
 
 export function setToken(token) {
   localStorage.setItem("token", token);
-}
-
-export function removeToken() {
-  localStorage.removeItem("token");
 }

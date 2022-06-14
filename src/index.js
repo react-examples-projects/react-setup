@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import Routers from "./Routers";
-import UserProvider from "context/UserProvider";
+import UserProvider from "context/User/UserProvider";
 import { queryClient } from "config/";
 import { GeistProvider, CssBaseline } from "@geist-ui/core";
 import { QueryClientProvider } from "react-query";

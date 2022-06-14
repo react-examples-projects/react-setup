@@ -1,16 +1,11 @@
-import React, { memo, useState, useEffect } from "react";
+import { memo } from "react";
 import css from "styles/User.module.scss";
+import useUsers from "hooks/useUsers";
 import UserItem from "components/UserItem";
-import useUserList from "hooks/useUserList";
 import LoaderUserList from "components/Loaders/LoaderUserList";
 
 function UserList() {
-  const { data, isLoading, isError } = useUserList();
-  const [users, setUsers] = useState(data || []);
-
-  useEffect(() => {
-    if (!!data) setUsers(data);
-  }, [data]);
+  const { users, isLoading, isError } = useUsers();
 
   if (isLoading) return <LoaderUserList />;
 

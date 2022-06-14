@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import UserContext from "context/UserContext";
+import UserContext from "context/User/UserContext";
 
 export default function useCurrentUser() {
   const contextData = useContext(UserContext);

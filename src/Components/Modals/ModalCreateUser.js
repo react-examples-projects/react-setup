@@ -1,10 +1,11 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import ErrorText from "components/Text/ErrorText";
 import useFormValidation from "hooks/useFormValidation";
 import useToast from "hooks/useToast";
+import useUsers from "hooks/useUsers";
 import useCreateUser from "hooks/useCreateUser";
 import createUserSchema from "helpers/schema/createUserSchema";
-import UserPlaceholderImg from "../../Assets/user_placeholder.png";
+import UserPlaceholderImg from "assets/user_placeholder.png";
 import {
   toFormDataObj,
   getErrorValidation,
@@ -20,11 +21,12 @@ export default function ModalCreateUser({
   const { error, success } = useToast();
   const [userProfile, setUserProfile] = useState(null);
   const [userRank, setUserRank] = useState("user");
+  const { addUser } = useUsers();
   const { isError, isLoading, ...createUseMutation } = useCreateUser();
   const { errors, reset, handleSubmit, register } =
     useFormValidation(createUserSchema);
   const containerUserRole = useRef(null);
- 
+
   const onSubmit = async (values) => {
     const data = toFormDataObj({
       ...values,
@@ -32,7 +34,8 @@ export default function ModalCreateUser({
       ...(userProfile && { perfil_photo: userProfile }),
     });
     try {
-      const res = await createUseMutation.mutateAsync(data);
+      const user = await createUseMutation.mutateAsync(data);
+      addUser(user);
       reset();
       setUserProfile(null);
       success("El usuario se creó correctamente");
@@ -148,7 +151,9 @@ export default function ModalCreateUser({
                 className="w-100 mb-2 position-relative"
                 ref={containerUserRole}
               >
-                <label htmlFor="rank" className="label">Rango</label>
+                <label htmlFor="rank" className="label">
+                  Rango
+                </label>
                 <Select
                   placeholder="Rango"
                   onChange={(value) => setUserRank(value)}

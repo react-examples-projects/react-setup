@@ -32,6 +32,12 @@ export default function UserItem({
 
       <UserMenu
         {...{
+          perfil_photo,
+          name,
+          email,
+          rank,
+          updateAt,
+
           isOpenMenu,
           toggleOpenMenu,
           toggleOpenModal,

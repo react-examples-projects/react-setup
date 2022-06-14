@@ -1,7 +1,15 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
+import useFormValidation from "hooks/useFormValidation";
+import useToast from "hooks/useToast";
+import UserPlaceholderImg from "assets/user_placeholder.png";
 import { Modal, Input, Select } from "@geist-ui/core";
 
 export default function ModalEditUser({
+  perfil_photo,
+  name,
+  email,
+  rank,
+  updateAt,
   isOpenModalEdit,
   toggleOpenModalEdit,
 }) {
@@ -33,7 +41,9 @@ export default function ModalEditUser({
           </Input>
 
           <div className="mb-2 position-relative" ref={containerUserRole}>
-            <label htmlFor="rank" className="label">Rango</label>
+            <label htmlFor="rank" className="label">
+              Rango
+            </label>
             <Select
               placeholder="Rango"
               onChange={null}

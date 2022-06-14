@@ -1,7 +1,8 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import useToggle from "hooks/useToggle";
 import UserList from "components/UserList";
 import ModalCreateUser from "components/Modals/ModalCreateUser";
+import UsersProvider from "context/Users/UsersProvider";
 import { Text, Grid, Input, Select, Button } from "@geist-ui/core";
 
 export default function Users() {
@@ -40,7 +41,9 @@ export default function Users() {
 
         <Grid xs={24} sm={14} md={14} lg={14} xl={14}>
           <div className="w-100 position-relative" ref={containerSelect}>
-            <label htmlFor="filter" className="label">Filtrar por:</label>
+            <label htmlFor="filter" className="label">
+              Filtrar por:
+            </label>
             <Select
               placeholder="Filtro"
               onChange={null}
@@ -57,8 +60,10 @@ export default function Users() {
         </Grid>
       </Grid.Container>
 
-      <UserList />
-      <ModalCreateUser {...{ isOpenModalCreate, toggleOpenModalCreate }} />
+      <UsersProvider>
+        <UserList />
+        <ModalCreateUser {...{ isOpenModalCreate, toggleOpenModalCreate }} />
+      </UsersProvider>
     </>
   );
 }

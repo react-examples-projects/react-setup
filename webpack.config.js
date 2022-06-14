@@ -26,6 +26,7 @@ module.exports = {
       config: path.resolve(__dirname, "src/Config/"),
       helpers: path.resolve(__dirname, "src/Helpers/"),
       context: path.resolve(__dirname, "src/Context/"),
+      assets: path.resolve(__dirname, "src/Assets/"),
     },
   },
 

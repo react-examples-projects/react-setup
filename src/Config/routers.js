@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import { publicRoute, privateRoute, redirectRoute, route } from "helpers/utils";
+import { privateRoute, redirectRoute, route } from "helpers/utils";
 import Layout from "components/Layout";
 
 const App = lazy(() => import("pages/App"));
