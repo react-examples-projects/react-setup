@@ -55,7 +55,17 @@ class UserController {
         name,
       });
 
-      success(res, userCreated);
+      success(res, userCreated, 201);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async editUser(req, res, next) {
+    try {
+      console.log({ id: req.params.id, body: req.body });
+      const result = await UserService.editUser(req.params.id, req.body);
+      success(res, result);
     } catch (err) {
       next(err);
     }

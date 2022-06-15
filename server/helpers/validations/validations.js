@@ -78,6 +78,25 @@ const createUserSchemaValidation = yup.object({
   }),
 });
 
+const editUserSchemaValidation = yup.object({
+  params: yup.object({
+    id: idSchema,
+  }),
+  body: yup.object({
+    name: yup
+      .string()
+      .min(4, "Mínimo 4 carácteres para el nombre")
+      .max(100, "Máximo 100 carácteres para el nombre")
+      .required("El nombre es obligatorio"),
+    email: yup
+      .string()
+      .email("El correo debe ser válido, ejemplo: example@domain.es")
+      .required("El correo es obligatorio"),
+    rank: yup.string().trim().oneOf(["user", "admin"], "El rango no es válido"),
+    perfil_photo: yup.string("La imágen de perfil debe ser una cadena"),
+  }),
+});
+
 const perfilPhotoSchemaValidation = yup.object({
   files: yup.object({
     perfil_photo: yup
@@ -111,6 +130,7 @@ module.exports = {
   loginSchemaValidation,
   signupSchemaValidation,
   createUserSchemaValidation,
+  editUserSchemaValidation,
   perfilPhotoSchemaValidation,
   passwordChangeValidation,
   requireIdValidation,

@@ -6,6 +6,7 @@ import ModalEditUser from "components/Modals/ModalEditUser";
 import { Text, Badge } from "@geist-ui/core";
 
 export default function UserItem({
+  _id,
   perfil_photo,
   name,
   email,
@@ -45,7 +46,18 @@ export default function UserItem({
         }}
       />
       <ModalDeleteUser {...{ toggleOpenModal, isOpenModal }} />
-      <ModalEditUser {...{ isOpenModalEdit, toggleOpenModalEdit }} />
+      <ModalEditUser
+        {...{
+          isOpenModalEdit,
+          toggleOpenModalEdit,
+          perfil_photo,
+          _id,
+          name,
+          email,
+          rank,
+          updateAt,
+        }}
+      />
     </li>
   );
 }

@@ -52,6 +52,7 @@ export default function ModalCreateUser({
       setUserProfile(imgUrl);
     } else {
       setUserProfile(UserPlaceholderImg);
+      e.target.value = null;
     }
   };
 

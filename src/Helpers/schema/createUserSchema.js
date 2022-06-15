@@ -4,11 +4,11 @@ const createUserSchema = yup.object({
   name: yup
     .string()
     .trim()
+    .required("El nombre completo es obligatorio")
     .matches(
       /^[a-zA-Z][a-zA-Z\s]*$/,
       "El nombre sólo debe tener letras y espacios"
-    )
-    .required("El nombre completo es obligatorio"),
+    ),
   email: yup
     .string()
     .trim()
@@ -29,7 +29,7 @@ const createUserSchema = yup.object({
   passwordConfirm: yup
     .string()
     .oneOf([yup.ref("password"), null], "Las contraseñas deben coincidir"),
-    
+
   perfil_photo: yup.string(),
 });
 

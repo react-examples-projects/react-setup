@@ -4,6 +4,7 @@ const userController = require("../../controllers/userController");
 const validate = require("../../helpers/validations/validate");
 const {
   createUserSchemaValidation,
+  editUserSchemaValidation,
   perfilPhotoSchemaValidation,
   passwordChangeValidation,
 } = require("../../helpers/validations/validations");
@@ -15,6 +16,8 @@ router.post(
   validate(createUserSchemaValidation),
   userController.createUser
 );
+
+router.put("/:id", validate(editUserSchemaValidation), userController.editUser);
 
 router.get("/users", userController.getAllUsers);
 

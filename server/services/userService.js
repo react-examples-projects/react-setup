@@ -23,6 +23,13 @@ class UserService {
     return users;
   }
 
+  async editUser(id, payload) {
+    const user = await this.UserModel.findByIdAndUpdate(id, payload, {
+      new: true,
+    });
+    return user;
+  }
+
   async existsUser(email) {
     const user = await this.UserModel.findOne({ email }).lean();
     return user;
