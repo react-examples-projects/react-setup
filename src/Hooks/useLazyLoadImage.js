@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 
 /**
  * Show an image loader placeholder and replace when it's been loaded
@@ -9,17 +9,14 @@ import { useEffect, useState, useCallback } from "react";
 export default function useLazyloadImage({ src }) {
   const [isLoaded, setLoaded] = useState(false);
 
-  const onLoad = useCallback(() => {
-    setLoaded(src);
-  }, [src]);
-
   useEffect(() => {
+    const onLoad = () => setLoaded(src);
     const img = new Image();
     img.src = src;
     img.addEventListener("load", onLoad);
 
     return () => img.removeEventListener("load", onLoad);
-  }, [src, onLoad]);
+  }, [src]);
 
   return isLoaded;
 }
