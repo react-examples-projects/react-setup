@@ -20,6 +20,7 @@ export default function ModalCreateUser({
 }) {
   const { error, success } = useToast();
   const [userProfile, setUserProfile] = useState(null);
+  const [userImg, setUserImg] = useState(UserPlaceholderImg);
   const [userRank, setUserRank] = useState("user");
   const { addUser } = useUsers();
   const { isError, isLoading, ...createUseMutation } = useCreateUser();
@@ -38,6 +39,7 @@ export default function ModalCreateUser({
       addUser(user);
       reset();
       setUserProfile(null);
+      setUserImg(UserPlaceholderImg);
       success("El usuario se creó correctamente");
       toggleOpenModalCreate();
     } catch {
@@ -48,10 +50,12 @@ export default function ModalCreateUser({
   const onChangeProfile = async (e) => {
     const [file] = e.target.files;
     if (isValidFile(file)) {
-      const imgUrl = await imageToBase64(file);
-      setUserProfile(imgUrl);
+      const img64 = await imageToBase64(file);
+      setUserProfile(file);
+      setUserImg(img64);
     } else {
-      setUserProfile(UserPlaceholderImg);
+      setUserProfile(null);
+      setUserImg(UserPlaceholderImg);
       e.target.value = null;
     }
   };
@@ -70,7 +74,7 @@ export default function ModalCreateUser({
       <Modal.Content>
         <form onSubmit={handleSubmit(onSubmit)} id="edit-user">
           <Grid.Container gap={1}>
-            <Grid xs={24} sm={24} md={12} lg={12} xl={12}>
+            <Grid xs={24} sm={12} md={12} lg={12} xl={12}>
               <div className="w-100">
                 <Input
                   {...register("name")}
@@ -89,7 +93,7 @@ export default function ModalCreateUser({
               </div>
             </Grid>
 
-            <Grid xs={24} sm={24} md={12} lg={12} xl={12}>
+            <Grid xs={24} sm={12} md={12} lg={12} xl={12}>
               <div className="w-100">
                 <Input
                   {...register("email")}
@@ -109,7 +113,7 @@ export default function ModalCreateUser({
               </div>
             </Grid>
 
-            <Grid xs={24} sm={24} md={12} lg={12} xl={12}>
+            <Grid xs={24} sm={12} md={12} lg={12} xl={12}>
               <div className="w-100">
                 <Input.Password
                   {...register("password")}
@@ -128,7 +132,7 @@ export default function ModalCreateUser({
               </div>
             </Grid>
 
-            <Grid xs={24} sm={24} md={12} lg={12} xl={12}>
+            <Grid xs={24} sm={12} md={12} lg={12} xl={12}>
               <div className="w-100">
                 <Input.Password
                   {...register("passwordConfirm")}
@@ -147,7 +151,7 @@ export default function ModalCreateUser({
               </div>
             </Grid>
 
-            <Grid xs={24} sm={24} md={12} lg={12} xl={12}>
+            <Grid xs={24} sm={12} md={12} lg={12} xl={12}>
               <div
                 className="w-100 mb-2 position-relative"
                 ref={containerUserRole}
@@ -171,7 +175,7 @@ export default function ModalCreateUser({
               </div>
             </Grid>
 
-            <Grid xs={24} sm={24} md={12} lg={12} xl={12}>
+            <Grid xs={24} sm={12} md={12} lg={12} xl={12}>
               <div className="w-100">
                 <Input
                   {...register("perfil_photo")}
@@ -200,7 +204,7 @@ export default function ModalCreateUser({
           />
 
           <img
-            src={userProfile || UserPlaceholderImg}
+            src={userImg}
             alt="User Profile"
             title="User Profile"
             className="d-block mx-auto mt-1 img-fluid"

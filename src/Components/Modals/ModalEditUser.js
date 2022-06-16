@@ -25,7 +25,8 @@ export default function ModalEditUser({
   toggleOpenModalEdit,
 }) {
   const { error, success } = useToast();
-  const [userProfile, setUserProfile] = useState(perfil_photo || null);
+  const [userProfile, setUserProfile] = useState(null);
+  const [userImg, setUserImg] = useState(perfil_photo || UserPlaceholderImg);
   const [userRank, setUserRank] = useState(rank);
   const { editUser } = useUsers();
   const { isError, isLoading, ...editUseMutation } = useEditUser();
@@ -44,13 +45,12 @@ export default function ModalEditUser({
       ...values,
       _id,
       rank: userRank,
-      perfil_photo: userProfile,
+      ...(userProfile && { perfil_photo: userProfile }),
     };
     const data = toFormDataObj(newUser);
     try {
       const user = await editUseMutation.mutateAsync(data);
-      console.log(user);
-      editUser(newUser);
+      editUser(user);
       reset();
       setUserProfile(null);
       success("El usuario se editó correctamente");
@@ -63,10 +63,12 @@ export default function ModalEditUser({
   const onChangeProfile = async (e) => {
     const [file] = e.target.files;
     if (isValidFile(file)) {
-      const imgUrl = await imageToBase64(file);
-      setUserProfile(imgUrl);
+      const img64 = await imageToBase64(file);
+      setUserProfile(file);
+      setUserImg(img64);
     } else {
-      setUserProfile(perfil_photo || UserPlaceholderImg);
+      setUserProfile(null);
+      setUserImg(perfil_photo || UserPlaceholderImg);
       e.target.value = null;
     }
   };
@@ -86,7 +88,7 @@ export default function ModalEditUser({
         <Text className="text-muted">Última actualización {updateAt}</Text>
         <form onSubmit={handleSubmit(onEditUser)} id="edit-user">
           <Grid.Container gap={1}>
-            <Grid xs={24} sm={24} md={12} lg={12} xl={12}>
+            <Grid xs={24} sm={12} md={12} lg={12} xl={12}>
               <div className="w-100">
                 <Input
                   {...register("name")}
@@ -105,7 +107,7 @@ export default function ModalEditUser({
               </div>
             </Grid>
 
-            <Grid xs={24} sm={24} md={12} lg={12} xl={12}>
+            <Grid xs={24} sm={12} md={12} lg={12} xl={12}>
               <div className="w-100">
                 <Input
                   {...register("email")}
@@ -125,7 +127,7 @@ export default function ModalEditUser({
               </div>
             </Grid>
 
-            <Grid xs={24} sm={24} md={12} lg={12} xl={12}>
+            <Grid xs={24} sm={12} md={12} lg={12} xl={12}>
               <div
                 className="w-100 mb-2 position-relative"
                 ref={containerUserRole}
@@ -149,7 +151,7 @@ export default function ModalEditUser({
               </div>
             </Grid>
 
-            <Grid xs={24} sm={24} md={12} lg={12} xl={12}>
+            <Grid xs={24} sm={12} md={12} lg={12} xl={12}>
               <div className="w-100">
                 <Input
                   {...register("perfil_photo")}
@@ -177,7 +179,7 @@ export default function ModalEditUser({
           />
 
           <img
-            src={userProfile || UserPlaceholderImg}
+            src={userImg}
             alt="User Profile"
             title="User Profile"
             className="d-block mx-auto mt-1 img-fluid"

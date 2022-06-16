@@ -42,18 +42,23 @@ class UserController {
 
   async createUser(req, res, next) {
     try {
-      const { email, password, rank, perfil_photo, name } = req.body;
+      const { email, password, rank, name } = req.body;
+
       const user = await UserService.existsUser(email);
       if (user) return error(res, "El correo ya está en uso");
 
       const passwordHashed = hashPassword(password);
-      const userCreated = await UserService.createUser({
+      const newData = {
         email,
         password: passwordHashed,
         rank,
-        perfil_photo,
         name,
-      });
+      };
+      if (req.files?.perfil_photo?.data) {
+        const img = await uploadImages(req.files?.perfil_photo?.data);
+        newData.perfil_photo = img?.url;
+      }
+      const userCreated = await UserService.createUser(newData);
 
       success(res, userCreated, 201);
     } catch (err) {
@@ -63,8 +68,19 @@ class UserController {
 
   async editUser(req, res, next) {
     try {
-      console.log({ id: req.params.id, body: req.body });
-      const result = await UserService.editUser(req.params.id, req.body);
+      const { email, rank, name } = req.body;
+      const newData = {
+        email,
+        rank,
+        name,
+      };
+
+      if (req.files?.perfil_photo?.data) {
+        const img = await uploadImages(req.files?.perfil_photo?.data);
+        newData.perfil_photo = img?.url;
+      }
+
+      const result = await UserService.editUser(req.params.id, newData);
       success(res, result);
     } catch (err) {
       next(err);

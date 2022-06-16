@@ -8,6 +8,8 @@ const SERVER = {
   PORT: process.env.API_PORT || 6000,
   DEV: process.env.DEV || false,
   API: {
+    API_UPLOAD_IMAGES: "https://api.imgbb.com/1/upload",
+    API_UPLOAD_IMAGES_KEY: process.env.API_UPLOAD_IMAGES_KEY,
     SALT_BCRYPT: process.env.SALT_BCRYPT,
     SECRET_TOKEN: process.env.SECRET_TOKEN,
     IS_PRODUCTION: process.env.NODE_ENV === "production",
