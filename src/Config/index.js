@@ -6,6 +6,7 @@ export const signup = "auth/signup";
 export const userInfo = "user/";
 export const createUser = "user/";
 export const editUser = (id) => "user/" + id;
+export const deleteUser = (id) => "user/" + id;
 export const getUsers = "user/users/";
 
 export const queryClient = new QueryClient({

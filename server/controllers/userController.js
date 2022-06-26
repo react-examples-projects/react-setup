@@ -1,7 +1,7 @@
 const UserService = require("../services/userService");
 const { uploadImages } = require("../helpers/requests");
 const { success, error } = require("../helpers/httpResponses");
-const { hashPassword } = require("../helpers/utils");
+const { hashPassword, isInvalidPassword } = require("../helpers/utils");
 class UserController {
   async perfilPhoto(req, res, next) {
     try {
@@ -82,6 +82,24 @@ class UserController {
 
       const result = await UserService.editUser(req.params.id, newData);
       success(res, result);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async deleteUser(req, res, next) {
+    try {
+      const currentUser = await UserService.getUserByIdWithPass(req.user._id);
+      if (!isInvalidPassword(req.body.password, currentUser.password)) {
+        const user = await UserService.deleteUser(req.params.id);
+        return success(res, user);
+      }
+
+      error(
+        res,
+        "La contraseña es incorrecta o no tienes privilegios para hacer esta acción",
+        400
+      );
     } catch (err) {
       next(err);
     }

@@ -97,6 +97,15 @@ const editUserSchemaValidation = yup.object({
   }),
 });
 
+const deleteUserSchemaValidation = yup.object({
+  params: yup.object({
+    id: idSchema,
+  }),
+  body: yup.object({
+    password: yup.string().required("La contraseña es obligatoria"),
+  }),
+});
+
 const perfilPhotoSchemaValidation = yup.object({
   files: yup.object({
     perfil_photo: yup
@@ -131,6 +140,7 @@ module.exports = {
   signupSchemaValidation,
   createUserSchemaValidation,
   editUserSchemaValidation,
+  deleteUserSchemaValidation,
   perfilPhotoSchemaValidation,
   passwordChangeValidation,
   requireIdValidation,

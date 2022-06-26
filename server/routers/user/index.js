@@ -5,6 +5,7 @@ const validate = require("../../helpers/validations/validate");
 const {
   createUserSchemaValidation,
   editUserSchemaValidation,
+  deleteUserSchemaValidation,
   perfilPhotoSchemaValidation,
   passwordChangeValidation,
 } = require("../../helpers/validations/validations");
@@ -24,6 +25,13 @@ router.put(
   requireAdmin,
   validate(editUserSchemaValidation),
   userController.editUser
+);
+
+router.delete(
+  "/:id",
+  requireAdmin,
+  validate(deleteUserSchemaValidation),
+  userController.deleteUser
 );
 
 router.get("/users", requireAdmin, userController.getAllUsers);

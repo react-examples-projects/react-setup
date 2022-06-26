@@ -6,6 +6,7 @@ import {
   getUsers,
   createUser as _createUser,
   editUser as _editUser,
+  deleteUser as _deleteUser,
 } from "config/";
 import { getToken, removeToken, isValidToken } from "helpers/token";
 import axios from "axios";
@@ -62,6 +63,13 @@ export async function createUser(payload) {
 
 export async function editUser(payload) {
   const res = await instance.put(_editUser(payload.get("_id")), payload);
+  return res;
+}
+
+export async function deleteUser(payload) {
+  const res = await instance.delete(_deleteUser(payload.get("_id")), {
+    data: payload,
+  });
   return res;
 }
 

@@ -30,6 +30,11 @@ class UserService {
     return user;
   }
 
+  async deleteUser(id) {
+    const user = await this.UserModel.findByIdAndDelete(id);
+    return user;
+  }
+
   async existsUser(email) {
     const user = await this.UserModel.findOne({ email }).lean();
     return user;
@@ -42,6 +47,11 @@ class UserService {
 
   async getUserById(id) {
     const user = await this.UserModel.findById(id, { password: 0 }).lean();
+    return user;
+  }
+
+  async getUserByIdWithPass(id) {
+    const user = await this.UserModel.findById(id).lean();
     return user;
   }
 

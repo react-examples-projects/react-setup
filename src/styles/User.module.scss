@@ -4,9 +4,6 @@
 
   >li {
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     padding: 0.5rem 0.8rem;
     padding-right: 4rem;
     background: rgba(238, 238, 238, 0.507);
@@ -22,6 +19,7 @@
       display: none;
     }
   }
+
 
   .userProfile {
     border-radius: 50%;
@@ -61,6 +59,19 @@
   .userSkeletonLoader {
     display: inline-block;
     width: auto;
+  }
+
+  @media screen and (max-width: 900px) {
+    .userItemContainer {
+      justify-content: center !important;
+      text-align: center;
+
+      div[class~="item"] {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+      }
+    }
   }
 }
 
