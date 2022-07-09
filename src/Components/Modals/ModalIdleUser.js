@@ -2,47 +2,52 @@ import ErrorText from "components/Text/ErrorText";
 import useFormValidation from "hooks/useFormValidation";
 import useToast from "hooks/useToast";
 import useUsers from "hooks/useUsers";
-import useDeleteUser from "hooks/useDeleteUser";
-import deleteUserSchema from "helpers/schema/deleteUserSchema";
+import useToggleUserIdle from "hooks/useToggleUserIdle";
+import toggleIdleUserSchema from "helpers/schema/toggleIdleUserSchema";
 import { toFormDataObj, getErrorValidation } from "helpers/utils";
 import { Modal, Input } from "@geist-ui/core";
 
-export default function ModalDeleteUser({
-  isOpenModal,
-  toggleOpenModal,
+export default function ModalIdleUser({
+  isOpenModalIdle,
+  toggleOpenModalIdle,
   _id,
 }) {
   const { error, success } = useToast();
-  const { removeUser } = useUsers();
-  const { isError, isLoading, ...deleteUserMutation } = useDeleteUser();
+  const { editUser } = useUsers();
+  const { isError, isLoading, ...idleUserMutation } = useToggleUserIdle();
   const { errors, handleSubmit, register } =
-    useFormValidation(deleteUserSchema);
+    useFormValidation(toggleIdleUserSchema);
 
   const onSubmit = async (e) => {
-    const data = toFormDataObj({...e, _id});
+    const data = toFormDataObj({ ...e, _id });
     try {
-      const user = await deleteUserMutation.mutateAsync(data);
+      const user = await idleUserMutation.mutateAsync(data);
+      if (user.isIdle) {
+        success("El usuario se desactivo correctamente");
+      } else {
+        success("El usuario se reactivo correctamente");
+      }
       console.log(user);
-      removeUser(_id);
-      success("El usuario se eliminó correctamente");
-      toggleOpenModal();
+      editUser(user);
+
+      toggleOpenModalIdle();
     } catch {
-      error("Ocurrió un error al eliminar el usuario");
+      error("Ocurrió un error al cambiar el estado del usuario");
     }
   };
 
   return (
     <Modal
-      visible={isOpenModal}
-      onClose={toggleOpenModal}
+      visible={isOpenModalIdle}
+      onClose={toggleOpenModalIdle}
       disableBackdropClick={isLoading}
     >
-      <Modal.Title>Confirmar eliminación</Modal.Title>
+      <Modal.Title>Cambiar estado del usuario</Modal.Title>
       <Modal.Subtitle className="mt-3">
-        Para eliminar el usuario debe confirmar su contraseña
+        Para cambiar el estado del usuario debe confirmar su contraseña
       </Modal.Subtitle>
       <Modal.Content>
-        <form onSubmit={handleSubmit(onSubmit)} id="delete-user">
+        <form onSubmit={handleSubmit(onSubmit)} id="idle-user">
           <Input.Password
             {...register("password")}
             id="password"
@@ -60,13 +65,13 @@ export default function ModalDeleteUser({
 
         <ErrorText
           isVisible={isError}
-          text={getErrorValidation(deleteUserMutation)}
+          text={getErrorValidation(idleUserMutation)}
         />
       </Modal.Content>
-      <Modal.Action passive onClick={toggleOpenModal}>
+      <Modal.Action passive onClick={toggleOpenModalIdle}>
         Cancelar
       </Modal.Action>
-      <Modal.Action htmlType="submit" form="delete-user">
+      <Modal.Action htmlType="submit" form="idle-user">
         Eliminar
       </Modal.Action>
     </Modal>

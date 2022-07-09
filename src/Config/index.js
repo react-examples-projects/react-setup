@@ -7,6 +7,7 @@ export const userInfo = "user/";
 export const createUser = "user/";
 export const editUser = (id) => "user/" + id;
 export const deleteUser = (id) => "user/" + id;
+export const toggleUserIdle = (id) => "user/idle/" + id;
 export const getUsers = "user/users/";
 
 export const queryClient = new QueryClient({

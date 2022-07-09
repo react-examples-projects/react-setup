@@ -73,6 +73,13 @@ class UserService {
     delete userUpdated.password;
     return userUpdated;
   }
+
+  async toggleIdle(_id) {
+    const user = await this.UserModel.findOne({ _id });
+    user.isIdle = !user.isIdle;
+    const saved = await user.save();
+    return saved;
+  }
 }
 
 module.exports = new UserService();

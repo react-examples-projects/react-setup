@@ -5,6 +5,7 @@ import ModalDeleteUser from "components/Modals/ModalDeleteUser";
 import ModalEditUser from "components/Modals/ModalEditUser";
 import UserItemAvatar from "components/UserItemAvatar";
 import { Text, Badge, Grid } from "@geist-ui/core";
+import ModalIdleUser from "./Modals/ModalIdleUser";
 
 export default function UserItem({
   _id,
@@ -13,11 +14,12 @@ export default function UserItem({
   email,
   rank,
   updateAt,
+  isIdle,
 }) {
   const [isOpenMenu, toggleOpenMenu] = useToggle();
   const [isOpenModal, toggleOpenModal] = useToggle();
   const [isOpenModalEdit, toggleOpenModalEdit] = useToggle();
-
+  const [isOpenModalIdle, toggleOpenModalIdle] = useToggle();
   return (
     <li>
       <div className={css.userListDivider}>
@@ -62,7 +64,11 @@ export default function UserItem({
             lg={3}
             className="d-flex align-items-center"
           >
-            <Badge type="success">Activo</Badge>
+            {isIdle ? (
+              <Badge type="warning">Desactivado</Badge>
+            ) : (
+              <Badge type="success">Activo</Badge>
+            )}
           </Grid>
         </Grid.Container>
       </div>
@@ -79,9 +85,11 @@ export default function UserItem({
           toggleOpenMenu,
           toggleOpenModal,
           toggleOpenModalEdit,
+          toggleOpenModalIdle,
         }}
       />
       <ModalDeleteUser {...{ toggleOpenModal, isOpenModal, _id }} />
+      <ModalIdleUser {...{ isOpenModalIdle, toggleOpenModalIdle, _id }} />
       <ModalEditUser
         {...{
           isOpenModalEdit,

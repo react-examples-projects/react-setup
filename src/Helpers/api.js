@@ -4,6 +4,7 @@ import {
   signup,
   userInfo,
   getUsers,
+  toggleUserIdle as _toggleUserIdle,
   createUser as _createUser,
   editUser as _editUser,
   deleteUser as _deleteUser,
@@ -70,6 +71,12 @@ export async function deleteUser(payload) {
   const res = await instance.delete(_deleteUser(payload.get("_id")), {
     data: payload,
   });
+  return res;
+}
+
+export async function toggleUserIdle(payload) {
+  console.log(payload)
+  const res = await instance.put(_toggleUserIdle(payload.get("_id")), payload);
   return res;
 }
 

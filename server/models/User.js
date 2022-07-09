@@ -34,6 +34,10 @@ const UserSchema = new Schema(
       unique: true,
       trim: true,
     },
+    isIdle: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

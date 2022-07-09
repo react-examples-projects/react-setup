@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const userController = require("../../controllers/userController");
 const validate = require("../../helpers/validations/validate");
+const requireAdmin = require("../../middlewares/requireAdmin");
+const requirePassword = require("../../middlewares/requirePassword");
 const {
   createUserSchemaValidation,
   editUserSchemaValidation,
@@ -9,7 +11,6 @@ const {
   perfilPhotoSchemaValidation,
   passwordChangeValidation,
 } = require("../../helpers/validations/validations");
-const requireAdmin = require("../../middlewares/requireAdmin");
 
 router.get("/", userController.getInfo);
 
@@ -30,8 +31,16 @@ router.put(
 router.delete(
   "/:id",
   requireAdmin,
+  requirePassword,
   validate(deleteUserSchemaValidation),
   userController.deleteUser
+);
+
+router.put(
+  "/idle/:id",
+  requireAdmin,
+  requirePassword,
+  userController.toggleUserIdle
 );
 
 router.get("/users", requireAdmin, userController.getAllUsers);

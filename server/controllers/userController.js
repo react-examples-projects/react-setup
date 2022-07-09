@@ -89,17 +89,8 @@ class UserController {
 
   async deleteUser(req, res, next) {
     try {
-      const currentUser = await UserService.getUserByIdWithPass(req.user._id);
-      if (!isInvalidPassword(req.body.password, currentUser.password)) {
-        const user = await UserService.deleteUser(req.params.id);
-        return success(res, user);
-      }
-
-      error(
-        res,
-        "La contraseña es incorrecta o no tienes privilegios para hacer esta acción",
-        400
-      );
+      const user = await UserService.deleteUser(req.params.id);
+      return success(res, user);
     } catch (err) {
       next(err);
     }
@@ -109,6 +100,15 @@ class UserController {
     try {
       const users = await UserService.getUsers();
       success(res, users);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async toggleUserIdle(req, res, next) {
+    try {
+      const result = await UserService.toggleIdle(req.params.id);
+      success(res, result);
     } catch (err) {
       next(err);
     }

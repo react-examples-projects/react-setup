@@ -29,7 +29,7 @@ export default function ModalEditUser({
   const [userImg, setUserImg] = useState(perfil_photo || UserPlaceholderImg);
   const [userRank, setUserRank] = useState(rank);
   const { editUser } = useUsers();
-  const { isError, isLoading, ...editUseMutation } = useEditUser();
+  const { isError, isLoading, ...editUserMutation } = useEditUser();
   const { errors, reset, handleSubmit, register } = useFormValidation(
     editUserSchema,
     {
@@ -49,7 +49,7 @@ export default function ModalEditUser({
     };
     const data = toFormDataObj(newUser);
     try {
-      const user = await editUseMutation.mutateAsync(data);
+      const user = await editUserMutation.mutateAsync(data);
       editUser(user);
       reset();
       setUserProfile(null);
@@ -175,7 +175,7 @@ export default function ModalEditUser({
           </Grid.Container>
           <ErrorText
             isVisible={isError}
-            text={getErrorValidation(editUseMutation)}
+            text={getErrorValidation(editUserMutation)}
           />
 
           <img

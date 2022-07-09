@@ -7,6 +7,10 @@
     },
     "sourceType": "module"
   },
+  "env": {
+    "browser": true,
+    "es6": true
+  },
   "plugins": ["react", "import", "react-hooks", "jsx-a11y"],
   "extends": [
     "plugin:import/typescript",
@@ -20,6 +24,7 @@
   "rules": {
     "quotes": ["warn", "double"],
     "no-unused-vars": "warn",
+    "no-undef": "error",
     "no-use-before-define": "warn",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
@@ -29,7 +34,7 @@
     "import/prefer-default-export": 0,
     "import/no-unresolved": [2, { "caseSensitive": false }]
   },
-  
+
   "settings": {
     "react": {
       "pragma": "React",

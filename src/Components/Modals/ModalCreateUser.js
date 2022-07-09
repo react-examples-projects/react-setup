@@ -23,7 +23,7 @@ export default function ModalCreateUser({
   const [userImg, setUserImg] = useState(UserPlaceholderImg);
   const [userRank, setUserRank] = useState("user");
   const { addUser } = useUsers();
-  const { isError, isLoading, ...createUseMutation } = useCreateUser();
+  const { isError, isLoading, ...createUserMutation } = useCreateUser();
   const { errors, reset, handleSubmit, register } =
     useFormValidation(createUserSchema);
   const containerUserRole = useRef(null);
@@ -35,7 +35,7 @@ export default function ModalCreateUser({
       ...(userProfile && { perfil_photo: userProfile }),
     });
     try {
-      const user = await createUseMutation.mutateAsync(data);
+      const user = await createUserMutation.mutateAsync(data);
       addUser(user);
       reset();
       setUserProfile(null);
@@ -200,7 +200,7 @@ export default function ModalCreateUser({
 
           <ErrorText
             isVisible={isError}
-            text={getErrorValidation(createUseMutation)}
+            text={getErrorValidation(createUserMutation)}
           />
 
           <img

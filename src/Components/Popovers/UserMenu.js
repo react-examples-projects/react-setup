@@ -8,6 +8,7 @@ export default function UserMenu({
   toggleOpenMenu,
   toggleOpenModal,
   toggleOpenModalEdit,
+  toggleOpenModalIdle,
 }) {
   const content = () => (
     <>
@@ -25,7 +26,9 @@ export default function UserMenu({
 
       <Popover.Item>
         <FiUserMinus className="me-3" />
-        <Text className="m-0 c-pointer">Desactivar</Text>
+        <Text className="m-0 c-pointer" onClick={toggleOpenModalIdle}>
+          Desactivar
+        </Text>
       </Popover.Item>
     </>
   );
