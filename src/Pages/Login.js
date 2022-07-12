@@ -4,10 +4,12 @@ import useToast from "hooks/useToast";
 import useFormValidation from "hooks/useFormValidation";
 import loginSchema from "helpers/schema/loginSchema";
 import ErrorText from "components/Text/ErrorText";
+import Alert from "components/Alerts/";
 import { getErrorValidation } from "helpers/utils";
 import { useNavigate, Link } from "react-router-dom";
 import { Button, Input, Text } from "@geist-ui/core";
 import { BiUser, BiKey } from "react-icons/bi";
+import { useState } from "react";
 
 const cssBody = {
   height: "100vh",
@@ -20,6 +22,7 @@ export default function Login() {
   useBody(cssBody);
   const login = useLogin();
   const navigate = useNavigate();
+  const [isIdle, setIdle] = useState(false);
   const { error } = useToast();
   const { errors, handleSubmit, register } = useFormValidation(loginSchema, {
     defaultValues: { email: "", password: "" },
@@ -27,7 +30,11 @@ export default function Login() {
 
   async function handleOnSubmit(data) {
     try {
+      setIdle(false);
       const res = await login.mutateAsync(data);
+      if (res?.user.isIdle) {
+        return setIdle(true);
+      }
       if (res?.user && res?.token) {
         login.setSession(res.token, res.user);
         navigate("/dashboard", { replace: true });
@@ -82,7 +89,19 @@ export default function Login() {
             isVisible={!!errors.password?.message}
           />
         </div>
-        <ErrorText isVisible={login.isError} text={getErrorValidation(login)} />
+
+        <ErrorText
+          isVisible={login.isError}
+          text={getErrorValidation(login)}
+          type="error"
+        />
+
+        <Alert
+          title="Error al inicia sesión"
+          content="Tu cuenta se encuentra deshabilitada, contacta con un moderador"
+          className="mb-2"
+          visible={isIdle}
+        />
 
         <div className="mb-2">
           <Button

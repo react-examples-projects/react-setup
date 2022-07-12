@@ -31,7 +31,7 @@ export default function UserItem({
             lg={8}
             className="d-flex align-items-center"
           >
-            <UserItemAvatar {...{ name, perfil_photo }} />
+            <UserItemAvatar {...{ name, rank, perfil_photo }} />
             <Text className="m-0 ms-2 text-capitalize">{name}</Text>
           </Grid>
 
@@ -100,6 +100,7 @@ export default function UserItem({
           email,
           rank,
           updateAt,
+          isIdle,
         }}
       />
     </li>

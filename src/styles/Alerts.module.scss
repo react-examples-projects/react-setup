@@ -1,0 +1,34 @@
+.alert {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 5px;
+  position: relative;
+  background-color: rgba(255, 245, 245);
+  color: #c53030;
+
+  .alertBody {
+    margin-left: 1rem;
+  }
+
+  .alertIcon {
+    font-size: 2rem;
+    margin-left: 0.5rem;
+  }
+
+  .alertContent {
+    margin: 0;
+    font-size: 14px;
+  }
+
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: #fc8181;
+  }
+}

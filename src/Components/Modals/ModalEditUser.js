@@ -6,7 +6,7 @@ import useToast from "hooks/useToast";
 import useUsers from "hooks/useUsers";
 import UserPlaceholderImg from "assets/user_placeholder.png";
 import { useRef, useState } from "react";
-import { Modal, Input, Select, Grid, Text } from "@geist-ui/core";
+import { Modal, Input, Select, Grid, Text, Checkbox } from "@geist-ui/core";
 import {
   toFormDataObj,
   getErrorValidation,
@@ -20,11 +20,13 @@ export default function ModalEditUser({
   name,
   email,
   rank,
+  isIdle,
   updateAt,
   isOpenModalEdit,
   toggleOpenModalEdit,
 }) {
   const { error, success } = useToast();
+  const [isCurrentUserIdle, setCurrentUserIdle] = useState(isIdle);
   const [userProfile, setUserProfile] = useState(null);
   const [userImg, setUserImg] = useState(perfil_photo || UserPlaceholderImg);
   const [userRank, setUserRank] = useState(rank);
@@ -39,12 +41,14 @@ export default function ModalEditUser({
       },
     }
   );
+  console.log({isCurrentUserIdle})
   const containerUserRole = useRef(null);
   const onEditUser = async (values) => {
     const newUser = {
       ...values,
       _id,
       rank: userRank,
+      isIdle: isCurrentUserIdle,
       ...(userProfile && { perfil_photo: userProfile }),
     };
     const data = toFormDataObj(newUser);
@@ -172,7 +176,21 @@ export default function ModalEditUser({
                 />
               </div>
             </Grid>
+
+            <Grid xs={24} sm={12} md={12} lg={12} xl={12}>
+              <div className="w-100">
+                <Checkbox
+                  checked={isCurrentUserIdle}
+                  onChange={() => setCurrentUserIdle(!isCurrentUserIdle)}
+                  id="isIdle"
+                  name="isIdle"
+                >
+                  Deshabilita usuario
+                </Checkbox>
+              </div>
+            </Grid>
           </Grid.Container>
+
           <ErrorText
             isVisible={isError}
             text={getErrorValidation(editUserMutation)}

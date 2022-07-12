@@ -68,11 +68,12 @@ class UserController {
 
   async editUser(req, res, next) {
     try {
-      const { email, rank, name } = req.body;
+      const { email, rank, name, isIdle } = req.body;
       const newData = {
         email,
         rank,
         name,
+        isIdle,
       };
 
       if (req.files?.perfil_photo?.data) {
