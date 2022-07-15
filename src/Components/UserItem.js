@@ -4,8 +4,9 @@ import UserMenu from "components/Popovers/UserMenu";
 import ModalDeleteUser from "components/Modals/ModalDeleteUser";
 import ModalEditUser from "components/Modals/ModalEditUser";
 import UserItemAvatar from "components/UserItemAvatar";
-import { Text, Badge, Grid } from "@geist-ui/core";
+import useCurrentUser from "hooks/useCurrentUser";
 import ModalIdleUser from "./Modals/ModalIdleUser";
+import { Text, Badge, Grid } from "@geist-ui/core";
 
 export default function UserItem({
   _id,
@@ -20,6 +21,8 @@ export default function UserItem({
   const [isOpenModal, toggleOpenModal] = useToggle();
   const [isOpenModalEdit, toggleOpenModalEdit] = useToggle();
   const [isOpenModalIdle, toggleOpenModalIdle] = useToggle();
+  const { user } = useCurrentUser();
+
   return (
     <li>
       <div className={css.userListDivider}>
@@ -73,21 +76,23 @@ export default function UserItem({
         </Grid.Container>
       </div>
 
-      <UserMenu
-        {...{
-          perfil_photo,
-          name,
-          email,
-          rank,
-          updateAt,
+      {user._id !== _id && (
+        <UserMenu
+          {...{
+            perfil_photo,
+            name,
+            email,
+            rank,
+            updateAt,
 
-          isOpenMenu,
-          toggleOpenMenu,
-          toggleOpenModal,
-          toggleOpenModalEdit,
-          toggleOpenModalIdle,
-        }}
-      />
+            isOpenMenu,
+            toggleOpenMenu,
+            toggleOpenModal,
+            toggleOpenModalEdit,
+            toggleOpenModalIdle,
+          }}
+        />
+      )}
       <ModalDeleteUser {...{ toggleOpenModal, isOpenModal, _id }} />
       <ModalIdleUser {...{ isOpenModalIdle, toggleOpenModalIdle, _id }} />
       <ModalEditUser

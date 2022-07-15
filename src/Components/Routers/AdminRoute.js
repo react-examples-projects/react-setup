@@ -3,12 +3,13 @@ import useUserInfo from "hooks/useUserInfo";
 import { Navigate, Outlet } from "react-router-dom";
 import { isValidToken } from "helpers/token";
 
-export default function PrivateRoute(props) {
+export default function AdminRoute(props) {
   const { user, isLoading } = useUserInfo();
 
   if (isLoading) return <LoaderPage />;
 
-  if (user && isValidToken()) return <Outlet {...props} />;
+  if (user && user.rank === "admin" && isValidToken())
+    return <Outlet {...props} />;
 
   return <Navigate to="/" replace />;
 }

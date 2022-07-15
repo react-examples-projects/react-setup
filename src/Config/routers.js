@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import { privateRoute, redirectRoute, route } from "helpers/utils";
+import { privateRoute, redirectRoute, route, adminRoute } from "helpers/utils";
 import Layout from "components/Layout";
 
 const App = lazy(() => import("pages/App"));
@@ -13,7 +13,7 @@ const routers = [
   redirectRoute(Login, "/"),
   redirectRoute(Signup, "/signup"),
   privateRoute(App, "/dashboard", options),
-  privateRoute(Users, "users", options),
+  adminRoute(Users, "/users", options),
   route(NotFound),
 ];
 

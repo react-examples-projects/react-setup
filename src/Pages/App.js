@@ -7,6 +7,7 @@ import { FiUsers } from "react-icons/fi";
 
 export default function App() {
   const { user } = useCurrentUser();
+
   return (
     <>
       <ColoredText className="fw-bold" h3>

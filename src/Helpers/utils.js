@@ -20,6 +20,10 @@ export const publicRoute = (component, path = "/", props) => {
   return route(component, path, { public: true, ...props });
 };
 
+export const adminRoute = (component, path = "/", props) => {
+  return route(component, path, { admin: true, ...props });
+};
+
 /**
  * It get the error that backend sends to client
  * @param {Response} mutationRequest The request response made by `useMutation`, `useQuery` or `axios.method`
@@ -136,11 +140,16 @@ export function isValidFile(file) {
 }
 
 /**
- * Remove accents per each letter 
+ * Remove accents per each letter
  * @param {FileList} files The images
  * @returns A promise if the files are valids
  */
 export function normalizeText(text) {
   const result = text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   return result;
+}
+
+export function createSlug(text) {
+  const normalizedText = normalizeText(text).replace(/\s/gi, "-");
+  return normalizedText.toLowerCase();
 }

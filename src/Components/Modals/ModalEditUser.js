@@ -41,7 +41,6 @@ export default function ModalEditUser({
       },
     }
   );
-  console.log({isCurrentUserIdle})
   const containerUserRole = useRef(null);
   const onEditUser = async (values) => {
     const newUser = {

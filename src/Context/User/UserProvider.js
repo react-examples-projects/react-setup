@@ -1,5 +1,5 @@
 import UserContext from "context/User/UserContext";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { removeToken } from "helpers/token";
 import { useQueryClient } from "react-query";
 
@@ -18,11 +18,14 @@ export default function UserProvider({ children }) {
     queryClient.removeQueries();
   }, [queryClient]);
 
-  const value = {
-    user,
-    setUser,
-    logout,
-  };
+  const value = useMemo(
+    () => ({
+      user,
+      setUser,
+      logout,
+    }),
+    [user, logout, setUser]
+  );
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }

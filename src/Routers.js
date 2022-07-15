@@ -2,6 +2,7 @@ import routers from "config/routers";
 import Layout from "components/Layout";
 import PrivateRoute from "components/Routers/PrivateRoute";
 import RedirectRoute from "components/Routers/RedirectRoute";
+import AdminRoute from "components/Routers/AdminRoute";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 export default function Routers() {
@@ -12,6 +13,13 @@ export default function Routers() {
           const key = path || i;
           const Ele = () => (layout ? <Layout>{Element}</Layout> : Element);
 
+          if (props.admin) {
+            return (
+              <Route path={path} element={<AdminRoute />} key={key}>
+                <Route element={<Ele />} index {...props} />
+              </Route>
+            );
+          } 
           if (props.private || props.redirect) {
             const Wrapper = props.private ? PrivateRoute : RedirectRoute;
             return (

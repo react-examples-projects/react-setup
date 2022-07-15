@@ -6,6 +6,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
@@ -75,7 +76,9 @@ module.exports = {
   },
 
   optimization: {
+    minimize: true,
     minimizer: [
+      new TerserPlugin(),
       new CssMinimizerPlugin({
         minimizerOptions: {
           preset: ["default", { discardComments: { removeAll: true } }],
