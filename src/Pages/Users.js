@@ -1,6 +1,6 @@
 import useToggle from "hooks/utils/useToggle";
 import UserList from "components/UserList";
-import ModalCreateUser from "components/Modals/ModalCreateUser";
+import ModalCreateUser from "components/Modals/ModalUsers/ModalCreateUser";
 import UsersProvider from "context/Users/UsersProvider";
 import { Text, Button } from "@geist-ui/core";
 
