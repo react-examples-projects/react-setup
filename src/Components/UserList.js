@@ -1,13 +1,13 @@
 import { memo, useRef } from "react";
 import css from "styles/User.module.scss";
-import useUsers from "hooks/useUsers";
+import useUsers from "hooks/users/useUsers";
 import UserItem from "components/UserItem";
 import LoaderUserList from "components/Loaders/LoaderUserList";
 import { Grid, Input, Select } from "@geist-ui/core";
 
 function UserList() {
   const containerSelect = useRef(null);
-  const { users, isLoading, isError } = useUsers();
+  const { users, isLoading, isError, filterUsersByName } = useUsers();
 
   if (isLoading) return <LoaderUserList />;
 
@@ -20,6 +20,7 @@ function UserList() {
           <Input
             htmlType="search"
             name="search"
+            onChange={(e) => filterUsersByName(e.target.value)}
             id="search"
             placeholder="José Perez"
             width="100%"

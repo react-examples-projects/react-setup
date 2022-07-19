@@ -1,4 +1,4 @@
-import useUserInfo from "hooks/useUserInfo";
+import useUserInfo from "hooks/users/useUserInfo";
 import { Outlet } from "react-router-dom";
 
 export default function PublicRoute(props) {

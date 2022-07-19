@@ -1,4 +1,4 @@
-import useCurrentUser from "hooks/useCurrentUser";
+import useCurrentUser from "hooks/users/useCurrentUser";
 import { setLogin } from "helpers/api";
 import { useMutation } from "react-query";
 import { setToken } from "helpers/token";

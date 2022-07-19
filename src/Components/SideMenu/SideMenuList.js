@@ -1,7 +1,7 @@
 import sections from "components/SideMenu/sections";
 import SideMenuSection from "./SideMenuSection";
 import SideMenuItem from "./SideMenuItem";
-import useCurrentUser from "hooks/useCurrentUser";
+import useCurrentUser from "hooks/users/useCurrentUser";
 
 export default function SideMenuList() {
   const { user } = useCurrentUser();

@@ -1,7 +1,7 @@
 import ColoredText from "components/Text/ColoredText";
 import css from "styles/Dashboard.module.scss";
 import cls from "classnames";
-import useCurrentUser from "hooks/useCurrentUser";
+import useCurrentUser from "hooks/users/useCurrentUser";
 import { Text, Grid } from "@geist-ui/core";
 import { FiUsers } from "react-icons/fi";
 

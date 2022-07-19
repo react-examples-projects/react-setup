@@ -1,5 +1,5 @@
 import UsersContext from "context/Users/UsersContext";
-import useUserList from "hooks/useUserList";
+import useUserList from "hooks/users/useUserList";
 
 export default function UsersProvider({children}) {
   const value = useUserList();

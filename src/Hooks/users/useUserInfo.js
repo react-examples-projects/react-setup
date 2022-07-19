@@ -1,4 +1,4 @@
-import useCurrentUser from "hooks/useCurrentUser";
+import useCurrentUser from "hooks/users/useCurrentUser";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { getUserInfo } from "helpers/api";

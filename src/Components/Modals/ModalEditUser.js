@@ -1,9 +1,9 @@
 import ErrorText from "components/Text/ErrorText";
-import useFormValidation from "hooks/useFormValidation";
+import useFormValidation from "hooks/validations/useFormValidation";
 import editUserSchema from "helpers/schema/editUserSchema";
-import useEditUser from "hooks/useEditUser";
-import useToast from "hooks/useToast";
-import useUsers from "hooks/useUsers";
+import useEditUser from "hooks/users/crud/useEditUser";
+import useToast from "hooks/utils/useToast";
+import useUsers from "hooks/users/useUsers";
 import UserPlaceholderImg from "assets/user_placeholder.png";
 import { useRef, useState } from "react";
 import { Modal, Input, Select, Grid, Text, Checkbox } from "@geist-ui/core";

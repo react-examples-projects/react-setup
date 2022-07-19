@@ -1,10 +1,10 @@
 import css from "styles/User.module.scss";
-import useToggle from "hooks/useToggle";
+import useToggle from "hooks/utils/useToggle";
 import UserMenu from "components/Popovers/UserMenu";
 import ModalDeleteUser from "components/Modals/ModalDeleteUser";
 import ModalEditUser from "components/Modals/ModalEditUser";
 import UserItemAvatar from "components/UserItemAvatar";
-import useCurrentUser from "hooks/useCurrentUser";
+import useCurrentUser from "hooks/users/useCurrentUser";
 import ModalIdleUser from "./Modals/ModalIdleUser";
 import { Text, Badge, Grid } from "@geist-ui/core";
 

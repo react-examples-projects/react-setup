@@ -1,7 +1,7 @@
-import useBody from "hooks/useBody";
+import useBody from "hooks/utils/useBody";
 import { Link } from "react-router-dom";
 import { Button, Text } from "@geist-ui/core";
-import useUserInfo from "hooks/useUserInfo";
+import useUserInfo from "hooks/users/useUserInfo";
 
 export default function NotFound() {
   useBody({

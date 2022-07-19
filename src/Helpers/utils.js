@@ -145,7 +145,10 @@ export function isValidFile(file) {
  * @returns A promise if the files are valids
  */
 export function normalizeText(text) {
-  const result = text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const result = text
+    .normalize("NFD")
+    .trim()
+    .replace(/[\u0300-\u036f]/g, "");
   return result;
 }
 

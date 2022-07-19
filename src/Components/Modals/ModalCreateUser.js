@@ -1,9 +1,9 @@
 import { useRef, useState } from "react";
 import ErrorText from "components/Text/ErrorText";
-import useFormValidation from "hooks/useFormValidation";
-import useToast from "hooks/useToast";
-import useUsers from "hooks/useUsers";
-import useCreateUser from "hooks/useCreateUser";
+import useFormValidation from "hooks/validations/useFormValidation";
+import useToast from "hooks/utils/useToast";
+import useUsers from "hooks/users/useUsers";
+import useCreateUser from "hooks/users/crud/useCreateUser";
 import createUserSchema from "helpers/schema/createUserSchema";
 import UserPlaceholderImg from "assets/user_placeholder.png";
 import {

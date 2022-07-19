@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import useCurrentUser from "hooks/useCurrentUser";
+import useCurrentUser from "hooks/users/useCurrentUser";
 import SideMenuList from "components/SideMenu/SideMenuList";
 import { Text } from "@geist-ui/core";
 import { FiPackage } from "react-icons/fi";

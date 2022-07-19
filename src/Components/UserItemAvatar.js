@@ -1,6 +1,6 @@
 import css from "styles/User.module.scss";
 import cls from "classnames";
-import useLazyloadImage from "hooks/useLazyLoadImage";
+import useLazyloadImage from "hooks/utils/useLazyLoadImage";
 import Skeleton from "react-loading-skeleton";
 
 export default function UserItemAvatar({ name, rank, perfil_photo }) {

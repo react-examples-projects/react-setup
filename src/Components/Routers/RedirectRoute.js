@@ -1,5 +1,5 @@
 import LoaderPage from "components/Loaders/LoaderPage";
-import useUserInfo from "hooks/useUserInfo";
+import useUserInfo from "hooks/users/useUserInfo";
 import { Navigate, Outlet } from "react-router-dom";
 import { isValidToken } from "helpers/token";
 

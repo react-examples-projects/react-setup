@@ -1,4 +1,4 @@
-import useToggle from "hooks/useToggle";
+import useToggle from "hooks/utils/useToggle";
 import UserList from "components/UserList";
 import ModalCreateUser from "components/Modals/ModalCreateUser";
 import UsersProvider from "context/Users/UsersProvider";

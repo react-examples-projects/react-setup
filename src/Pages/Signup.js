@@ -1,8 +1,8 @@
-import useBody from "hooks/useBody";
-import useToast from "hooks/useToast";
-import useSignup from "hooks/useSignup";
+import useBody from "hooks/utils/useBody";
+import useToast from "hooks/utils/useToast";
+import useSignup from "hooks/auth/useSignup";
 import ErrorText from "components/Text/ErrorText";
-import useFormValidation from "hooks/useFormValidation";
+import useFormValidation from "hooks/validations/useFormValidation";
 import signupSchema from "helpers/schema/signupSchema";
 import { Button, Input, Text } from "@geist-ui/core";
 import { useNavigate, Link } from "react-router-dom";

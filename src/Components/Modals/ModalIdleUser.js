@@ -1,8 +1,8 @@
 import ErrorText from "components/Text/ErrorText";
-import useFormValidation from "hooks/useFormValidation";
-import useToast from "hooks/useToast";
-import useUsers from "hooks/useUsers";
-import useToggleUserIdle from "hooks/useToggleUserIdle";
+import useFormValidation from "hooks/validations/useFormValidation";
+import useToast from "hooks/utils/useToast";
+import useUsers from "hooks/users/useUsers";
+import useToggleUserIdle from "hooks/users/crud/useToggleUserIdle";
 import toggleIdleUserSchema from "helpers/schema/toggleIdleUserSchema";
 import { toFormDataObj, getErrorValidation } from "helpers/utils";
 import { Modal, Input } from "@geist-ui/core";
