@@ -19,13 +19,13 @@
     "helmet": "5.1.0",
     "hpp": "0.2.3",
     "jsonwebtoken": "8.5.1",
-    "mongodb": "4.6.0",
-    "mongoose": "6.3.5",
+    "mongodb": "4.8.0",
+    "mongoose": "6.4.6",
     "yup": "0.32.11"
   },
   "devDependencies": {
     "morgan": "1.10.0",
-    "nodemon": "2.0.16"
+    "nodemon": "2.0.19"
   },
   "author": "znareak",
   "license": "ISC"
