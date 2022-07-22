@@ -1,6 +1,18 @@
 {
   "compilerOptions": {
-    "baseUrl": "."
+    "baseUrl": "./src",
+    "jsx": "react",
+    "paths": {
+      "components": ["src/Components/"],
+      "pages": ["src/Pages/"],
+      "styles": ["src/Styles/"],
+      "hooks": ["src/Hooks/"],
+      "config": ["src/Config/"],
+      "helpers": ["src/Helpers/"],
+      "context": ["src/Context/"],
+      "assets": ["src/Assets/"]
+    }
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["node_modules", "build", "dist"]
 }

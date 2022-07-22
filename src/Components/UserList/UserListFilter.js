@@ -1,17 +1,13 @@
-import { memo, useRef } from "react";
-import css from "styles/User.module.scss";
 import useUsers from "hooks/users/useUsers";
-import UserItem from "components/UserItem";
-import LoaderUserList from "components/Loaders/LoaderUserList";
 import { Grid, Input, Select } from "@geist-ui/core";
+import { useRef } from "react";
+import useToggle from "hooks/utils/useToggle";
+import ModalFilterUsersByRole from "components/Modals/ModalFilterUsers/ModalFilterUsersByRole";
 
-function UserList() {
+export default function UserListFilter() {
   const containerSelect = useRef(null);
-  const { users, isLoading, isError, filterUsersByName } = useUsers();
-
-  if (isLoading) return <LoaderUserList />;
-
-  if (isError) return "Error al solicitar los usuarios";
+  const [isOpen, toggleOpen] = useToggle();
+  const { filterUsersByName } = useUsers();
 
   return (
     <>
@@ -42,21 +38,17 @@ function UserList() {
               getPopupContainer={() => containerSelect.current}
               width="100%"
             >
-              <Select.Option value="1">Rol</Select.Option>
+              <Select.Option value="1" onClick={toggleOpen}>
+                Rol
+              </Select.Option>
               <Select.Option value="2">Estado</Select.Option>
               <Select.Option value="3">Fecha de ingreso</Select.Option>
+              <Select.Option value="4">Rango</Select.Option>
             </Select>
           </div>
         </Grid>
       </Grid.Container>
-
-      <ul className={css.userList}>
-        {users?.map((user, index) => (
-          <UserItem {...user} key={user?._id || user?.email || index} />
-        ))}
-      </ul>
+      <ModalFilterUsersByRole {...{ isOpen, toggleOpen }} />
     </>
   );
 }
-
-export default memo(UserList);

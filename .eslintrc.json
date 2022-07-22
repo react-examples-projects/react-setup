@@ -9,11 +9,11 @@
   },
   "env": {
     "browser": true,
-    "es6": true
+    "es6": true,
+    "node": true
   },
   "plugins": ["react", "import", "react-hooks", "jsx-a11y"],
   "extends": [
-    "plugin:import/typescript",
     "plugin:react/recommended",
     "plugin:import/recommended",
     "plugin:react-hooks/recommended",

@@ -45,12 +45,21 @@ export default function useUserList() {
     [users]
   );
 
-  return { 
+  const filterUsersByRank = useCallback((rank) => {
+    const filtered = users.filter((user) => {
+      return user.rank === rank;
+    });
+
+    setUsersFiltered(filtered);
+  }, [users]);
+
+  return {
     users: usersFiltered,
     addUser,
     editUser,
     removeUser,
     filterUsersByName,
+    filterUsersByRank,
     ...args,
   };
 }
