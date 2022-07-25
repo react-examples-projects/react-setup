@@ -2,12 +2,21 @@ import useUsers from "hooks/users/useUsers";
 import { Grid, Input, Select } from "@geist-ui/core";
 import { useRef } from "react";
 import useToggle from "hooks/utils/useToggle";
-import ModalFilterUsersByRole from "components/Modals/ModalFilterUsers/ModalFilterUsersByRole";
+import ModalFilterUsersByRole from "modals/ModalFilterUsers/ModalFilterUsersByRole";
+import ModalFilterUsersByRank from "modals/ModalFilterUsers/ModalFilterUsersByRank";
 
 export default function UserListFilter() {
   const containerSelect = useRef(null);
-  const [isOpen, toggleOpen] = useToggle();
-  const { filterUsersByName } = useUsers();
+  const [isOpenModalFilterRole, toggleOpenModalFilterRole] = useToggle();
+  const [isOpenModalFilterRank, toggleOpenModalFilterRank] = useToggle();
+  const { filterUsersByName, isActiveFilter } = useUsers();
+  const ACTIONS_MODALS = {
+    rol: toggleOpenModalFilterRole,
+    rank: toggleOpenModalFilterRank,
+  };
+  const onShowModalFilter = (v) => {
+    if (v in ACTIONS_MODALS) ACTIONS_MODALS[v]();
+  };
 
   return (
     <>
@@ -32,23 +41,34 @@ export default function UserListFilter() {
             </label>
             <Select
               placeholder="Filtro"
-              onChange={null}
               name="filter"
               id="filter"
               getPopupContainer={() => containerSelect.current}
+              onChange={onShowModalFilter}
               width="100%"
             >
-              <Select.Option value="1" onClick={toggleOpen}>
-                Rol
-              </Select.Option>
-              <Select.Option value="2">Estado</Select.Option>
-              <Select.Option value="3">Fecha de ingreso</Select.Option>
-              <Select.Option value="4">Rango</Select.Option>
+              <Select.Option value="rol">Rol</Select.Option>
+              <Select.Option value="status">Estado</Select.Option>
+              <Select.Option value="date">Fecha de ingreso</Select.Option>
+              <Select.Option value="rank">Rango</Select.Option>
             </Select>
           </div>
         </Grid>
       </Grid.Container>
-      <ModalFilterUsersByRole {...{ isOpen, toggleOpen }} />
+      {isActiveFilter && (
+        <p className="text-muted">
+          <small>Actualmente se encuentra activado un filtro</small>
+        </p>
+      )}
+      <ModalFilterUsersByRole
+        isOpen={isOpenModalFilterRole}
+        toggleOpen={toggleOpenModalFilterRole}
+      />
+
+      <ModalFilterUsersByRank
+        isOpen={isOpenModalFilterRank}
+        toggleOpen={toggleOpenModalFilterRank}
+      />
     </>
   );
 }

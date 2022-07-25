@@ -10,6 +10,23 @@ export const deleteUser = (id) => "user/" + id;
 export const toggleUserIdle = (id) => "user/idle/" + id;
 export const getUsers = "user/users/";
 
+export const USER_RANKS = {
+  ADMIN: {
+    name: "admin",
+    label: "Administrador",
+  },
+  USER: {
+    name: "user",
+    label: "Usuario",
+  },
+};
+
+export const USER_FILTERS = {
+  BY_NAME: "byName",
+  BY_RANK: "byRank",
+  ALL: "all",
+};
+
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

@@ -1,4 +1,4 @@
-import LoaderPage from "components/Loaders/LoaderPage";
+import LoaderPage from "loaders/LoaderPage";
 import { Suspense } from "react";
 
 export function LazyComponent({

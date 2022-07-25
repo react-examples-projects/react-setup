@@ -3,14 +3,17 @@
     "baseUrl": "./src",
     "jsx": "react",
     "paths": {
-      "components": ["src/Components/"],
-      "pages": ["src/Pages/"],
-      "styles": ["src/Styles/"],
-      "hooks": ["src/Hooks/"],
-      "config": ["src/Config/"],
-      "helpers": ["src/Helpers/"],
-      "context": ["src/Context/"],
-      "assets": ["src/Assets/"]
+      "components":   ["src/Components/"],
+      "pages":        ["src/Pages/"],
+      "styles":       ["src/Styles/"],
+      "hooks":        ["src/Hooks/"],
+      "config":       ["src/Config/"],
+      "helpers":      ["src/Helpers/"],
+      "context":      ["src/Context/"],
+      "assets":       ["src/Assets/"],
+      "modals":       ["src/Components/Modals/"],
+      "loaders":      ["src/Components/Loaders/"],
+      "routers":      ["src/Components/Routers/"]
     }
   },
   "include": ["src"],

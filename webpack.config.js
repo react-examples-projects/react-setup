@@ -20,7 +20,6 @@ module.exports = {
   resolve: {
     extensions: [".js", ".jsx"],
     alias: {
-      components: path.resolve(__dirname, "src/Components/"),
       pages: path.resolve(__dirname, "src/Pages/"),
       styles: path.resolve(__dirname, "src/Styles/"),
       hooks: path.resolve(__dirname, "src/Hooks/"),
@@ -28,6 +27,10 @@ module.exports = {
       helpers: path.resolve(__dirname, "src/Helpers/"),
       context: path.resolve(__dirname, "src/Context/"),
       assets: path.resolve(__dirname, "src/Assets/"),
+      components: path.resolve(__dirname, "src/Components/"),
+      modals : path.resolve(__dirname, "src/Components/Modals/"),
+      loaders: path.resolve(__dirname, "src/Components/Loaders/"),
+      routers: path.resolve(__dirname, "src/Components/Routers/"),
     },
   },
 

@@ -2,7 +2,7 @@ import { memo } from "react";
 import css from "styles/User.module.scss";
 import useUsers from "hooks/users/useUsers";
 import UserItem from "components/UserList/UserItem";
-import LoaderUserList from "components/Loaders/LoaderUserList";
+import LoaderUserList from "loaders/LoaderUserList";
 import UserListFilter from "components/UserList/UserListFilter";
 
 function UserList() {
