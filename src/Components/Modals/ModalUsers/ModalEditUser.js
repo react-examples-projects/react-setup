@@ -4,6 +4,7 @@ import editUserSchema from "helpers/schema/editUserSchema";
 import useEditUser from "hooks/users/crud/useEditUser";
 import useToast from "hooks/utils/useToast";
 import useUsers from "hooks/users/useUsers";
+import useUserRanks from "hooks/users/useUserRanks";
 import UserPlaceholderImg from "assets/user_placeholder.png";
 import { useRef, useState } from "react";
 import { Modal, Input, Select, Grid, Text, Checkbox } from "@geist-ui/core";
@@ -31,6 +32,7 @@ export default function ModalEditUser({
   const [userImg, setUserImg] = useState(perfil_photo || UserPlaceholderImg);
   const [userRank, setUserRank] = useState(rank);
   const { editUser } = useUsers();
+
   const { isError, isLoading, ...editUserMutation } = useEditUser();
   const { errors, reset, handleSubmit, register } = useFormValidation(
     editUserSchema,
@@ -41,6 +43,7 @@ export default function ModalEditUser({
       },
     }
   );
+  const ranks = useUserRanks();
   const containerUserRole = useRef(null);
   const onEditUser = async (values) => {
     const newUser = {
@@ -148,8 +151,11 @@ export default function ModalEditUser({
                   width="100%"
                   initialValue={userRank}
                 >
-                  <Select.Option value="admin">Administrador</Select.Option>
-                  <Select.Option value="user">Usuario</Select.Option>
+                  {ranks.map(({ label, name }) => (
+                    <Select.Option value={name} key={name}>
+                      {label}
+                    </Select.Option>
+                  ))}
                 </Select>
               </div>
             </Grid>

@@ -2,10 +2,11 @@ import css from "styles/User.module.scss";
 import cls from "classnames";
 import useLazyloadImage from "hooks/utils/useLazyLoadImage";
 import Skeleton from "react-loading-skeleton";
+import { USER_RANKS } from "config";
 
 export default function UserItemAvatar({ name, rank, perfil_photo }) {
   const isLoaded = useLazyloadImage({ src: perfil_photo });
-  const isAdmin = rank === "admin";
+  const isAdmin = rank === USER_RANKS.ADMIN.name;
 
   if (isLoaded) { 
     return (

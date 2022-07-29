@@ -1,14 +1,18 @@
 import useUsers from "hooks/users/useUsers";
+import useUserRanks from "hooks/users/useUserRanks";
 import { useRef } from "react";
 import { Modal, Select } from "@geist-ui/core";
-import { USER_RANKS } from "config/";
+import { USER_FILTERS } from "config/";
 
 export default function ModalFilterUsersByRank({ isOpen, toggleOpen }) {
   const { filterUsersByRank, isActiveFilter, users } = useUsers();
   const containerSelect = useRef(null);
-  const ranks = Object.values(USER_RANKS);
-  const onChangeRank = (ranks) => filterUsersByRank(ranks || []);
-
+  const ranks = useUserRanks();
+  const isActiveFilterRank = isActiveFilter?.type === USER_FILTERS.BY_RANK;
+  const defaultValueFilterRank = isActiveFilterRank ? isActiveFilter?.data : [];
+  const onChangeRank = (ranks = []) => {
+    filterUsersByRank(ranks);
+  };
   return (
     <Modal
       visible={isOpen}
@@ -23,6 +27,7 @@ export default function ModalFilterUsersByRank({ isOpen, toggleOpen }) {
       <Modal.Content>
         <div className="w-100 mb-2 position-relative" ref={containerSelect}>
           <Select
+            initialValue={defaultValueFilterRank}
             getPopupContainer={() => containerSelect.current}
             placeholder="Rangos"
             multiple
@@ -48,9 +53,6 @@ export default function ModalFilterUsersByRank({ isOpen, toggleOpen }) {
       </Modal.Content>
       <Modal.Action onClick={toggleOpen} passive>
         Cancelar
-      </Modal.Action>
-      <Modal.Action htmlType="submit" form="edit-user">
-        Crear
       </Modal.Action>
     </Modal>
   );

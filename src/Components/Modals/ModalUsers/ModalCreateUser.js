@@ -4,6 +4,7 @@ import useFormValidation from "hooks/validations/useFormValidation";
 import useToast from "hooks/utils/useToast";
 import useUsers from "hooks/users/useUsers";
 import useCreateUser from "hooks/users/crud/useCreateUser";
+import useUserRanks from "hooks/users/useUserRanks";
 import createUserSchema from "helpers/schema/createUserSchema";
 import UserPlaceholderImg from "assets/user_placeholder.png";
 import {
@@ -27,6 +28,7 @@ export default function ModalCreateUser({
   const { errors, reset, handleSubmit, register } =
     useFormValidation(createUserSchema);
   const containerUserRole = useRef(null);
+  const ranks = useUserRanks();
 
   const onSubmit = async (values) => {
     const data = toFormDataObj({
@@ -169,8 +171,11 @@ export default function ModalCreateUser({
                   width="100%"
                   initialValue={userRank}
                 >
-                  <Select.Option value="admin">Administrador</Select.Option>
-                  <Select.Option value="user">Usuario</Select.Option>
+                  {ranks.map(({ label, name }) => (
+                    <Select.Option value={name} key={name}>
+                      {label}
+                    </Select.Option>
+                  ))}
                 </Select>
               </div>
             </Grid>

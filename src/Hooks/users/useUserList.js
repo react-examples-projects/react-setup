@@ -5,18 +5,22 @@ import { normalizeText } from "helpers/utils";
 import { USER_FILTERS } from "config/";
 
 export default function useUserList() {
-  const { data, ...args } = useQuery("users", getAllUsers);
-  const [users, setUsers] = useState(data || []);
-  const [usersFiltered, setUsersFiltered] = useState(data || []);
-
+  const { data = [], ...args } = useQuery("users", getAllUsers);
+  const [users, setUsers] = useState([]);
+  const [usersFiltered, setUsersFiltered] = useState([]);
   const [isActiveFilter, setActiveFilter] = useState(null);
 
+  /*
+    Todas las asignaciones del estado que apunten a `users` deben ser
+    clonadas para evitar una asignacion por referencia, asi solo copiamos el valor
+    del arreglo de objetos
+  */
   useEffect(() => {
-    if (!!data) setUsers(data);
+    if (data.length) setUsers([...data]);
   }, [data]);
 
   useEffect(() => {
-    if (users.length) setUsersFiltered(users);
+    if (users.length) setUsersFiltered([...users]);
   }, [users]);
 
   const addUser = useCallback((user) => {
@@ -36,40 +40,55 @@ export default function useUserList() {
     setUsers((users) => users.filter((_user) => _user._id !== id));
   }, []);
 
+  const removeAllUserFilters = useCallback(() => {
+    setUsersFiltered([...users]), setActiveFilter(null);
+  }, [users]);
+
   const filterUsersByName = useCallback(
     (name) => {
       const normalizedName = normalizeText(name).toLowerCase();
-      if (!normalizedName) return setActiveFilter(null);
+      if (!normalizedName) return removeAllUserFilters();
 
-      const filtered = users.filter((user) => {
+      const filtered = usersFiltered.filter((user) => {
         return user.name.toLowerCase().includes(normalizedName);
       });
 
-      setActiveFilter(USER_FILTERS.BY_NAME);
+      setActiveFilter({
+        type: USER_FILTERS.BY_NAME,
+        data: name,
+      });
       setUsersFiltered(filtered);
     },
-    [users]
+    [usersFiltered, removeAllUserFilters]
   );
 
   const filterUsersByRank = useCallback(
     (rank) => {
-      if (Array.isArray(rank) && !rank.length)
-        return setUsersFiltered(users), setActiveFilter(null);
-
-      const filtered = users.filter((user) => {
+      if (Array.isArray(rank) && !rank.length) return removeAllUserFilters();
+      const filtered = usersFiltered.filter((user) => {
         if (Array.isArray(rank)) return rank.includes(user.rank);
         return user.rank === rank;
       });
 
-      setActiveFilter(USER_FILTERS.BY_RANK);
+      setActiveFilter({
+        type: USER_FILTERS.BY_RANK,
+        data: rank,
+      });
       setUsersFiltered(filtered);
     },
-    [users]
+    [usersFiltered, removeAllUserFilters]
   );
 
-  const removeAllUserFilters = useCallback(() => {
-    setUsersFiltered(users), setActiveFilter(null);
-  }, [users]);
+  const filterUsersByDate = useCallback(() => {
+    const filtered = usersFiltered.sort((userPrevius, userNext) => {
+      return new Date(userNext.createdAt) - new Date(userPrevius.createdAt);
+    });
+    setActiveFilter({
+      type: USER_FILTERS.BY_DATE,
+      data: filtered,
+    });
+    setUsersFiltered(filtered);
+  }, [usersFiltered]);
 
   return {
     users: usersFiltered,
@@ -79,6 +98,7 @@ export default function useUserList() {
     isActiveFilter,
     filterUsersByName,
     filterUsersByRank,
+    filterUsersByDate,
     removeAllUserFilters,
     ...args,
   };

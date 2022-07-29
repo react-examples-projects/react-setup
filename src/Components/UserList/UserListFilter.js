@@ -9,11 +9,20 @@ export default function UserListFilter() {
   const containerSelect = useRef(null);
   const [isOpenModalFilterRole, toggleOpenModalFilterRole] = useToggle();
   const [isOpenModalFilterRank, toggleOpenModalFilterRank] = useToggle();
-  const { filterUsersByName, isActiveFilter } = useUsers();
+  const {
+    filterUsersByName,
+    filterUsersByDate,
+    removeAllUserFilters,
+    users,
+    isActiveFilter,
+  } = useUsers();
   const ACTIONS_MODALS = {
     rol: toggleOpenModalFilterRole,
     rank: toggleOpenModalFilterRank,
+    none: removeAllUserFilters,
+    date: filterUsersByDate,
   };
+
   const onShowModalFilter = (v) => {
     if (v in ACTIONS_MODALS) ACTIONS_MODALS[v]();
   };
@@ -46,18 +55,23 @@ export default function UserListFilter() {
               getPopupContainer={() => containerSelect.current}
               onChange={onShowModalFilter}
               width="100%"
+              initialValue="none"
             >
               <Select.Option value="rol">Rol</Select.Option>
               <Select.Option value="status">Estado</Select.Option>
-              <Select.Option value="date">Fecha de ingreso</Select.Option>
+              <Select.Option value="date">Más recientes</Select.Option>
               <Select.Option value="rank">Rango</Select.Option>
+              <Select.Option value="none">Ninguno</Select.Option>
             </Select>
           </div>
         </Grid>
       </Grid.Container>
       {isActiveFilter && (
         <p className="text-muted">
-          <small>Actualmente se encuentra activado un filtro</small>
+          <small>
+            Actualmente se encuentra activado un filtro ({users.length + " "}
+            coincidencias)
+          </small>
         </p>
       )}
       <ModalFilterUsersByRole

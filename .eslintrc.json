@@ -40,20 +40,8 @@
       "pragma": "React",
       "version": "detect"
     },
-    "import/extensions": [".js", ".jsx", ".mjs", ".ts", ".tsx"],
+    "import/extensions": [".js", ".jsx", ".mjs", ".ts", ".tsx",".json"],
     "import/resolver": {
-      "node": {
-        "extensions": [".ts", ".tsx", ".js", ".jsx", ".json"],
-        "moduleDirectory": ["node_modules", "src/"]
-      },
-      "webpack": {
-        "config": {
-          "resolve": {
-            "extensions": [".ts", ".tsx", ".js", ".jsx", ".json"],
-            "modules": ["node_modules", "src/"]
-          }
-        }
-      },
       "alias": {
         "map": [
           ["pages", "./src/Pages/"],
@@ -68,7 +56,7 @@
           ["loaders", "./src/Components/Loaders/"],
           ["routers", "./src/Components/Routers/"]
         ],
-        "extensions": [".ts", ".js", ".jsx", ".json"]
+        "extensions": [".js", ".jsx", ".mjs", ".ts", ".tsx",".json"]
       }
     }
   }
