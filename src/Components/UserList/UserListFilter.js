@@ -4,11 +4,13 @@ import { useRef } from "react";
 import useToggle from "hooks/utils/useToggle";
 import ModalFilterUsersByRole from "modals/ModalFilterUsers/ModalFilterUsersByRole";
 import ModalFilterUsersByRank from "modals/ModalFilterUsers/ModalFilterUsersByRank";
+import ModalFilterUsersByStatus from "modals/ModalFilterUsers/ModalFilterUsersByStatus";
 
 export default function UserListFilter() {
   const containerSelect = useRef(null);
   const [isOpenModalFilterRole, toggleOpenModalFilterRole] = useToggle();
   const [isOpenModalFilterRank, toggleOpenModalFilterRank] = useToggle();
+  const [isOpenModalFilterStatus, toggleOpenModalFilterStatus] = useToggle();
   const {
     filterUsersByName,
     filterUsersByDate,
@@ -20,6 +22,7 @@ export default function UserListFilter() {
     rol: toggleOpenModalFilterRole,
     rank: toggleOpenModalFilterRank,
     none: removeAllUserFilters,
+    status: toggleOpenModalFilterStatus,
     date: filterUsersByDate,
   };
 
@@ -82,6 +85,11 @@ export default function UserListFilter() {
       <ModalFilterUsersByRank
         isOpen={isOpenModalFilterRank}
         toggleOpen={toggleOpenModalFilterRank}
+      />
+
+      <ModalFilterUsersByStatus
+        isOpen={isOpenModalFilterStatus}
+        toggleOpen={toggleOpenModalFilterStatus}
       />
     </>
   );

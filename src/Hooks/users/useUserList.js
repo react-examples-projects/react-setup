@@ -49,7 +49,7 @@ export default function useUserList() {
       const normalizedName = normalizeText(name).toLowerCase();
       if (!normalizedName) return removeAllUserFilters();
 
-      const filtered = usersFiltered.filter((user) => {
+      const filtered = users.filter((user) => {
         return user.name.toLowerCase().includes(normalizedName);
       });
 
@@ -59,13 +59,13 @@ export default function useUserList() {
       });
       setUsersFiltered(filtered);
     },
-    [usersFiltered, removeAllUserFilters]
+    [users, removeAllUserFilters]
   );
 
   const filterUsersByRank = useCallback(
     (rank) => {
       if (Array.isArray(rank) && !rank.length) return removeAllUserFilters();
-      const filtered = usersFiltered.filter((user) => {
+      const filtered = users.filter((user) => {
         if (Array.isArray(rank)) return rank.includes(user.rank);
         return user.rank === rank;
       });
@@ -76,7 +76,7 @@ export default function useUserList() {
       });
       setUsersFiltered(filtered);
     },
-    [usersFiltered, removeAllUserFilters]
+    [users, removeAllUserFilters]
   );
 
   const filterUsersByDate = useCallback(() => {
@@ -90,6 +90,20 @@ export default function useUserList() {
     setUsersFiltered(filtered);
   }, [usersFiltered]);
 
+  const filterUserByStatus = useCallback(
+    (status) => {
+      const filtered = users.filter((user) => {
+        return user.status === status;
+      });
+      setActiveFilter({
+        type: USER_FILTERS.BY_STATUS,
+        data: filtered,
+      });
+      setUsersFiltered(filtered);
+    },
+    [users]
+  );
+
   return {
     users: usersFiltered,
     addUser,
@@ -99,6 +113,7 @@ export default function useUserList() {
     filterUsersByName,
     filterUsersByRank,
     filterUsersByDate,
+    filterUserByStatus,
     removeAllUserFilters,
     ...args,
   };

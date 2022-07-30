@@ -25,6 +25,7 @@ export const USER_FILTERS = {
   BY_NAME: "byName",
   BY_RANK: "byRank",
   BY_DATE: "byDate",
+  BY_STATUS: "byStatus",
   ALL: "all",
 };
 
