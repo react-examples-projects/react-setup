@@ -1,7 +1,8 @@
-import useUsers from "hooks/users/useUsers";
 import { Grid, Input, Select } from "@geist-ui/core";
 import { useRef } from "react";
 import useToggle from "hooks/utils/useToggle";
+import useUsers from "hooks/users/useUsers";
+import ActiveUsersFilterText from "modals/ActiveUsersFilterText";
 import ModalFilterUsersByRole from "modals/ModalFilterUsers/ModalFilterUsersByRole";
 import ModalFilterUsersByRank from "modals/ModalFilterUsers/ModalFilterUsersByRank";
 import ModalFilterUsersByStatus from "modals/ModalFilterUsers/ModalFilterUsersByStatus";
@@ -11,13 +12,7 @@ export default function UserListFilter() {
   const [isOpenModalFilterRole, toggleOpenModalFilterRole] = useToggle();
   const [isOpenModalFilterRank, toggleOpenModalFilterRank] = useToggle();
   const [isOpenModalFilterStatus, toggleOpenModalFilterStatus] = useToggle();
-  const {
-    filterUsersByName,
-    filterUsersByDate,
-    removeAllUserFilters,
-    users,
-    isActiveFilter,
-  } = useUsers();
+  const { filterUsersByName, filterUsersByDate, removeAllUserFilters } = useUsers();
   const ACTIONS_MODALS = {
     rol: toggleOpenModalFilterRole,
     rank: toggleOpenModalFilterRank,
@@ -69,14 +64,9 @@ export default function UserListFilter() {
           </div>
         </Grid>
       </Grid.Container>
-      {isActiveFilter && (
-        <p className="text-muted">
-          <small>
-            Actualmente se encuentra activado un filtro ({users.length + " "}
-            coincidencias)
-          </small>
-        </p>
-      )}
+
+      <ActiveUsersFilterText />
+
       <ModalFilterUsersByRole
         isOpen={isOpenModalFilterRole}
         toggleOpen={toggleOpenModalFilterRole}

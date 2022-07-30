@@ -1,18 +1,20 @@
 import useUsers from "hooks/users/useUsers";
 import useUserRanks from "hooks/users/useUserRanks";
+import useCurrenFilterUserValue from "hooks/users/useCurrenFilterUserValue";
+import ActiveUsersFilterText from "modals/ActiveUsersFilterText";
 import { useRef } from "react";
 import { Modal, Select } from "@geist-ui/core";
 import { USER_FILTERS } from "config/";
 
 export default function ModalFilterUsersByRank({ isOpen, toggleOpen }) {
-  const { filterUsersByRank, isActiveFilter, users } = useUsers();
+  const { filterUsersByRank } = useUsers();
   const containerSelect = useRef(null);
   const ranks = useUserRanks();
-  const isActiveFilterRank = isActiveFilter?.type === USER_FILTERS.BY_RANK;
-  const defaultValueFilterRank = isActiveFilterRank ? isActiveFilter?.data : [];
+  const defaultValueFilterRank = useCurrenFilterUserValue(USER_FILTERS.BY_RANK) || [];
   const onChangeRank = (ranks = []) => {
     filterUsersByRank(ranks);
   };
+
   return (
     <Modal
       visible={isOpen}
@@ -41,15 +43,7 @@ export default function ModalFilterUsersByRank({ isOpen, toggleOpen }) {
             ))}
           </Select>
         </div>
-
-        {isActiveFilter && (
-          <p className="text-muted">
-            <small>
-              Se encontraron <strong>{users.length}</strong> coincidencias para
-              los filtros
-            </small>
-          </p>
-        )}
+        <ActiveUsersFilterText />
       </Modal.Content>
       <Modal.Action onClick={toggleOpen} passive>
         Cancelar

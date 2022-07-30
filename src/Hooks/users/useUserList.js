@@ -9,7 +9,6 @@ export default function useUserList() {
   const [users, setUsers] = useState([]);
   const [usersFiltered, setUsersFiltered] = useState([]);
   const [isActiveFilter, setActiveFilter] = useState(null);
-
   /*
     Todas las asignaciones del estado que apunten a `users` deben ser
     clonadas para evitar una asignacion por referencia, asi solo copiamos el valor
@@ -93,11 +92,12 @@ export default function useUserList() {
   const filterUserByStatus = useCallback(
     (status) => {
       const filtered = users.filter((user) => {
-        return user.status === status;
+        if (status === "idle") return user.isIdle;
+        return !user.isIdle;
       });
       setActiveFilter({
         type: USER_FILTERS.BY_STATUS,
-        data: filtered,
+        data: status,
       });
       setUsersFiltered(filtered);
     },
