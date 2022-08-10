@@ -4,7 +4,7 @@ import useToast from "hooks/utils/useToast";
 import useUsers from "hooks/users/useUsers";
 import useToggleUserIdle from "hooks/users/crud/useToggleUserIdle";
 import toggleIdleUserSchema from "helpers/schema/toggleIdleUserSchema";
-import { toFormDataObj, getErrorValidation } from "helpers/utils";
+import { toFormDataObj } from "helpers/utils";
 import { Modal, Input } from "@geist-ui/core";
 
 export default function ModalIdleUser({
@@ -63,10 +63,7 @@ export default function ModalIdleUser({
           />
         </form>
 
-        <ErrorText
-          isVisible={isError}
-          text={getErrorValidation(idleUserMutation)}
-        />
+        <ErrorText isVisible={isError} text={idleUserMutation} />
       </Modal.Content>
       <Modal.Action passive onClick={toggleOpenModalIdle}>
         Cancelar

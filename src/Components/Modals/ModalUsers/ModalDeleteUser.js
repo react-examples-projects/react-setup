@@ -4,14 +4,10 @@ import useToast from "hooks/utils/useToast";
 import useUsers from "hooks/users/useUsers";
 import useDeleteUser from "hooks/users/crud/useDeleteUser";
 import deleteUserSchema from "helpers/schema/deleteUserSchema";
-import { toFormDataObj, getErrorValidation } from "helpers/utils";
+import { toFormDataObj } from "helpers/utils";
 import { Modal, Input } from "@geist-ui/core";
 
-export default function ModalDeleteUser({
-  isOpenModal,
-  toggleOpenModal,
-  _id,
-}) {
+export default function ModalDeleteUser({ isOpenModal, toggleOpenModal, _id }) {
   const { error, success } = useToast();
   const { removeUser } = useUsers();
   const { isError, isLoading, ...deleteUserMutation } = useDeleteUser();
@@ -19,7 +15,7 @@ export default function ModalDeleteUser({
     useFormValidation(deleteUserSchema);
 
   const onSubmit = async (e) => {
-    const data = toFormDataObj({...e, _id});
+    const data = toFormDataObj({ ...e, _id });
     try {
       const user = await deleteUserMutation.mutateAsync(data);
       console.log(user);
@@ -58,10 +54,7 @@ export default function ModalDeleteUser({
           />
         </form>
 
-        <ErrorText
-          isVisible={isError}
-          text={getErrorValidation(deleteUserMutation)}
-        />
+        <ErrorText isVisible={isError} text={deleteUserMutation} />
       </Modal.Content>
       <Modal.Action passive onClick={toggleOpenModal}>
         Cancelar

@@ -18,7 +18,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: [".js", ".jsx", ".mjs", ".ts", ".tsx",".json"],
+    extensions: [".js", ".jsx", ".mjs", ".ts", ".tsx", ".json"],
     alias: {
       pages: path.resolve(__dirname, "src/Pages/"),
       styles: path.resolve(__dirname, "src/Styles/"),
@@ -28,7 +28,7 @@ module.exports = {
       context: path.resolve(__dirname, "src/Context/"),
       assets: path.resolve(__dirname, "src/Assets/"),
       components: path.resolve(__dirname, "src/Components/"),
-      modals : path.resolve(__dirname, "src/Components/Modals/"),
+      modals: path.resolve(__dirname, "src/Components/Modals/"),
       loaders: path.resolve(__dirname, "src/Components/Loaders/"),
       routers: path.resolve(__dirname, "src/Components/Routers/"),
     },
@@ -42,6 +42,11 @@ module.exports = {
 
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        enforce: "pre",
+        use: ["source-map-loader"],
+      },
       {
         test: /\.?js$/,
         exclude: /node_modules/,

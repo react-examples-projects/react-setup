@@ -5,7 +5,6 @@ import useFormValidation from "hooks/validations/useFormValidation";
 import loginSchema from "helpers/schema/loginSchema";
 import ErrorText from "components/Text/ErrorText";
 import Alert from "components/Alerts/";
-import { getErrorValidation } from "helpers/utils";
 import { useNavigate, Link } from "react-router-dom";
 import { Button, Input, Text } from "@geist-ui/core";
 import { BiUser, BiKey } from "react-icons/bi";
@@ -90,11 +89,7 @@ export default function Login() {
           />
         </div>
 
-        <ErrorText
-          isVisible={login.isError}
-          text={getErrorValidation(login)}
-          type="error"
-        />
+        <ErrorText isVisible={login.isError} text={login} type="error" />
 
         <Alert
           title="Error al inicia sesión"

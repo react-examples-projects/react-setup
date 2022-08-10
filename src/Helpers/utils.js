@@ -31,16 +31,17 @@ export const adminRoute = (component, path = "/", props) => {
  */
 export function getErrorValidation(
   mutationRequest,
-  defaultError = "Ocurrió un error, verifica tus datos."
+  defaultError = "Ocurrió un error, intente más tarde."
 ) {
-  const objError = mutationRequest?.error?.response?.data;
-  if (typeof objError?.data === "string") return objError?.data;
+  const ERROR = mutationRequest?.error;
+  const DATA_ERROR = ERROR?.response?.data;
 
+  if (typeof DATA_ERROR?.data === "string") return DATA_ERROR?.data;
+  
   return (
-    objError?.data?.[0] ||
-    objError?.message ||
-    mutationRequest?.data?.message ||
-    mutationRequest?.error?.toString() ||
+    DATA_ERROR?.data?.[0] ||
+    DATA_ERROR?.errorDescription ||
+    ERROR?.message ||
     defaultError
   );
 }

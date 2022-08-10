@@ -1,6 +1,6 @@
 const { error } = require("../helpers/httpResponses");
 
-async function requireAdmin(req, res, next) {
+function requireAdmin(req, res, next) {
   if (req?.user?.rank === "admin") {
     return next();
   }

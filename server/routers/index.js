@@ -5,7 +5,9 @@ const existsToken = require("../middlewares/existsToken");
 // sub-routers
 const userRouters = require("./user");
 const authRouters = require("./auth");
+const dashboardRouters = require("./dashboard");
 
+router.use("/dashboard", existsToken, dashboardRouters);
 router.use("/user", existsToken, userRouters);
 router.use("/auth", authRouters);
 

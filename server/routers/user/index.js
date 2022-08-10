@@ -4,6 +4,8 @@ const userController = require("../../controllers/userController");
 const validate = require("../../helpers/validations/validate");
 const requireAdmin = require("../../middlewares/requireAdmin");
 const requirePassword = require("../../middlewares/requirePassword");
+const uploadPerfilPhoto = require("../../middlewares/uploadPerfilPhoto");
+const checkExistEmail = require("../../middlewares/checkExistEmail");
 const {
   createUserSchemaValidation,
   editUserSchemaValidation,
@@ -18,6 +20,8 @@ router.post(
   "/",
   requireAdmin,
   validate(createUserSchemaValidation),
+  checkExistEmail,
+  uploadPerfilPhoto,
   userController.createUser
 );
 
@@ -25,6 +29,8 @@ router.put(
   "/:id",
   requireAdmin,
   validate(editUserSchemaValidation),
+  checkExistEmail,
+  uploadPerfilPhoto,
   userController.editUser
 );
 
@@ -48,6 +54,7 @@ router.get("/users", requireAdmin, userController.getAllUsers);
 router.post(
   "/perfil-photo",
   validate(perfilPhotoSchemaValidation),
+  uploadPerfilPhoto,
   userController.perfilPhoto
 );
 

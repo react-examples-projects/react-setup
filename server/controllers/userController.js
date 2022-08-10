@@ -1,17 +1,14 @@
 const UserService = require("../services/userService");
-const { uploadImages } = require("../helpers/requests");
 const { success, error } = require("../helpers/httpResponses");
-const { hashPassword, isInvalidPassword } = require("../helpers/utils");
+const { hashPassword } = require("../helpers/utils");
 class UserController {
   async perfilPhoto(req, res, next) {
     try {
-      const perfil_photo = req.files.perfil_photo.data;
-      const data = await uploadImages(perfil_photo);
       await UserService.setPerfilPhoto({
         id: req.user._id,
-        perfil_photo: data.url,
+        perfil_photo: req.perfilPhoto,
       });
-      success(res, data);
+      success(res, req.perfilPhotoData);
     } catch (err) {
       next(err);
     }
@@ -43,21 +40,13 @@ class UserController {
   async createUser(req, res, next) {
     try {
       const { email, password, rank, name } = req.body;
-
-      const user = await UserService.existsUser(email);
-      if (user) return error(res, "El correo ya está en uso");
-
-      const passwordHashed = hashPassword(password);
       const newData = {
         email,
-        password: passwordHashed,
+        password: hashPassword(password),
         rank,
         name,
       };
-      if (req.files?.perfil_photo?.data) {
-        const img = await uploadImages(req.files?.perfil_photo?.data);
-        newData.perfil_photo = img?.url;
-      }
+      if (req.perfilPhoto) newData.perfil_photo = req.perfilPhoto;
       const userCreated = await UserService.createUser(newData);
 
       success(res, userCreated, 201);
@@ -75,12 +64,7 @@ class UserController {
         name,
         isIdle,
       };
-
-      if (req.files?.perfil_photo?.data) {
-        const img = await uploadImages(req.files?.perfil_photo?.data);
-        newData.perfil_photo = img?.url;
-      }
-
+      if (req.perfilPhoto) newData.perfil_photo = req.perfilPhoto;
       const result = await UserService.editUser(req.params.id, newData);
       success(res, result);
     } catch (err) {

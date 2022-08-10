@@ -8,6 +8,7 @@ import {
   createUser as _createUser,
   editUser as _editUser,
   deleteUser as _deleteUser,
+  dashboard,
 } from "config/";
 import { getToken, removeToken, isValidToken } from "helpers/token";
 import axios from "axios";
@@ -75,12 +76,17 @@ export async function deleteUser(payload) {
 }
 
 export async function toggleUserIdle(payload) {
-  console.log(payload)
+  console.log(payload);
   const res = await instance.put(_toggleUserIdle(payload.get("_id")), payload);
   return res;
 }
 
 export async function getAllUsers() {
   const res = await instance.get(getUsers);
+  return res;
+}
+
+export async function getDashboardData() {
+  const res = await instance.get(dashboard);
   return res;
 }

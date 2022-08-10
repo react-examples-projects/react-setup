@@ -21,7 +21,7 @@ export default function Signup() {
 
   const signup = useSignup();
   const navigate = useNavigate();
-  const { error } = useToast();
+  const { error, success } = useToast();
   const { errors, handleSubmit, register } = useFormValidation(signupSchema, {
     defaultValues: { email: "", password: "", passwordConfirm: "", name: "" },
   });
@@ -31,6 +31,7 @@ export default function Signup() {
       const res = await signup.mutateAsync(data);
       if (res?.name && res?.email) {
         navigate("/", { replace: true });
+        success("Usuario registrado con exito");
       }
     } catch {
       error("Error al registrar la cuenta");

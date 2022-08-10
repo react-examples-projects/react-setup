@@ -26,23 +26,20 @@ class UserService {
   async editUser(id, payload) {
     const user = await this.UserModel.findByIdAndUpdate(id, payload, {
       new: true,
-    });
+    })
+      .select("-password")
+      .lean();
     return user;
   }
 
   async deleteUser(id) {
-    const user = await this.UserModel.findByIdAndDelete(id);
+    const user = await this.UserModel.findByIdAndDelete(id).lean();
     return user;
   }
 
   async existsUser(email) {
     const user = await this.UserModel.findOne({ email }).lean();
     return user;
-  }
-
-  async isEmailInUse(email) {
-    const users = await this.UserModel.find({ email }).lean();
-    return users.length > 0;
   }
 
   async getUserById(id) {

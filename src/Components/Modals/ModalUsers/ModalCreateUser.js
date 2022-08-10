@@ -7,12 +7,7 @@ import useCreateUser from "hooks/users/crud/useCreateUser";
 import useUserRanks from "hooks/users/useUserRanks";
 import createUserSchema from "helpers/schema/createUserSchema";
 import UserPlaceholderImg from "assets/user_placeholder.png";
-import {
-  toFormDataObj,
-  getErrorValidation,
-  isValidFile,
-  imageToBase64,
-} from "helpers/utils";
+import { toFormDataObj, isValidFile, imageToBase64 } from "helpers/utils";
 import { Modal, Input, Select, Grid } from "@geist-ui/core";
 
 export default function ModalCreateUser({
@@ -203,10 +198,7 @@ export default function ModalCreateUser({
             </Grid>
           </Grid.Container>
 
-          <ErrorText
-            isVisible={isError}
-            text={getErrorValidation(createUserMutation)}
-          />
+          <ErrorText isVisible={isError} text={createUserMutation} />
 
           <img
             src={userImg}

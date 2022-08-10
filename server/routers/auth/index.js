@@ -6,8 +6,14 @@ const {
   signupSchemaValidation,
 } = require("../../helpers/validations/validations");
 const authController = require("../../controllers/authController");
+const checkExistEmail = require("../../middlewares/checkExistEmail");
 
 router.post("/login", validate(loginSchemaValidation), authController.login);
-router.post("/signup", validate(signupSchemaValidation), authController.signup);
+router.post(
+  "/signup",
+  validate(signupSchemaValidation),
+  checkExistEmail,
+  authController.signup
+);
 
 module.exports = router;

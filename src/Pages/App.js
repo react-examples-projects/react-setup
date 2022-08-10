@@ -2,11 +2,25 @@ import ColoredText from "components/Text/ColoredText";
 import css from "styles/Dashboard.module.scss";
 import cls from "classnames";
 import useCurrentUser from "hooks/users/useCurrentUser";
-import { Text, Grid } from "@geist-ui/core";
-import { FiUsers } from "react-icons/fi";
+import useDashboardInfo from "hooks/dashboard/useDashboardData";
+import { Text, Grid, Spinner } from "@geist-ui/core";
+import { FiUsers, FiStar } from "react-icons/fi";
+import ErrorText from "components/Text/ErrorText";
 
 export default function App() {
   const { user } = useCurrentUser();
+  const { isLoading, data, isError } = useDashboardInfo();
+  const ErrorTextContrast = (
+    <ErrorText
+      text="Error de red"
+      style={{
+        backgroundColor: "#0000004d",
+        padding: "0.4rem",
+        borderRadius: "4px",
+      }}
+      isVisible
+    />
+  );
 
   return (
     <>
@@ -21,45 +35,77 @@ export default function App() {
           12 de enero, 2022
         </Text>
 
-        <img className={css.dashboardImg} alt="dashboard welcome" src="./img/dashboard.svg" />
+        <img
+          className={css.dashboardImg}
+          alt="dashboard welcome"
+          src="./img/dashboard.svg"
+        />
       </div>
 
       <Grid.Container gap={1}>
         <Grid xs={8} sm={8} md={8} lg={8} xl={8}>
           <div className={cls(css.dashboardCard, css.c1)}>
-            <FiUsers className="d-block mb-2" style={{ fontSize: "1.5rem" }} />
-            <Text className="mt-0" h5>
-              32 Usuarios
-            </Text>
-            <Text small>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa,
-              distinctio.
-            </Text>
+            {isError ? (
+              ErrorTextContrast
+            ) : (
+              <>
+                <FiUsers
+                  className="d-block mb-2"
+                  style={{ fontSize: "1.5rem" }}
+                />
+                <Text className="mt-0 d-flex align-items-center" h5>
+                  {isLoading ? <Spinner className="me-2" /> : data.users + " "}
+                  Usuarios
+                </Text>
+              </>
+            )}
+
+            <Text small>Total de usuarios registrado en el sistema</Text>
           </div>
         </Grid>
 
         <Grid xs={8} sm={8} md={8} lg={8} xl={8}>
           <div className={cls(css.dashboardCard, css.c2)}>
-            <FiUsers className="d-block mb-2" style={{ fontSize: "1.5rem" }} />
-            <Text className="mt-0" h5>
-              32 Roles
-            </Text>
+            {isError ? (
+              ErrorTextContrast
+            ) : (
+              <>
+                <FiUsers
+                  className="d-block mb-2"
+                  style={{ fontSize: "1.5rem" }}
+                />
+                <Text className="mt-0 d-flex align-items-center" h5>
+                  {isLoading ? <Spinner className="me-2" /> : data.admins + " "}
+                  Administradores
+                </Text>
+              </>
+            )}
+
             <Text small>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa,
-              distinctio.
+              Total de usuarios con el rango de administrador registrados en el
+              sistema
             </Text>
           </div>
         </Grid>
 
         <Grid xs={8} sm={8} md={8} lg={8} xl={8}>
           <div className={cls(css.dashboardCard, css.c3)}>
-            <FiUsers className="d-block mb-2" style={{ fontSize: "1.5rem" }} />
-            <Text className="mt-0" h5>
-              32 Roles
-            </Text>
+            {isError ? (
+              ErrorTextContrast
+            ) : (
+              <>
+                <FiStar
+                  className="d-block mb-2"
+                  style={{ fontSize: "1.5rem" }}
+                />
+                <Text className="mt-0 d-flex align-items-center" h5>
+                  {isLoading ? <Spinner className="me-2" /> : data.roles + " "}
+                  Roles
+                </Text>
+              </>
+            )}
             <Text small>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa,
-              distinctio.
+              Total de roles asignables a los usuarios del sistema
             </Text>
           </div>
         </Grid>

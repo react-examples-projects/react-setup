@@ -1,17 +1,14 @@
 const boom = require("@hapi/boom");
 const { isRequestAjaxOrApi } = require("../helpers/utils");
 const { message } = require("../helpers/utils");
-const { DEV } = require("../config/variables").SERVER;
 
 function logErrors(err, req, res, next) {
-  message.error(err.stack);
+  message.error(err.stack || err.message || err);
   next(err);
 }
 
 function wrapErrors(err, req, res, next) {
-  if (!err.isBoom) {
-    next(boom.badImplementation(err));
-  }
+  if (!err.isBoom) next(boom.badImplementation(err));
   // err ya tiene un error tipo Boom
   next(err);
 }
@@ -21,10 +18,11 @@ function clientErrorHandling(err, req, res, next) {
       https://hapi.dev/module/boom/api/?v=9.1.2
   */
   const { statusCode, payload } = err.output;
-  // catch errors ajax or errors while streaming
   if (isRequestAjaxOrApi(req) || req.headersSent) {
-    const response = { ...payload };
-    if (DEV) response.errorDescription = err.message;
+    const response = {
+      ...payload,
+      errorDescription: err.message || err || "An internal server error occurred",
+    };
     return res.status(statusCode).json(response);
   }
 

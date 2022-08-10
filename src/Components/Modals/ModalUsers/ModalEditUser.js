@@ -8,12 +8,7 @@ import useUserRanks from "hooks/users/useUserRanks";
 import UserPlaceholderImg from "assets/user_placeholder.png";
 import { useRef, useState } from "react";
 import { Modal, Input, Select, Grid, Text, Checkbox } from "@geist-ui/core";
-import {
-  toFormDataObj,
-  getErrorValidation,
-  isValidFile,
-  imageToBase64,
-} from "helpers/utils";
+import { toFormDataObj, isValidFile, imageToBase64 } from "helpers/utils";
 
 export default function ModalEditUser({
   perfil_photo,
@@ -196,10 +191,7 @@ export default function ModalEditUser({
             </Grid>
           </Grid.Container>
 
-          <ErrorText
-            isVisible={isError}
-            text={getErrorValidation(editUserMutation)}
-          />
+          <ErrorText isVisible={isError} text={editUserMutation} />
 
           <img
             src={userImg}

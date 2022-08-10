@@ -28,9 +28,6 @@ class AuthController {
   async signup(req, res, next) {
     try {
       const { email, password, name } = req.body;
-      const user = await UserService.existsUser(email);
-      if (user) return error(res, "El correo ya está en uso");
-
       const passwordHashed = hashPassword(password);
       const userCreated = await UserService.createUser({
         name,
