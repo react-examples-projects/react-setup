@@ -1,12 +1,15 @@
 import useBody from "hooks/utils/useBody";
 import useToast from "hooks/utils/useToast";
 import useSignup from "hooks/auth/useSignup";
+import useEmailInUse from "hooks/validations/useEmailInUse";
 import ErrorText from "components/Text/ErrorText";
 import useFormValidation from "hooks/validations/useFormValidation";
 import signupSchema from "helpers/schema/signupSchema";
+import InputLoader from "components/Loaders/InputLoader";
 import { Button, Input, Text } from "@geist-ui/core";
 import { useNavigate, Link } from "react-router-dom";
 import { BiUser, BiEnvelope, BiKey } from "react-icons/bi";
+import { FiAlertTriangle } from "react-icons/fi";
 
 const cssBody = {
   backgroundSize: "cover",
@@ -18,7 +21,7 @@ const cssBody = {
 
 export default function Signup() {
   useBody(cssBody);
-
+  const { inUse, check, ...emailInUse } = useEmailInUse();
   const signup = useSignup();
   const navigate = useNavigate();
   const { error, success } = useToast();
@@ -28,14 +31,21 @@ export default function Signup() {
 
   async function handleOnSubmit(data) {
     try {
-      const res = await signup.mutateAsync(data);
-      if (res?.name && res?.email) {
-        navigate("/", { replace: true });
-        success("Usuario registrado con exito");
+      if (!inUse) {
+        const res = await signup.mutateAsync(data);
+        if (res?.name && res?.email) {
+          navigate("/", { replace: true });
+          success("Usuario registrado con exito");
+        }
       }
     } catch {
       error("Error al registrar la cuenta");
     }
+  }
+
+  async function checkEmail(e) {
+    const email = e.target.value.trim();
+    check(email);
   }
 
   return (
@@ -66,7 +76,9 @@ export default function Signup() {
         <div className="mb-2">
           <Input
             {...register("email")}
-            iconRight={<BiEnvelope />}
+            onBlur={checkEmail}
+            iconRight={emailInUse.isLoading ? <InputLoader /> : <BiEnvelope />}
+            disabled={emailInUse.isLoading}
             htmlType="email"
             name="email"
             id="email"
@@ -74,6 +86,7 @@ export default function Signup() {
             autoComplete="off"
             width="100%"
           />
+          <ErrorText isVisible={inUse} text="El correo está en uso" />
           <ErrorText
             className="mt-2"
             text={errors.email?.message}
@@ -114,8 +127,9 @@ export default function Signup() {
           />
         </div>
 
-        <Text className="text-muted" style={{ fontSize: "80%" }}>
-          La clave debe tener letras mayúsculas, minúsculas y un número
+        <Text className="text-muted d-flex align-items-center" style={{ fontSize: "80%" }}>
+          <FiAlertTriangle className="me-1" />
+          La contraseña debe tener letras mayúsculas, minúsculas y un número
         </Text>
 
         <ErrorText isVisible={signup.isError} text={signup} />
@@ -123,8 +137,8 @@ export default function Signup() {
         <div className="mb-2">
           <Button
             htmlType="submit"
-            disabled={signup.isLoading}
-            loading={signup.isLoading}
+            disabled={signup.isLoading || emailInUse.isLoading || inUse}
+            loading={signup.isLoading || emailInUse.isLoading}
             width="100%"
           >
             Registrarse

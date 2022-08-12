@@ -9,6 +9,7 @@ import {
   editUser as _editUser,
   deleteUser as _deleteUser,
   dashboard,
+  emailInUse,
 } from "config/";
 import { getToken, removeToken, isValidToken } from "helpers/token";
 import axios from "axios";
@@ -42,6 +43,13 @@ instance.interceptors.response.use(
     return Promise.reject(err);
   }
 );
+
+export async function checkEmailExists(email) {
+  const res = await instance.post(emailInUse, {
+    email,
+  });
+  return res;
+}
 
 export async function setLogin(auth) {
   const res = await instance.post(login, auth);

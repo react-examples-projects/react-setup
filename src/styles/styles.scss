@@ -66,6 +66,47 @@ img {
   mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 1)), to(rgba(0, 0, 0, 0.3)))
 }
 
-.backdrop div > h2 {
+.backdrop div>h2 {
   font-weight: bolder;
-}  
+}
+
+
+svg.inputLoader {
+  width: 1.5rem !important;
+  transform: none !important;
+  transform-origin: center !important;
+  animation: rotate4 2s linear infinite;
+
+  circle {
+    fill: none;
+    stroke: hsl(214, 97%, 59%);
+    stroke-width: 3 !important;
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+    stroke-linecap: round;
+   
+    animation: dash4 1.5s ease-in-out infinite;
+  }
+
+  @keyframes rotate4 {
+    100% {
+      transform: rotate(360deg) !important;
+    }
+  }
+
+  @keyframes dash4 {
+    0% {
+      stroke-dasharray: 1, 200;
+      stroke-dashoffset: 0;
+    }
+
+    50% {
+      stroke-dasharray: 90, 200;
+      stroke-dashoffset: -35px;
+    }
+
+    100% {
+      stroke-dashoffset: -125px;
+    }
+  }
+}

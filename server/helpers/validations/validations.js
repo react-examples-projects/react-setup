@@ -129,6 +129,15 @@ const passwordChangeValidation = yup.object({
   }),
 });
 
+const checkEmailInUseValidation = yup.object({
+  body: yup.object({
+    email: yup
+      .string()
+      .email("El correo debe ser válido, ejemplo: example@domain.es")
+      .required("El correo es obligatorio"),
+  }),
+});
+
 const requireIdValidation = yup.object({
   params: yup.object({
     id: idSchema,
@@ -143,5 +152,6 @@ module.exports = {
   deleteUserSchemaValidation,
   perfilPhotoSchemaValidation,
   passwordChangeValidation,
+  checkEmailInUseValidation,
   requireIdValidation,
 };
