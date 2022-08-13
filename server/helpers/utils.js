@@ -1,7 +1,11 @@
 const chalk = require("chalk");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const path = require("path");
+const fs = require("fs");
+const handlebars = require("handlebars");
 const { SERVER } = require("../config/variables");
+
 const message = {
   success(str) {
     console.log(chalk.greenBright(`[✔️] ${str}`) + "\n");
@@ -17,7 +21,7 @@ const message = {
   },
 };
 
-function getTokenInfo(token) {
+function getSessionTokenInfo(token) {
   return new Promise((resolve, reject) => {
     jwt.verify(token, SERVER.API.SECRET_TOKEN, (err, payload) => {
       if (err) return reject(new Error(err));
@@ -37,22 +41,39 @@ function isInvalidPassword(hashedPassword, password) {
   return !result;
 }
 
-function getTokenFromPayload(payload) {
+function createSessionToken(payload) {
   const token = jwt.sign(payload, SERVER.API.SECRET_TOKEN, {
     expiresIn: "1h",
   });
   return token;
 }
-  
+
 function isRequestAjaxOrApi(req) {
   return !req.accepts("html") || req.xhr;
 }
 
+function createEmailVerifyToken(user) {
+  const token = jwt.sign(user, SERVER.SECRET_TOKEN_VERIFY_EMAILS, {
+    expiresIn: "10m",
+  });
+  return token;
+}
+
+function compileTemplate(url, variables) {
+  const filePath = path.join(__dirname, url);
+  const source = fs.readFileSync(filePath, "utf-8").toString();
+  const template = handlebars.compile(source);
+  const htmlToSend = template(variables);
+  return htmlToSend;
+}
+
 module.exports = {
   message,
-  getTokenInfo,
+  getSessionTokenInfo,
   hashPassword,
+  compileTemplate,
   isInvalidPassword,
   isRequestAjaxOrApi,
-  getTokenFromPayload,
+  createSessionToken,
+  createEmailVerifyToken,
 };

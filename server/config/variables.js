@@ -1,5 +1,5 @@
 require("dotenv").config();
-
+const nodemailer = require("nodemailer");
 const MONGO_DB = {
   URL: process.env.MONGODB_URL,
 };
@@ -23,6 +23,15 @@ const SERVER = {
       max: 200, // limit each IP to 200 requests per windowMs
     },
   },
+  SECRET_TOKEN_VERIFY_EMAILS: process.env.SECRET_TOKEN_VERIFY_EMAILS,
+  transporterEmails: nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+    logger: true,
+  }),
 };
 
 module.exports = {

@@ -24,7 +24,7 @@ export default function Signup() {
   const { inUse, check, ...emailInUse } = useEmailInUse();
   const signup = useSignup();
   const navigate = useNavigate();
-  const { error, success } = useToast();
+  const { error, success } = useToast({ delay: 4000 });
   const { errors, handleSubmit, register } = useFormValidation(signupSchema, {
     defaultValues: { email: "", password: "", passwordConfirm: "", name: "" },
   });
@@ -33,20 +33,17 @@ export default function Signup() {
     try {
       if (!inUse) {
         const res = await signup.mutateAsync(data);
-        if (res?.name && res?.email) {
-          navigate("/", { replace: true });
-          success("Usuario registrado con exito");
-        }
+        success(res.message);
+        // if (res?.name && res?.email) {
+        //   navigate("/", { replace: true });
+        //   success("Usuario registrado con exito");
+        // }
       }
     } catch {
       error("Error al registrar la cuenta");
     }
   }
-
-  async function checkEmail(e) {
-    const email = e.target.value.trim();
-    check(email);
-  }
+  const checkEmail = (e) => check(e.target.value);
 
   return (
     <div style={{ maxWidth: "370px" }}>
@@ -127,7 +124,10 @@ export default function Signup() {
           />
         </div>
 
-        <Text className="text-muted d-flex align-items-center" style={{ fontSize: "80%" }}>
+        <Text
+          className="text-muted d-flex align-items-center"
+          style={{ fontSize: "80%" }}
+        >
           <FiAlertTriangle className="me-1" />
           La contraseña debe tener letras mayúsculas, minúsculas y un número
         </Text>

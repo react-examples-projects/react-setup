@@ -1,9 +1,12 @@
 const UserService = require("../services/userService");
 const { success, error } = require("../helpers/httpResponses");
+const { sendVerificationEmail } = require("../helpers/requests");
 const {
   hashPassword,
-  getTokenFromPayload,
+  createSessionToken,
+  createEmailVerifyToken,
   isInvalidPassword,
+  compileTemplate,
 } = require("../helpers/utils");
 
 class AuthController {
@@ -16,7 +19,7 @@ class AuthController {
           return error(res, "Usuario o clave incorrecta");
 
         delete user.password;
-        const token = getTokenFromPayload(user);
+        const token = createSessionToken(user);
         return success(res, { user, token });
       }
       error(res, "Usuario o clave incorrecta");
@@ -28,14 +31,22 @@ class AuthController {
   async signup(req, res, next) {
     try {
       const { email, password, name } = req.body;
+      await sendVerificationEmail({ email, name });
+
       const passwordHashed = hashPassword(password);
-      const userCreated = await UserService.createUser({
+      const user = await UserService.createUser({
         name,
         email,
         password: passwordHashed,
       });
-
-      success(res, userCreated, 201);
+      success(
+        res,
+        {
+          message: `Para continuar verifique su bandeja correo ${email} para continuar con el registro`,
+          user,
+        },
+        201
+      );
     } catch (err) {
       next(err);
     }

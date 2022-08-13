@@ -37,7 +37,7 @@ export function getErrorValidation(
   const DATA_ERROR = ERROR?.response?.data;
 
   if (typeof DATA_ERROR?.data === "string") return DATA_ERROR?.data;
-  
+
   return (
     DATA_ERROR?.data?.[0] ||
     DATA_ERROR?.errorDescription ||
@@ -138,6 +138,16 @@ export function isValidFile(file) {
     return false;
   }
   return true;
+}
+/**
+ * Check if `str` is a valid e-mail with regex
+ * @param {string} str string to check
+ * @returns if `str` is a valid e-mail
+ */
+export function isEmail(str) {
+  if (typeof str !== "string") return false;
+  const regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return regexEmail.test(str);
 }
 
 /**

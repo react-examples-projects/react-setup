@@ -18,6 +18,7 @@
     "axios": "^0.27.2",
     "classnames": "^2.3.1",
     "constate": "^3.3.2",
+    "handlebars": "^4.7.7",
     "inter-ui": "^3.19.3",
     "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
