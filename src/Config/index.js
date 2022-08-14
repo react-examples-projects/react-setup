@@ -11,7 +11,7 @@ export const toggleUserIdle = (id) => "user/idle/" + id;
 export const getUsers = "user/users/";
 export const dashboard = "dashboard/"
 export const emailInUse = "validation/email"
-
+export const verifyAccount = "validation/account"
 export const USER_RANKS = {
   ADMIN: {
     name: "admin",

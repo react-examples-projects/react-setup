@@ -59,6 +59,15 @@ function createEmailVerifyToken(user) {
   return token;
 }
 
+function getAccountFromVerifyToken(token) {
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, SERVER.SECRET_TOKEN_VERIFY_EMAILS, (err, payload) => {
+      if (err) return reject(new Error(err));
+      resolve(payload);
+    });
+  });
+}
+
 function compileTemplate(url, variables) {
   const filePath = path.join(__dirname, url);
   const source = fs.readFileSync(filePath, "utf-8").toString();
@@ -76,4 +85,5 @@ module.exports = {
   isRequestAjaxOrApi,
   createSessionToken,
   createEmailVerifyToken,
+  getAccountFromVerifyToken,
 };

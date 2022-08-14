@@ -24,21 +24,17 @@ export default function Signup() {
   const { inUse, check, ...emailInUse } = useEmailInUse();
   const signup = useSignup();
   const navigate = useNavigate();
-  const { error, success } = useToast({ delay: 4000 });
+  const { error, success } = useToast({ delay: 6000 });
   const { errors, handleSubmit, register } = useFormValidation(signupSchema, {
     defaultValues: { email: "", password: "", passwordConfirm: "", name: "" },
   });
 
   async function handleOnSubmit(data) {
     try {
-      if (!inUse) {
-        const res = await signup.mutateAsync(data);
-        success(res.message);
-        // if (res?.name && res?.email) {
-        //   navigate("/", { replace: true });
-        //   success("Usuario registrado con exito");
-        // }
-      }
+      if (inUse) return;
+      const res = await signup.mutateAsync(data);
+      success(res.message);
+      navigate("/", { replace: true });
     } catch {
       error("Error al registrar la cuenta");
     }

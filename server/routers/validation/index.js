@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const userController = require("../../controllers/userController");
+const validationController = require("../../controllers/validationController");
 const validate = require("../../helpers/validations/validate");
 const {
   checkEmailInUseValidation,
@@ -9,7 +9,9 @@ const {
 router.post(
   "/email",
   validate(checkEmailInUseValidation),
-  userController.checkEmailInUse
+  validationController.checkEmailInUse
 );
+
+router.post("/account", validationController.verifyAccount);
 
 module.exports = router;

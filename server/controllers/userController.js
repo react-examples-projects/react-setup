@@ -36,17 +36,7 @@ class UserController {
       next(err);
     }
   }
-
-  async checkEmailInUse(req, res, next) {
-    try {
-      const email = req.body.email;
-      const user = await UserService.existsUser(email);
-      success(res, !!user);
-    } catch (err) {
-      next(err);
-    }
-  }
-
+  
   async createUser(req, res, next) {
     try {
       const { email, password, rank, name } = req.body;

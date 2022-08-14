@@ -4,9 +4,7 @@ const { sendVerificationEmail } = require("../helpers/requests");
 const {
   hashPassword,
   createSessionToken,
-  createEmailVerifyToken,
   isInvalidPassword,
-  compileTemplate,
 } = require("../helpers/utils");
 
 class AuthController {
@@ -14,15 +12,29 @@ class AuthController {
     try {
       const { email, password } = req.body;
       const user = await UserService.existsUser(email);
-      if (user) {
-        if (isInvalidPassword(password, user.password))
-          return error(res, "Usuario o clave incorrecta");
+      if (!user) return error(res, "Usuario o clave incorrecta");
 
-        delete user.password;
-        const token = createSessionToken(user);
-        return success(res, { user, token });
+      if (user.isIdle) {
+        return success(res, {
+          message: "Tu cuenta se encuentra deshabilitada, contacta con un moderador.",
+          isIdle: true,
+        });
       }
-      error(res, "Usuario o clave incorrecta");
+
+      if(!user.isVerified){
+        return success(res, {
+          message: "Tu cuenta no está verificada, revisa tu correo electrónico.",
+          isVerified: false,
+        });
+      }
+
+      if (isInvalidPassword(password, user.password))
+        return error(res, "Usuario o clave incorrecta");
+
+      delete user.password;
+      const token = createSessionToken(user);
+      return success(res, { user, token });
+
     } catch (err) {
       next(err);
     }
@@ -42,8 +54,8 @@ class AuthController {
       success(
         res,
         {
-          message: `Para continuar verifique su bandeja correo ${email} para continuar con el registro`,
           user,
+          message: `Para continuar verifique su bandeja correo:\n ${email}, para continuar con el registro`,
         },
         201
       );

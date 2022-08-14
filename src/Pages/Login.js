@@ -22,6 +22,7 @@ export default function Login() {
   const login = useLogin();
   const navigate = useNavigate();
   const [isIdle, setIdle] = useState(false);
+  const [isVerified, setVerified] = useState(true);
   const { error } = useToast();
   const { errors, handleSubmit, register } = useFormValidation(loginSchema, {
     defaultValues: { email: "", password: "" },
@@ -31,9 +32,9 @@ export default function Login() {
     try {
       setIdle(false);
       const res = await login.mutateAsync(data);
-      if (res?.user.isIdle) {
-        return setIdle(true);
-      }
+      if (res?.isIdle) return setIdle(true);
+      if ("isVerified" in res && !res.isVerified) return setVerified(false);
+
       if (res?.user && res?.token) {
         login.setSession(res.token, res.user);
         navigate("/dashboard", { replace: true });
@@ -93,9 +94,16 @@ export default function Login() {
 
         <Alert
           title="Error al inicia sesión"
-          content="Tu cuenta se encuentra deshabilitada, contacta con un moderador"
+          content="Tu cuenta se encuentra deshabilitada, contacta con un moderador."
           className="mb-2"
           visible={isIdle}
+        />
+
+        <Alert
+          title="Error al inicia sesión"
+          content="Tu cuenta no está verificada, revisa tu correo electrónico."
+          className="mb-2"
+          visible={!isVerified}
         />
 
         <div className="mb-2">
