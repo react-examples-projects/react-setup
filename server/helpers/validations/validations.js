@@ -138,6 +138,12 @@ const checkEmailInUseValidation = yup.object({
   }),
 });
 
+const verifyAccountValidation = yup.object({
+  body: yup.object({
+    token: yup.string().required("El token es obligatorio"),
+  }),
+});
+
 const requireIdValidation = yup.object({
   params: yup.object({
     id: idSchema,
@@ -153,5 +159,6 @@ module.exports = {
   perfilPhotoSchemaValidation,
   passwordChangeValidation,
   checkEmailInUseValidation,
+  verifyAccountValidation,
   requireIdValidation,
 };

@@ -15,22 +15,13 @@ class ValidationController {
 
   async verifyAccount(req, res, next) {
     try {
-      const token = decodeURIComponent(req.body.token).replace(/\-/g, ".");
-      const { email } = await getAccountFromVerifyToken(token);
-      const user = await UserService.existsUser(email);
-
-      if (!email || !user) {
-        throw new Error(
-          "El token es inválido o caducó, solicite un nuevo token para verificar su cuenta"
-        );
-      }
       await UserService.UserModel.findOneAndUpdate(
-        { email },
+        { email: req.email },
         { isVerified: true }
       );
 
       success(res, {
-        message: `El correo: ${email} fue verificado con exito, proceda a iniciar sesión.`,
+        message: `El correo: ${req.email} fue verificado con exito, proceda a iniciar sesión.`,
       });
     } catch (err) {
       next(err);

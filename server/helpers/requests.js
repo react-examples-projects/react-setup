@@ -41,8 +41,8 @@ function sendEmail({ email, subject, text, html }) {
 
 async function sendVerificationEmail({ email, name }) {
   const token = createEmailVerifyToken({ email, name });
-  const tokenEscaped = encodeURIComponent(token).replace(/\./g, "-");
-
+  const tokenEscaped = encodeURIComponent(token).replace(/\./g, "$");
+  console.log(tokenEscaped)
   return sendEmail({
     email,
     subject: "Verificar su cuenta en React Dashboard",

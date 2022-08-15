@@ -10,6 +10,7 @@ import {
   deleteUser as _deleteUser,
   dashboard,
   emailInUse,
+  verifyAccount as _verifyAccount,
 } from "config/";
 import { getToken, removeToken, isValidToken } from "helpers/token";
 import axios from "axios";
@@ -51,6 +52,13 @@ export async function checkEmailExists(email) {
   return res;
 }
 
+export async function verifyAccount(token) {
+  const res = await instance.post(_verifyAccount, {
+    token,
+  });
+  return res;
+}
+
 export async function setLogin(auth) {
   const res = await instance.post(login, auth);
   return res;
@@ -84,7 +92,6 @@ export async function deleteUser(payload) {
 }
 
 export async function toggleUserIdle(payload) {
-  console.log(payload);
   const res = await instance.put(_toggleUserIdle(payload.get("_id")), payload);
   return res;
 }
