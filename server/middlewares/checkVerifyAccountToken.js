@@ -4,7 +4,6 @@ const { getAccountFromVerifyToken } = require("../helpers/utils");
 async function checkVerifyAccountToken(req, res, next) {
   try {
     const token = decodeURIComponent(req.body.token).replace(/\$/g, ".");
-    console.log(token)
     const { email } = await getAccountFromVerifyToken(token);
     if (!email) {
       return next("El token es inválido o caducó, solicite otro");

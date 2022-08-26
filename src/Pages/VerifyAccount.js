@@ -1,37 +1,62 @@
-import { useParams } from "react-router-dom";
-import { verifyAccount } from "helpers/api";
-import { useEffect, useState } from "react";
+import useValidateAccount from "hooks/validations/useValidateAccount";
+import useBody from "hooks/utils/useBody";
+import Loader from "components/Loaders/Loader";
+import styles from "styles/VerifyAccount.module.scss";
+import cls from "classnames"
+import { Link } from "react-router-dom";
+import { FiXCircle, FiCheckCircle } from "react-icons/fi";
+import { Button } from "@geist-ui/core";
 
 export default function VerifyAccount() {
-  const { token } = useParams();
-  console.log(token)
-  const [isLoading, setLoading] = useState(false);
-  const [isError, setError] = useState(null);
-  const [data, setData] = useState(null);
+  const { isLoading, isError, error, data } = useValidateAccount();
+  const errorDesc = error?.response?.data.errorDescription || error?.code;
 
-  useEffect(() => {
-    async function verify() {
-      try {
-        setLoading(true);
-        const res = await verifyAccount(token);
-        setData(res);
-        console.log(res);
-      } catch (error) {
-        console.error(error);
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    verify();
-  }, [token]);
+  useBody({
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "100vh",
+  });
 
   return (
-    <div>
-      {isLoading && <p>Verificando token...</p>}
-      {isError && <p>Ocurrió un error ...</p>}
-      {data && <p>El token se verifico con exito...</p>}
+    <div className={styles.container}>
+      {isLoading && (
+        <>
+          <h2 className="mb-4">Verificando token</h2>
+          <Loader />
+        </>
+      )}
+      {isError && (
+        <>
+          <FiXCircle className={cls(styles.icon, styles.iconError)} />
+          <h2 className="mt-2">Ocurrió un error</h2>
+          <p className="text-muted mt-2">
+            Ocurrio un error al activar tu cuenta, verifica que el link no esté
+            expirado, error:
+            <code className="d-block mt-1">{errorDesc}</code>
+          </p>
+
+          <Button type="success" className="mt-2">
+            Reenviar código nuevo
+          </Button>
+        </>
+      )}
+      {data && (
+        <>
+          <FiCheckCircle className={cls(styles.icon, styles.iconSuccess)} />
+          <h2 className="mt-2">Cuenta Activada</h2>
+          <p className="text-muted mt-2">
+            La cuenta ha sido activada con exito.
+          </p>
+
+          <Link to="/">
+            <Button type="success" className="mt-2">
+              Iniciar Sesión
+            </Button>
+          </Link>
+        </>
+      )}
     </div>
   );
 }

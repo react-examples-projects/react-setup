@@ -1,6 +1,5 @@
 const UserService = require("../services/userService");
 const { success } = require("../helpers/httpResponses");
-const { getAccountFromVerifyToken } = require("../helpers/utils");
 
 class ValidationController {
   async checkEmailInUse(req, res, next) {
