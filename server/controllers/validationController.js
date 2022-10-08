@@ -1,5 +1,5 @@
 const UserService = require("../services/userService");
-const { success } = require("../helpers/httpResponses");
+const { success, sendVerificationEmail } = require("../helpers/httpResponses");
 
 class ValidationController {
   async checkEmailInUse(req, res, next) {
@@ -21,6 +21,21 @@ class ValidationController {
 
       success(res, {
         message: `El correo: ${req.email} fue verificado con exito, proceda a iniciar sesión.`,
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async resendVerifyCode(req, res, next) {
+    try {
+      if (req.user.isVerified) {
+        return next("El correo de esta cuenta ya está verificada");
+      }
+
+      await sendVerificationEmail({
+        email: req.user.email,
+        name: req.user.name,
       });
     } catch (err) {
       next(err);

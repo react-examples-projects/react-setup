@@ -1,11 +1,12 @@
 import useValidateAccount from "hooks/validations/useValidateAccount";
 import useBody from "hooks/utils/useBody";
 import Loader from "components/Loaders/Loader";
+import ResendVerifyCode from "components/ResendVerifyCode"
 import styles from "styles/VerifyAccount.module.scss";
-import cls from "classnames"
+import cls from "classnames";
 import { Link } from "react-router-dom";
 import { FiXCircle, FiCheckCircle } from "react-icons/fi";
-import { Button } from "@geist-ui/core";
+import { Button, } from "@geist-ui/core";
 
 export default function VerifyAccount() {
   const { isLoading, isError, error, data } = useValidateAccount();
@@ -37,9 +38,9 @@ export default function VerifyAccount() {
             <code className="d-block mt-1">{errorDesc}</code>
           </p>
 
-          <Button type="success" className="mt-2">
-            Reenviar código nuevo
-          </Button>
+          {errorDesc.includes("jwt expired") && (
+            <ResendVerifyCode />
+          )}
         </>
       )}
       {data && (
