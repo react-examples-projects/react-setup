@@ -1,32 +1,25 @@
 import ErrorText from "components/Text/ErrorText";
-import axios from "axios";
+import useFormValidation from "hooks/validations/useFormValidation";
+import resendVerifyCodeSchema from "helpers/schema/resendVerifyCodeSchema";
+import useResendVerifyCode from "hooks/auth/useResendVerifyCode";
+import useToast from "hooks/utils/useToast";
 import { Button, Input } from "@geist-ui/core";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 
 export default function ResendVerifyCode() {
-  const schema = yup
-    .object({
-      email: yup
-        .string()
-        .email("Debe ser un correo válido")
-        .required("El correo es obligatorio"),
-    })
-    .required();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
+  const resendCodeMutation = useResendVerifyCode();
+  const { error, success } = useToast();
+  const { register, handleSubmit, errors } = useFormValidation(
+    resendVerifyCodeSchema
+  );
   const onSubmit = async (data) => {
-    const res = await axios.post(
-      "http://localhost:5000/api/validation/resend-verfication",
-      data
-    );
-    console.log(res);
+    try {
+      const res = await resendCodeMutation.mutateAsync(data);
+      console.log(res);
+      success("Se reenvió el código de confirmación");
+    } catch (err) {
+      console.log(err);
+      error("Hubo un error al enviar el código de confirmación");
+    }
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

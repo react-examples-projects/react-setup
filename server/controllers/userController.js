@@ -18,6 +18,7 @@ class UserController {
     try {
       const { password, passwordConfirm } = req.body;
       const id = req.user._id;
+
       if (password !== passwordConfirm) {
         return error(res, "Las contraseñas no coinciden", 400);
       }
@@ -36,7 +37,7 @@ class UserController {
       next(err);
     }
   }
-  
+
   async createUser(req, res, next) {
     try {
       const { email, password, rank, name } = req.body;
@@ -46,7 +47,9 @@ class UserController {
         rank,
         name,
       };
+
       if (req.perfilPhoto) newData.perfil_photo = req.perfilPhoto;
+
       const userCreated = await UserService.createUser(newData);
 
       success(res, userCreated, 201);
@@ -64,8 +67,11 @@ class UserController {
         name,
         isIdle,
       };
+
       if (req.perfilPhoto) newData.perfil_photo = req.perfilPhoto;
+
       const result = await UserService.editUser(req.params.id, newData);
+      
       success(res, result);
     } catch (err) {
       next(err);

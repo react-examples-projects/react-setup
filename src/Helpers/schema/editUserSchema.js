@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import { emailSchema, rankUser } from "./helperSchemas";
 
 const editUserSchema = yup.object({
   name: yup
@@ -9,12 +10,8 @@ const editUserSchema = yup.object({
       /^[a-zA-Z][a-zA-Z\s]*$/,
       "El nombre sólo debe tener letras y espacios"
     ),
-  email: yup
-    .string()
-    .trim()
-    .email("El correo no tiene un formato válido")
-    .required("El correo es obligatorio"),
-  rank: yup.string().trim().oneOf(["user", "admin"], "El rango no es válido"),
+  email: emailSchema,
+  rank: rankUser,
   perfil_photo: yup.string(),
 });
 

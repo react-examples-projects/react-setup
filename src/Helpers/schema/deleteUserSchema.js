@@ -1,7 +1,8 @@
 import * as yup from "yup";
+import { passwordSchema } from "./helperSchemas";
 
 const deleteUserSchema = yup.object({
-  password: yup.string().required("La contraseña es obligatoria"),
+  password: passwordSchema,
 });
 
 export default deleteUserSchema;

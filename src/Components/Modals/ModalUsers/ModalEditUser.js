@@ -46,6 +46,7 @@ export default function ModalEditUser({
       _id,
       rank: userRank,
       isIdle: isCurrentUserIdle,
+      lastEmail: email,
       ...(userProfile && { perfil_photo: userProfile }),
     };
     const data = toFormDataObj(newUser);

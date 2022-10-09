@@ -31,7 +31,6 @@ const UserSchema = new Schema(
       required: [true, "El nombre es obligatorio"],
       minLength: 4,
       maxLength: 100,
-      unique: true,
       trim: true,
     },
     isIdle: {

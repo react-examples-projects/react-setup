@@ -11,6 +11,7 @@ import {
   dashboard,
   emailInUse,
   verifyAccount as _verifyAccount,
+  resendVerifyCode as _resendVerifyCode,
 } from "config/";
 import { getToken, removeToken, isValidToken } from "helpers/token";
 import axios from "axios";
@@ -103,5 +104,10 @@ export async function getAllUsers() {
 
 export async function getDashboardData() {
   const res = await instance.get(dashboard);
+  return res;
+}
+
+export async function resendVerifyCode(data) {
+  const res = await instance.post(_resendVerifyCode, data);
   return res;
 }

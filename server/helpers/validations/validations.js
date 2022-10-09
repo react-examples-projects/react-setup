@@ -92,6 +92,10 @@ const editUserSchemaValidation = yup.object({
       .string()
       .email("El correo debe ser válido, ejemplo: example@domain.es")
       .required("El correo es obligatorio"),
+    lastEmail: yup
+      .string()
+      .email("El antiguo correo debe ser válido, ejemplo: example@domain.es")
+      .required("El antiguo correo es un obligatorio"),
     rank: yup.string().trim().oneOf(["user", "admin"], "El rango no es válido"),
     perfil_photo: yup.string("La imágen de perfil debe ser una cadena"),
   }),

@@ -1,5 +1,6 @@
 const UserService = require("../services/userService");
-const { success, sendVerificationEmail } = require("../helpers/httpResponses");
+const { success } = require("../helpers/httpResponses");
+const { sendVerificationEmail } = require("../helpers/requests");
 
 class ValidationController {
   async checkEmailInUse(req, res, next) {
@@ -36,6 +37,10 @@ class ValidationController {
       await sendVerificationEmail({
         email: req.user.email,
         name: req.user.name,
+      });
+
+      success(res, {
+        message: "Verificación enviada",
       });
     } catch (err) {
       next(err);

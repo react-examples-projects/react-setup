@@ -9,9 +9,11 @@ export const editUser = (id) => "user/" + id;
 export const deleteUser = (id) => "user/" + id;
 export const toggleUserIdle = (id) => "user/idle/" + id;
 export const getUsers = "user/users/";
-export const dashboard = "dashboard/"
-export const emailInUse = "validation/email"
-export const verifyAccount = "validation/account"
+export const dashboard = "dashboard/";
+export const emailInUse = "validation/email";
+export const verifyAccount = "validation/account";
+export const resendVerifyCode = "validation/resend-verfication";
+
 export const USER_RANKS = {
   ADMIN: {
     name: "admin",

@@ -16,25 +16,28 @@ class AuthController {
 
       if (user.isIdle) {
         return success(res, {
-          message: "Tu cuenta se encuentra deshabilitada, contacta con un moderador.",
+          message:
+            "Tu cuenta se encuentra deshabilitada, contacta con un moderador.",
           isIdle: true,
         });
       }
 
-      if(!user.isVerified){
+      if (!user.isVerified) {
         return success(res, {
-          message: "Tu cuenta no está verificada, revisa tu correo electrónico.",
+          message:
+            "Tu cuenta no está verificada, revisa tu correo electrónico.",
           isVerified: false,
         });
       }
 
-      if (isInvalidPassword(password, user.password))
+      if (isInvalidPassword(password, user.password)) {
         return error(res, "Usuario o clave incorrecta");
+      }
 
       delete user.password;
+      
       const token = createSessionToken(user);
       return success(res, { user, token });
-
     } catch (err) {
       next(err);
     }
