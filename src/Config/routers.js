@@ -8,14 +8,16 @@ const NotFound = lazy(() => import("pages/NotFound"));
 const Signup = lazy(() => import("pages/Signup"));
 const Login = lazy(() => import("pages/Login"));
 const VerifyAccount = lazy(() => import("pages/VerifyAccount"));
+const Landing = lazy(() => import("pages/Landing"));
 const options = { layout: Layout };
 
 const routers = [
-  redirectRoute(Login, "/"),
+  redirectRoute(Login, "/login"),
   redirectRoute(Signup, "/signup"),
   privateRoute(App, "/dashboard", options),
   adminRoute(Users, "/users", options),
   route(VerifyAccount, "/verify/:token"),
+  route(Landing, "/"),
   route(NotFound),
 ];
 

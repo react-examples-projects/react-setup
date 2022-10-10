@@ -1,0 +1,57 @@
+.container {
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+  padding: 3rem 1rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+
+  h1 {
+    font-size: 1rem;
+    margin: 0;
+  }
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+}
+
+.navItem {
+  font-size: 14px;
+
+  &:hover {
+    color: #000 !important;
+  }
+
+  &:not(:last-child) {
+    margin-right: 15px;
+  }
+}
+
+.btnLogin {
+  margin-left: 2rem !important;
+
+}
+
+.banner {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.lead {
+  max-width: 800px;
+  margin: auto;
+}
