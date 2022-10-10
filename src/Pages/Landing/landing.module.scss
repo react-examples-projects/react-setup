@@ -55,3 +55,51 @@
   max-width: 800px;
   margin: auto;
 }
+
+.feactureTitle {
+  color: #00418b;
+  font-size: 1.2rem;
+}
+
+.feactureSvg {
+  font-size: 1.5rem;
+  stroke: #0070f3;
+}
+
+.technologies {
+  padding: 3rem;
+  margin-top: 3rem;
+  background-color: #0071f328;
+  border-radius: 10px;
+}
+
+
+.technologiesItem {
+  position: relative;
+  width: 100%;
+  padding: 1rem !important;
+  background-color: #fff;
+  border-radius: 4px;
+  text-align: left;
+
+  h4 {
+    font-size: 1.1rem;
+    max-width: 250px;
+  }
+
+  >div {
+    position: absolute !important;
+    right: 1rem;
+    bottom: 1rem;
+
+    img {
+      object-fit: contain !important;
+    }
+  }
+
+  a {
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: 14px;
+  }
+}
