@@ -8,9 +8,10 @@ const CompressionPlugin = require("compression-webpack-plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const isDevelopment  = process.env.NODE_ENV !== "production";
 
 module.exports = {
-  mode: "development",
+  mode: isDevelopment  ? "development" : "production",
   entry: ["babel-polyfill", path.join(__dirname, "src", "index.js")],
   output: {
     path: path.resolve(__dirname, "dist"),

@@ -24,6 +24,7 @@ const SERVER = {
     },
   },
   SECRET_TOKEN_VERIFY_EMAILS: process.env.SECRET_TOKEN_VERIFY_EMAILS,
+  SECRET_TOKEN_RECOVERY_PASSWORD: process.env.SECRET_TOKEN_RECOVERY_PASSWORD,
   transporterEmails: nodemailer.createTransport({
     service: "gmail",
     auth: {

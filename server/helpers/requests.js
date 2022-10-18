@@ -2,6 +2,7 @@ const axios = require("axios").default;
 const FormData = require("form-data");
 const {
   createEmailVerifyToken,
+  createRecoryPasswordToken,
   compileTemplate,
   message,
 } = require("../helpers/utils");
@@ -53,4 +54,23 @@ async function sendVerificationEmail({ email, name }) {
   });
 }
 
-module.exports = { uploadImages, sendEmail, sendVerificationEmail };
+async function sendRecoveryPasswordEmail({ email, name }) {
+  const token = createRecoryPasswordToken({ email, name });
+  const tokenEscaped = encodeURIComponent(token).replace(/\./g, "$");
+
+  return sendEmail({
+    email,
+    subject: "Recuperar clave de su cuenta en React Dashboard",
+    html: compileTemplate("../templates/recovery-password.html", {
+      name,
+      verifyLink: `http://localhost:3000/recovery/${tokenEscaped}`,
+    }),
+  });
+}
+
+module.exports = {
+  uploadImages,
+  sendEmail,
+  sendRecoveryPasswordEmail,
+  sendVerificationEmail,
+};

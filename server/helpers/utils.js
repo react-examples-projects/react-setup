@@ -59,6 +59,13 @@ function createEmailVerifyToken(user) {
   return token;
 }
 
+function createRecoryPasswordToken(user) {
+  const token = jwt.sign(user, SERVER.SECRET_TOKEN_RECOVERY_PASSWORD, {
+    expiresIn: "10m",
+  });
+  return token;
+}
+
 function getAccountFromVerifyToken(token) {
   return new Promise((resolve, reject) => {
     jwt.verify(token, SERVER.SECRET_TOKEN_VERIFY_EMAILS, (err, payload) => {
@@ -85,5 +92,6 @@ module.exports = {
   isRequestAjaxOrApi,
   createSessionToken,
   createEmailVerifyToken,
+  createRecoryPasswordToken,
   getAccountFromVerifyToken,
 };

@@ -6,7 +6,7 @@ export default function LoaderUserList() {
       <Skeleton
         height={74}
         containerClassName="w-100"
-        count={5}
+        count={10}
         className="mb-2"
       />
     </div>

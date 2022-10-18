@@ -130,8 +130,9 @@ export default function Signup() {
 
         <ErrorText isVisible={signup.isError} text={signup} />
 
-        <div className="mb-2">
+        <div className="mb-2 mt-3">
           <Button
+            type="success-light"
             htmlType="submit"
             disabled={signup.isLoading || emailInUse.isLoading || inUse}
             loading={signup.isLoading || emailInUse.isLoading}
@@ -139,9 +140,10 @@ export default function Signup() {
           >
             Registrarse
           </Button>
-          <Text className="text-muted" style={{ fontSize: "80%" }}>
-            Si ya tienes cuenta, entra <Link to="/">aca</Link>.
-          </Text>
+
+          <Link style={{ fontSize: "80%" }} className="d-block mt-3" to="/login">
+            Si ya tienes cuenta, entra aquí.
+          </Link>
         </div>
       </form>
     </div>

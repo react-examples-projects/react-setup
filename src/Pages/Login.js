@@ -106,8 +106,9 @@ export default function Login() {
           visible={!isVerified}
         />
 
-        <div className="mb-2">
+        <div className="mb-2 mt-3">
           <Button
+            type="success-light"
             htmlType="submit"
             disabled={login.isLoading}
             loading={login.isLoading}
@@ -115,10 +116,15 @@ export default function Login() {
           >
             Iniciar
           </Button>
+          <div className="d-flex justify-content-between mt-3">
+            <Link style={{ fontSize: "80%" }} to="/signup">
+              Crea tu cuenta aquí
+            </Link>
 
-          <Text className="text-muted" style={{ fontSize: "80%" }}>
-            Si no tienes cuenta, puedes crearla <Link to="/signup">aca</Link>.
-          </Text>
+            <Link style={{ fontSize: "80%" }} to="/recovery">
+              Recuperar clave
+            </Link>
+          </div>
         </div>
       </form>
     </div>

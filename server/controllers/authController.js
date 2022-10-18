@@ -1,6 +1,9 @@
 const UserService = require("../services/userService");
 const { success, error } = require("../helpers/httpResponses");
-const { sendVerificationEmail } = require("../helpers/requests");
+const {
+  sendRecoveryPasswordEmail,
+  sendVerificationEmail,
+} = require("../helpers/requests");
 const {
   hashPassword,
   createSessionToken,
@@ -35,7 +38,7 @@ class AuthController {
       }
 
       delete user.password;
-      
+
       const token = createSessionToken(user);
       return success(res, { user, token });
     } catch (err) {
@@ -62,6 +65,23 @@ class AuthController {
         },
         201
       );
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async resetPassword(req, res, next) {
+    try {
+      if (!req.user.isVerified) {
+        return next("El correo de esta cuenta no está verificado");
+      }
+      await sendRecoveryPasswordEmail({
+        email: req.user.email,
+        name: req.user.name,
+      });
+      success(res, {
+        message: "Reseteo de clave enviada",
+      });
     } catch (err) {
       next(err);
     }

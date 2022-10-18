@@ -1,9 +1,22 @@
 const yup = require("yup");
-const passwordScheme = yup
+const passwordSchema = yup
   .string()
   .min(6, "Mínimo 6 carácteres para la contraseña")
   .max(50, "Máximo 50 carácteres para la contraseña")
   .required("La contraseña es obligatoria");
+
+const passwordConfirmSchema = passwordSchema.test(
+  "passwordChangeValidation",
+  "Las contraseñas no coinciden",
+  function (value) {
+    return this.parent.password === value;
+  }
+);
+
+const emailSchema = yup
+  .string()
+  .email("El correo debe ser válido, ejemplo: example@domain.es")
+  .required("El correo es obligatorio");
 
 const idSchema = yup
   .string()
@@ -12,15 +25,8 @@ const idSchema = yup
 
 const loginSchemaValidation = yup.object({
   body: yup.object({
-    email: yup
-      .string()
-      .email("El correo debe ser válido, ejemplo: example@domain.es")
-      .required("El correo es obligatorio"),
-    password: yup
-      .string()
-      .min(8, "Mínimo 8 carácteres para la contraseña")
-      .max(20, "Máximo 20 carácteres para la contraseña")
-      .required("La contraseña es obligatoria"),
+    email: emailSchema,
+    password: passwordSchema,
   }),
 });
 
@@ -31,22 +37,9 @@ const signupSchemaValidation = yup.object({
       .min(4, "Mínimo 4 carácteres para el nombre")
       .max(100, "Máximo 100 carácteres para el nombre")
       .required("El nombre es obligatorio"),
-    email: yup
-      .string()
-      .email("El correo debe ser válido, ejemplo: example@domain.es")
-      .required("El correo es obligatorio"),
-    password: yup
-      .string()
-      .min(8, "Mínimo 8 carácteres para la contraseña")
-      .max(20, "Máximo 20 carácteres para la contraseña")
-      .required("La contraseña es obligatoria"),
-    passwordConfirm: passwordScheme.test(
-      "passwordChangeValidation",
-      "Las contraseñas no coinciden",
-      function (value) {
-        return this.parent.password === value;
-      }
-    ),
+    email: emailSchema,
+    password: passwordSchema,
+    passwordConfirm: passwordConfirmSchema,
   }),
 });
 
@@ -57,24 +50,11 @@ const createUserSchemaValidation = yup.object({
       .min(4, "Mínimo 4 carácteres para el nombre")
       .max(100, "Máximo 100 carácteres para el nombre")
       .required("El nombre es obligatorio"),
-    email: yup
-      .string()
-      .email("El correo debe ser válido, ejemplo: example@domain.es")
-      .required("El correo es obligatorio"),
+    email: emailSchema,
     rank: yup.string().trim().oneOf(["user", "admin"], "El rango no es válido"),
     perfil_photo: yup.string("La imágen de perfil debe ser una cadena"),
-    password: yup
-      .string()
-      .min(8, "Mínimo 8 carácteres para la contraseña")
-      .max(20, "Máximo 20 carácteres para la contraseña")
-      .required("La contraseña es obligatoria"),
-    passwordConfirm: passwordScheme.test(
-      "passwordChangeValidation",
-      "Las contraseñas no coinciden",
-      function (value) {
-        return this.parent.password === value;
-      }
-    ),
+    password: passwordSchema,
+    passwordConfirm: passwordConfirmSchema,
   }),
 });
 
@@ -88,10 +68,7 @@ const editUserSchemaValidation = yup.object({
       .min(4, "Mínimo 4 carácteres para el nombre")
       .max(100, "Máximo 100 carácteres para el nombre")
       .required("El nombre es obligatorio"),
-    email: yup
-      .string()
-      .email("El correo debe ser válido, ejemplo: example@domain.es")
-      .required("El correo es obligatorio"),
+    email: emailSchema,
     lastEmail: yup
       .string()
       .email("El antiguo correo debe ser válido, ejemplo: example@domain.es")
@@ -122,29 +99,26 @@ const perfilPhotoSchemaValidation = yup.object({
 
 const passwordChangeValidation = yup.object({
   body: yup.object({
-    password: passwordScheme,
-    passwordConfirm: passwordScheme.test(
-      "passwordChangeValidation",
-      "Las contraseñas no coinciden",
-      function (value) {
-        return this.parent.password === value;
-      }
-    ),
+    password: passwordSchema,
+    passwordConfirm: passwordConfirmSchema,
   }),
 });
 
 const checkEmailInUseValidation = yup.object({
   body: yup.object({
-    email: yup
-      .string()
-      .email("El correo debe ser válido, ejemplo: example@domain.es")
-      .required("El correo es obligatorio"),
+    email: emailSchema,
   }),
 });
 
 const verifyAccountValidation = yup.object({
   body: yup.object({
     token: yup.string().required("El token es obligatorio"),
+  }),
+});
+
+const recoveryPassSchemaValidation = yup.object({
+  body: yup.object({
+    email: emailSchema,
   }),
 });
 
@@ -164,5 +138,8 @@ module.exports = {
   passwordChangeValidation,
   checkEmailInUseValidation,
   verifyAccountValidation,
+  recoveryPassSchemaValidation,
   requireIdValidation,
+  passwordSchema,
+  passwordConfirmSchema,
 };

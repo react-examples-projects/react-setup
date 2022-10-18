@@ -39,13 +39,15 @@ export default function Landing() {
             Contribuir
           </Link>
 
-          <Button
-            scale={0.7}
-            type="success-light"
-            className={cls(css.btnLogin)}
-          >
-            Iniciar Sesión
-          </Button>
+          <Link to="login">
+            <Button
+              scale={0.7}
+              type="success-light"
+              className={cls(css.btnLogin)}
+            >
+              Iniciar Sesión
+            </Button>
+          </Link>
         </nav>
       </header>
 

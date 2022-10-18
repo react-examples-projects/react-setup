@@ -12,6 +12,7 @@ import {
   emailInUse,
   verifyAccount as _verifyAccount,
   resendVerifyCode as _resendVerifyCode,
+  sendRecoveryPassword as _sendRecoveryPassword,
 } from "config/";
 import { getToken, removeToken, isValidToken } from "helpers/token";
 import axios from "axios";
@@ -109,5 +110,9 @@ export async function getDashboardData() {
 
 export async function resendVerifyCode(data) {
   const res = await instance.post(_resendVerifyCode, data);
+  return res;
+}
+export async function sendRecoveryPassword(data) {
+  const res = await instance.post(_sendRecoveryPassword, data);
   return res;
 }

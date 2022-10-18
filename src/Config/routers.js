@@ -8,6 +8,7 @@ const NotFound = lazy(() => import("pages/NotFound"));
 const Signup = lazy(() => import("pages/Signup"));
 const Login = lazy(() => import("pages/Login"));
 const VerifyAccount = lazy(() => import("pages/VerifyAccount"));
+const RecoveryPassword = lazy(() => import("pages/RecoveryPassword"));
 const Landing = lazy(() => import("pages/Landing"));
 const options = { layout: Layout };
 
@@ -16,6 +17,7 @@ const routers = [
   redirectRoute(Signup, "/signup"),
   privateRoute(App, "/dashboard", options),
   adminRoute(Users, "/users", options),
+  route(RecoveryPassword, "/recovery/:token"),
   route(VerifyAccount, "/verify/:token"),
   route(Landing, "/"),
   route(NotFound),
