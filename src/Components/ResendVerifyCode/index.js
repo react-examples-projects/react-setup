@@ -13,11 +13,9 @@ export default function ResendVerifyCode() {
   );
   const onSubmit = async (data) => {
     try {
-      const res = await resendCodeMutation.mutateAsync(data);
-      console.log(res);
+      await resendCodeMutation.mutateAsync(data);
       success("Se reenvió el código de confirmación");
     } catch (err) {
-      console.log(err);
       error("Hubo un error al enviar el código de confirmación");
     }
   };

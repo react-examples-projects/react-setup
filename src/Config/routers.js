@@ -17,7 +17,7 @@ const routers = [
   redirectRoute(Signup, "/signup"),
   privateRoute(App, "/dashboard", options),
   adminRoute(Users, "/users", options),
-  route(RecoveryPassword, "/recovery/:token"),
+  route(RecoveryPassword, "/recovery/"),
   route(VerifyAccount, "/verify/:token"),
   route(Landing, "/"),
   route(NotFound),

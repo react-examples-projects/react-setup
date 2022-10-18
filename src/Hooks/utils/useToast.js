@@ -1,6 +1,6 @@
 import { useToasts } from "@geist-ui/core";
 
-export default function useToast({ delay = 2300 } = {}) {
+export default function useToast({ delay = 2000 } = {}) {
   const { setToast } = useToasts();
 
   const toast = (text, type) => setToast({ text, delay, type });
