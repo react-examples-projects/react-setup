@@ -45,7 +45,7 @@ export default function Login() {
   }
 
   return (
-    <div style={{ maxWidth: "370px" }}>
+    <div style={{ maxWidth: "370px" }} className="mx-auto">
       <Text className="mb-4" h3>
         Inicia Sesión
       </Text>

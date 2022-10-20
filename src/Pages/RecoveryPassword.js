@@ -1,4 +1,5 @@
 import ErrorText from "components/Text/ErrorText";
+import RecoveryPasswordImg from "assets/recovery_password.svg";
 import styles from "styles/RecoveryPassword.module.scss";
 import useBody from "hooks/utils/useBody";
 import useToast from "hooks/utils/useToast";
@@ -6,12 +7,12 @@ import useResetPassword from "hooks/auth/useResetPassword";
 import useFormValidation from "hooks/validations/useFormValidation";
 import resetPasswordSchema from "helpers/schema/resetPasswordSchema";
 import { getErrorValidation } from "helpers/utils";
-import { Text, Input, Button } from "@geist-ui/core";
+import { Text, Input, Button,Image } from "@geist-ui/core";
 
 export default function RecoveryPassword() {
-  const { register, handleSubmit, errors } = useFormValidation(resetPasswordSchema);
-  const resetPasswordMutation = useResetPassword();
+  const { register, handleSubmit, errors } =useFormValidation(resetPasswordSchema);
   const { error, success } = useToast();
+  const resetPasswordMutation = useResetPassword();
 
   const onSubmit = async (data) => {
     try {
@@ -31,6 +32,7 @@ export default function RecoveryPassword() {
   });
   return (
     <div className={styles.container}>
+      <Image src={RecoveryPasswordImg} className="mb-3" width="200px" />
       <Text className="fw-bolder" h2>
         Recuperar Contraseña
       </Text>
@@ -59,7 +61,7 @@ export default function RecoveryPassword() {
           text={getErrorValidation(resetPasswordMutation)}
           isVisible={resetPasswordMutation.isError}
         />
-        <Button htmlType="submit" type="success-light">
+        <Button htmlType="submit" type="success-light" className="mt-3">
           Resetear contraseña
         </Button>
       </form>

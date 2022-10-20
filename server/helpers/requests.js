@@ -63,7 +63,7 @@ async function sendRecoveryPasswordEmail({ email, name }) {
     subject: "Recuperar clave de su cuenta en React Dashboard",
     html: compileTemplate("../templates/recovery-password.html", {
       name,
-      verifyLink: `http://localhost:3000/recovery/${tokenEscaped}`,
+      verifyLink: `http://localhost:3000/reset/${tokenEscaped}`,
     }),
   });
 }

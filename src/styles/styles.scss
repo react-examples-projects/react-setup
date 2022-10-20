@@ -30,6 +30,11 @@ img {
   width: auto;
 }
 
+#root {
+  width: 100%;
+  height: auto;
+}
+
 .container {
   width: 100%;
   max-width: 1200px;
@@ -84,7 +89,7 @@ svg.inputLoader {
     stroke-dasharray: 1, 200;
     stroke-dashoffset: 0;
     stroke-linecap: round;
-   
+
     animation: dash4 1.5s ease-in-out infinite;
   }
 

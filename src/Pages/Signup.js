@@ -42,7 +42,7 @@ export default function Signup() {
   const checkEmail = (e) => check(e.target.value);
 
   return (
-    <div style={{ maxWidth: "370px" }}>
+    <div style={{ maxWidth: "370px" }} className="mx-auto">
       <Text className="mb-4" h3>
         Registrate
       </Text>

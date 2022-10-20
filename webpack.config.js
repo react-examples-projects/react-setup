@@ -8,10 +8,10 @@ const CompressionPlugin = require("compression-webpack-plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const isDevelopment  = process.env.NODE_ENV !== "production";
+const isDevelopment = process.env.NODE_ENV !== "production";
 
 module.exports = {
-  mode: isDevelopment  ? "development" : "production",
+  mode: isDevelopment ? "development" : "production",
   entry: ["babel-polyfill", path.join(__dirname, "src", "index.js")],
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -67,7 +67,7 @@ module.exports = {
         use: ["style-loader", "css-loader", "sass-loader", "postcss-loader"],
       },
       {
-        test: /\.(png|jp(e*)g|svg|gif)$/,
+        test: /\.(png|jp(e*)g|gif)$/,
         use: [
           {
             loader: "url-loader",
@@ -79,7 +79,7 @@ module.exports = {
       },
       {
         test: /\.svg$/,
-        use: ["@svgr/webpack"],
+        use: ["@svgr/webpack", "url-loader"],
       },
     ],
   },
