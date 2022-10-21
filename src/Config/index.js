@@ -13,7 +13,7 @@ export const dashboard = "dashboard/";
 export const emailInUse = "validation/email";
 export const verifyAccount = "validation/account";
 export const resendVerifyCode = "validation/resend-verfication";
-export const sendRecoveryPassword ="auth/recovery/password";
+export const sendRecoveryPassword = "auth/recovery/password";
 
 export const USER_RANKS = {
   ADMIN: {
@@ -41,7 +41,7 @@ export const queryClient = new QueryClient({
       refetchOnReconnect: false,
       refetchOnWindowFocus: false,
       refetchOnMount: false,
-      retry: 2,
+      retry: 0,
     },
   },
 });

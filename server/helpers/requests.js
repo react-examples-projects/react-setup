@@ -4,6 +4,7 @@ const {
   createEmailVerifyToken,
   createRecoryPasswordToken,
   compileTemplate,
+  escapeToken,
   message,
 } = require("../helpers/utils");
 const {
@@ -42,7 +43,7 @@ function sendEmail({ email, subject, text, html }) {
 
 async function sendVerificationEmail({ email, name }) {
   const token = createEmailVerifyToken({ email, name });
-  const tokenEscaped = encodeURIComponent(token).replace(/\./g, "$");
+  const tokenEscaped = escapeToken(token);
 
   return sendEmail({
     email,
@@ -56,7 +57,7 @@ async function sendVerificationEmail({ email, name }) {
 
 async function sendRecoveryPasswordEmail({ email, name }) {
   const token = createRecoryPasswordToken({ email, name });
-  const tokenEscaped = encodeURIComponent(token).replace(/\./g, "$");
+  const tokenEscaped = escapeToken(token);
 
   return sendEmail({
     email,

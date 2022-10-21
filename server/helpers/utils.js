@@ -21,13 +21,48 @@ const message = {
   },
 };
 
-function getSessionTokenInfo(token) {
+function getPayloadFromToken(token, secret) {
   return new Promise((resolve, reject) => {
-    jwt.verify(token, SERVER.API.SECRET_TOKEN, (err, payload) => {
+    jwt.verify(token, secret, (err, payload) => {
       if (err) return reject(new Error(err));
       resolve(payload);
     });
   });
+}
+
+async function getUserSessionFromToken(token) {
+  const data = await getPayloadFromToken(token, SERVER.API.SECRET_TOKEN);
+  return data;
+}
+
+async function getAccountFromVerifyToken(token) {
+  const data = await getPayloadFromToken(
+    token,
+    SERVER.SECRET_TOKEN_VERIFY_EMAILS
+  );
+  return data;
+}
+
+function createToken(payload, secret, expiresIn) {
+  const token = jwt.sign(payload, secret, {
+    expiresIn,
+  });
+  return token;
+}
+
+function createSessionToken(payload) {
+  const token = createToken(payload, SERVER.API.SECRET_TOKEN, "1h");
+  return token;
+}
+
+function createEmailVerifyToken(user) {
+  const token = createToken(user, SERVER.SECRET_TOKEN_VERIFY_EMAILS, "10m");
+  return token;
+}
+
+function createRecoryPasswordToken(user) {
+  const token = createToken(user, SERVER.SECRET_TOKEN_RECOVERY_PASSWORD, "10m");
+  return token;
 }
 
 function hashPassword(password) {
@@ -41,38 +76,18 @@ function isInvalidPassword(hashedPassword, password) {
   return !result;
 }
 
-function createSessionToken(payload) {
-  const token = jwt.sign(payload, SERVER.API.SECRET_TOKEN, {
-    expiresIn: "1h",
-  });
-  return token;
-}
-
 function isRequestAjaxOrApi(req) {
   return !req.accepts("html") || req.xhr;
 }
 
-function createEmailVerifyToken(user) {
-  const token = jwt.sign(user, SERVER.SECRET_TOKEN_VERIFY_EMAILS, {
-    expiresIn: "10m",
-  });
-  return token;
+function escapeToken(token) {
+  const tokenEscaped = encodeURIComponent(token).replace(/\./g, "$");
+  return tokenEscaped;
 }
 
-function createRecoryPasswordToken(user) {
-  const token = jwt.sign(user, SERVER.SECRET_TOKEN_RECOVERY_PASSWORD, {
-    expiresIn: "10m",
-  });
+function unescapeToken(tokenEscaped) {
+  const token = encodeURIComponent(tokenEscaped).replace(/\$/g, ".");
   return token;
-}
-
-function getAccountFromVerifyToken(token) {
-  return new Promise((resolve, reject) => {
-    jwt.verify(token, SERVER.SECRET_TOKEN_VERIFY_EMAILS, (err, payload) => {
-      if (err) return reject(new Error(err));
-      resolve(payload);
-    });
-  });
 }
 
 function compileTemplate(url, variables) {
@@ -85,11 +100,14 @@ function compileTemplate(url, variables) {
 
 module.exports = {
   message,
-  getSessionTokenInfo,
+  getUserSessionFromToken,
   hashPassword,
+  escapeToken,
+  unescapeToken,
   compileTemplate,
   isInvalidPassword,
   isRequestAjaxOrApi,
+  getPayloadFromToken,
   createSessionToken,
   createEmailVerifyToken,
   createRecoryPasswordToken,

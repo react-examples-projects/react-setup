@@ -1,5 +1,5 @@
 const { invalidToken, unauthorized } = require("../helpers/httpResponses");
-const { getSessionTokenInfo } = require("../helpers/utils");
+const { getUserSessionFromToken } = require("../helpers/utils");
 
 async function existsToken(req, res, next) {
   const headers = req.headers.authorization;
@@ -7,9 +7,9 @@ async function existsToken(req, res, next) {
     try {
       const token = headers.split(" ")[1];
       if (!token) return invalidToken(res);
-      const tokenInfo = await getSessionTokenInfo(token);
+      const userData = await getUserSessionFromToken(token);
       req.token = token;
-      req.user = tokenInfo;
+      req.user = userData;
       next();
     } catch (error) {
       invalidToken(res);

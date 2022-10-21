@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const validationController = require("../../controllers/validationController");
 const validate = require("../../helpers/validations/validate");
-const checkVerifyAccountToken = require("../../middlewares/checkVerifyAccountToken");
+const checkVerificationToken = require("../../middlewares/checkVerificationToken");
 const checkExistUser = require("../../middlewares/checkExistUser");
 const {
   checkEmailInUseValidation,
@@ -21,10 +21,12 @@ router.post(
   validationController.resendVerifyCode
 );
 
+//router.post("/recovery-token")
+
 router.post(
   "/account",
   validate(verifyAccountValidation),
-  checkVerifyAccountToken,
+  checkVerificationToken,
   validationController.verifyAccount
 );
 

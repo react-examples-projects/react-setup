@@ -9,19 +9,16 @@ export default function useUserInfo() {
   const { data, isError, ...args } = useQuery("user", getUserInfo, {
     enabled: isValidToken() && !user,
   });
-  
+
   useEffect(() => {
-    if (isValidToken()) {
-      if (!isError && data && !user) {
-        setUser({
-          ...data,
-          isAdmin: data?.rank === "admin",
-        });
-      } else if (isError) {
-        logout();
-      }
-    }
+    if (isError) return logout();
+    if (user || !data) return;
+
+    setUser({
+      ...data,
+      isAdmin: data.rank === "admin",
+    });
   }, [data, isError, setUser, logout, user]);
 
-  return { user: data || user, isError, ...args };
+  return { user: data, isError, ...args };
 }

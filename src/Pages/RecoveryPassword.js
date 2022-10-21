@@ -7,10 +7,11 @@ import useResetPassword from "hooks/auth/useResetPassword";
 import useFormValidation from "hooks/validations/useFormValidation";
 import resetPasswordSchema from "helpers/schema/resetPasswordSchema";
 import { getErrorValidation } from "helpers/utils";
-import { Text, Input, Button,Image } from "@geist-ui/core";
+import { Text, Input, Button, Image } from "@geist-ui/core";
 
 export default function RecoveryPassword() {
-  const { register, handleSubmit, errors } =useFormValidation(resetPasswordSchema);
+  const { register, handleSubmit, errors } =
+    useFormValidation(resetPasswordSchema);
   const { error, success } = useToast();
   const resetPasswordMutation = useResetPassword();
 
@@ -61,7 +62,13 @@ export default function RecoveryPassword() {
           text={getErrorValidation(resetPasswordMutation)}
           isVisible={resetPasswordMutation.isError}
         />
-        <Button htmlType="submit" type="success-light" className="mt-3">
+        <Button
+          htmlType="submit"
+          type="success-light"
+          className="mt-3"
+          loading={resetPasswordMutation.isLoading}
+          disabled={resetPasswordMutation.isLoading}
+        >
           Resetear contraseña
         </Button>
       </form>

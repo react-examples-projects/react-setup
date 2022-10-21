@@ -12,24 +12,24 @@ export function removeToken() {
   localStorage.removeItem("token");
 }
 
+export function setToken(token) {
+  localStorage.setItem("token", token);
+}
+
 export function isValidToken() {
   if (!existsToken()) return false;
-  const token = getToken();
   try {
+    const token = getToken();
     const decoded = jwtDecode(token);
+    const isExpired = Date.now() >= decoded.exp * 1000;
 
-    if (Date.now() >= decoded.exp * 1000) {
-      console.log("The user token is expired!");
+    if (isExpired) {
       removeToken();
       return false;
     }
-  } catch (error) {
+  } catch {
     return false;
   }
 
   return true;
-}
-
-export function setToken(token) {
-  localStorage.setItem("token", token);
 }
