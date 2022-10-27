@@ -28,6 +28,7 @@ export function isValidToken() {
       return false;
     }
   } catch {
+    removeToken();
     return false;
   }
 

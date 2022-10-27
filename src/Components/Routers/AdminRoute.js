@@ -12,5 +12,5 @@ export default function AdminRoute(props) {
   if (user && user.rank === USER_RANKS.ADMIN.name && isValidToken())
     return <Outlet {...props} />;
 
-  return <Navigate to="/" replace />;
+  return <Navigate to="/login" replace />;
 }

@@ -10,5 +10,5 @@ export default function PrivateRoute(props) {
 
   if (user && isValidToken()) return <Outlet {...props} />;
 
-  return <Navigate to="/" replace />;
+  return <Navigate to="/login" replace />;
 }

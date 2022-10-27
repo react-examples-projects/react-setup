@@ -40,8 +40,8 @@ instance.interceptors.response.use(
       err.response.data.statusCode === 401 &&
       err.response.config.url !== userInfo // The private router check this
     ) {
-      isValidToken() && removeToken();
-      window.location.href = "/";
+      removeToken();
+      window.location.href = "/login";
     }
     return Promise.reject(err);
   }
