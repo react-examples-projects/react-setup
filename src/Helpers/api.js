@@ -25,6 +25,9 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use((req) => {
+  if (req.url === userInfo && !isValidToken()) {
+    throw new Error("Invalid session token");
+  }
   if (isValidToken()) {
     req.headers.authorization = "Bearer " + getToken();
   }

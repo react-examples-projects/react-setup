@@ -9,11 +9,14 @@ export default function useUserInfo() {
   const { user, setUser, logout } = useCurrentUser();
   const { data, isError, ...args } = useQuery("user", getUserInfo, {
     enabled: isValidTokenSession,
+    onError() {
+      logout();
+    },
   });
 
   useEffect(() => {
-    if (isError) return logout();
-    if (user || !data) return;
+    // it's necessary to include `user` var to avoid override the current logged user
+    if (user || !data || isError) return;
 
     setUser({
       ...data,

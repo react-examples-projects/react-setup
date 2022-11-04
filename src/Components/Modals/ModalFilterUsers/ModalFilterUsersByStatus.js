@@ -1,13 +1,13 @@
 import useUsers from "hooks/users/useUsers";
 import ActiveUsersFilterText from "modals/ActiveUsersFilterText";
-import useCurrenFilterUserValue from "hooks/users/useCurrenFilterUserValue";
+import useCurrentFilterUserValue from "hooks/users/useCurrentFilterUserValue";
 import { useRef } from "react";
 import { Modal, Select } from "@geist-ui/core";
 import { USER_FILTERS } from "config/";
 
 export default function ModalFilterUsersByStatus({ isOpen, toggleOpen }) {
   const containerSelect = useRef(null);
-  const defaultValueFilterStatus = useCurrenFilterUserValue(
+  const defaultValueFilterStatus = useCurrentFilterUserValue(
     USER_FILTERS.BY_STATUS
   );
   const { filterUserByStatus } = useUsers();
@@ -16,7 +16,7 @@ export default function ModalFilterUsersByStatus({ isOpen, toggleOpen }) {
   return (
     <Modal
       visible={isOpen}
-      onClose={toggleOpen}
+      onClose={toggleOpen} 
       width="600px"
       wrapClassName="overflow-visible"
     >

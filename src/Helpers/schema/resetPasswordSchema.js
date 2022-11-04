@@ -1,10 +1,11 @@
 import * as yup from "yup";
-import { emailSchema } from "./helperSchemas";
+import { passwordSchema, passwordConfirmSchema } from "./helperSchemas";
 
-const resetPasswordSchema = yup
+const recoveryPasswordSchema = yup
   .object({
-    email: emailSchema,
+    password: passwordSchema,
+    passwordConfirm: passwordConfirmSchema,
   })
   .required();
 
-export default resetPasswordSchema;
+export default recoveryPasswordSchema;

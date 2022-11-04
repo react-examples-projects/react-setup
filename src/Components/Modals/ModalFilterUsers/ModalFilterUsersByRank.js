@@ -1,19 +1,19 @@
 import useUsers from "hooks/users/useUsers";
 import useUserRanks from "hooks/users/useUserRanks";
-import useCurrenFilterUserValue from "hooks/users/useCurrenFilterUserValue";
+import useCurrentFilterUserValue from "hooks/users/useCurrentFilterUserValue";
 import ActiveUsersFilterText from "modals/ActiveUsersFilterText";
 import { useRef } from "react";
 import { Modal, Select } from "@geist-ui/core";
 import { USER_FILTERS } from "config/";
-
+ 
 export default function ModalFilterUsersByRank({ isOpen, toggleOpen }) {
   const { filterUsersByRank } = useUsers();
   const containerSelect = useRef(null);
   const ranks = useUserRanks();
-  const defaultValueFilterRank = useCurrenFilterUserValue(USER_FILTERS.BY_RANK) || [];
+  const defaultValueFilterRank = useCurrentFilterUserValue(USER_FILTERS.BY_RANK) || [];
   const onChangeRank = (ranks = []) => {
     filterUsersByRank(ranks);
-  };
+  };    
 
   return (
     <Modal

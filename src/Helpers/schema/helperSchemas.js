@@ -25,6 +25,14 @@ export const passwordSchema = yup
     "La contraseña debe tener una letras mayúsculas y minúscula"
   )
   .required("La contraseña es obligatoria");
+  
+export const passwordConfirmSchema = passwordSchema.test(
+  "passwordChangeValidation",
+  "Las contraseñas no coinciden",
+  function (value) {
+    return this.parent.password === value;
+  }
+);
 
 export const rankUser = yup
   .string()

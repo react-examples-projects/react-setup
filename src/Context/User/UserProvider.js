@@ -13,9 +13,9 @@ export default function UserProvider({ children }) {
 
   const logout = useCallback(() => {
     removeToken();
-    setUserInfo(null);
     queryClient.invalidateQueries("user");
     queryClient.removeQueries();
+    setUserInfo(null);
   }, [queryClient]);
 
   const value = useMemo(
