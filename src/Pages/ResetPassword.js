@@ -5,18 +5,32 @@ import useFormValidation from "hooks/validations/useFormValidation";
 import resetPasswordSchema from "helpers/schema/resetPasswordSchema";
 import useToast from "hooks/utils/useToast";
 import ErrorText from "components/Text/ErrorText";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Button, Input, Text, Image } from "@geist-ui/core";
+import axios from "axios";
 
 export default function ResetPassword() {
-  const { register, handleSubmit, errors } =
-    useFormValidation(resetPasswordSchema);
+  const { register, handleSubmit, errors } = useFormValidation(resetPasswordSchema);
   const { error, success } = useToast();
   const { token } = useParams();
+  const navigate = useNavigate();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async ({ password }) => {
     try {
-      success("Se envio el reseteo de su contraseña");
+      axios
+        .post("http://localhost:5000/api/auth/reset/password", {
+          token,
+          password,
+        })
+        .then((res) => {
+          console.log(res.data);
+          success("Se envio el reseteo de su contraseña");
+          navigate("/login", { replace: true });
+        })
+        .catch((err) => {
+          console.error(err);
+          error("Ocurrió un error al cambiar la contraseña");
+        });
     } catch (err) {
       error("Hubo un error al enviar el email");
     }

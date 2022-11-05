@@ -6,12 +6,12 @@ import useToast from "hooks/utils/useToast";
 import useResetPassword from "hooks/auth/useResetPassword";
 import useFormValidation from "hooks/validations/useFormValidation";
 import recoveryPasswordSchema from "helpers/schema/recoveryPasswordSchema";
+import { Link } from "react-router-dom";
 import { getErrorValidation } from "helpers/utils";
 import { Text, Input, Button, Image } from "@geist-ui/core";
- 
+
 export default function RecoveryPassword() {
-  const { register, handleSubmit, errors } =
-    useFormValidation(recoveryPasswordSchema);
+  const { register, handleSubmit, errors } = useFormValidation(recoveryPasswordSchema);
   const { error, success } = useToast();
   const resetPasswordMutation = useResetPassword();
 
@@ -71,6 +71,10 @@ export default function RecoveryPassword() {
         >
           Resetear contraseña
         </Button>
+
+        <Link to="/login" className="ms-2">
+          <Button>Regresar</Button>
+        </Link>
       </form>
     </div>
   );

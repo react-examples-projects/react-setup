@@ -86,7 +86,7 @@ function escapeToken(token) {
 }
 
 function unescapeToken(tokenEscaped) {
-  const token = encodeURIComponent(tokenEscaped).replace(/\$/g, ".");
+  const token = decodeURIComponent(tokenEscaped).replace(/\$/g, ".");
   return token;
 }
 

@@ -122,6 +122,13 @@ const recoveryPassSchemaValidation = yup.object({
   }),
 });
 
+const resetPassSchemaValidation = yup.object({
+  body: yup.object({
+    password: passwordSchema,
+    token: yup.string().required("The user token is required"),
+  }),
+});
+
 const requireIdValidation = yup.object({
   params: yup.object({
     id: idSchema,
@@ -139,6 +146,7 @@ module.exports = {
   checkEmailInUseValidation,
   verifyAccountValidation,
   recoveryPassSchemaValidation,
+  resetPassSchemaValidation,
   requireIdValidation,
   passwordSchema,
   passwordConfirmSchema,

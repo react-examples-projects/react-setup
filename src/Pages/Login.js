@@ -1,10 +1,12 @@
 import useBody from "hooks/utils/useBody";
 import useLogin from "hooks/auth/useLogin";
 import useToast from "hooks/utils/useToast";
+import useCaptcha from "hooks/validations/useCaptcha";
 import useFormValidation from "hooks/validations/useFormValidation";
 import loginSchema from "helpers/schema/loginSchema";
 import ErrorText from "components/Text/ErrorText";
 import Alert from "components/Alerts/";
+import Captcha from "components/Captcha";
 import { useNavigate, Link } from "react-router-dom";
 import { Button, Input, Text } from "@geist-ui/core";
 import { BiUser, BiKey } from "react-icons/bi";
@@ -21,14 +23,20 @@ export default function Login() {
   useBody(cssBody);
   const login = useLogin();
   const navigate = useNavigate();
+  const [loginAttempts, setLoginAttempts] = useState(0);
   const [isIdle, setIdle] = useState(false);
   const [isVerified, setVerified] = useState(true);
+  const { isValidCaptcha, reset, onChange, onExpired, onErrored, ref } = useCaptcha();
   const { error } = useToast();
   const { errors, handleSubmit, register } = useFormValidation(loginSchema, {
     defaultValues: { email: "", password: "" },
   });
+  const isReachedLoginAttempts = loginAttempts > 2;
+  const isInvalidForm = !isValidCaptcha && isReachedLoginAttempts;
 
   async function handleOnSubmit(data) {
+    if (isInvalidForm) return;
+
     try {
       setIdle(false);
       const res = await login.mutateAsync(data);
@@ -41,6 +49,11 @@ export default function Login() {
       }
     } catch {
       error("Error al iniciar sesión");
+      if (isReachedLoginAttempts) {
+        reset();
+      } else {
+        setLoginAttempts((c) => c + 1);
+      }
     }
   }
 
@@ -90,8 +103,16 @@ export default function Login() {
           />
         </div>
 
-        <ErrorText isVisible={login.isError} text={login} type="error" />
-
+        {isReachedLoginAttempts && (
+          <div className="mt-2 d-flex justify-content-center">
+            <Captcha {...{ onChange, onExpired, onErrored, ref }} />
+          </div>
+        )}
+        <ErrorText isVisible={login.isError} text={login} />
+        <ErrorText
+          isVisible={isReachedLoginAttempts}
+          text="Muchos intentos fallidos"
+        />
         <Alert
           title="Error al inicia sesión"
           content="Tu cuenta se encuentra deshabilitada, contacta con un moderador."
@@ -107,15 +128,20 @@ export default function Login() {
         />
 
         <div className="mb-2 mt-3">
-          <Button
-            type="success-light"
-            htmlType="submit"
-            disabled={login.isLoading}
-            loading={login.isLoading}
-            width="100%"
-          >
-            Iniciar
-          </Button>
+          <div className="d-flex align-items-center w-100">
+            <Button
+              type="success-light"
+              htmlType="submit"
+              disabled={login.isLoading || isInvalidForm}
+              loading={login.isLoading}
+              className="w-100"
+            >
+              Iniciar
+            </Button>
+            <Link to="/" className="ms-2">
+              <Button className="w-100">Regresar</Button>
+            </Link>
+          </div>
           <div className="d-flex justify-content-between mt-3">
             <Link style={{ fontSize: "80%" }} to="/signup">
               Crea tu cuenta aquí

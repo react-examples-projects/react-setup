@@ -8,7 +8,10 @@ const {
   hashPassword,
   createSessionToken,
   isInvalidPassword,
+  unescapeToken,
+  getPayloadFromToken,
 } = require("../helpers/utils");
+const { SERVER } = require("../config/variables");
 
 class AuthController {
   async login(req, res, next) {
@@ -72,9 +75,6 @@ class AuthController {
 
   async resetPassword(req, res, next) {
     try {
-      if (!req.user.isVerified) {
-        return next("El correo de esta cuenta no está verificado");
-      }
       await sendRecoveryPasswordEmail({
         email: req.user.email,
         name: req.user.name,
@@ -83,6 +83,33 @@ class AuthController {
         message: "Reseteo de clave enviada",
       });
     } catch (err) {
+      next(err);
+    }
+  }
+
+  async changePassword(req, res, next) {
+    try {
+      const token = req.body.token;
+      const password = hashPassword(req.body.password);
+
+      const tokenUnescaped = unescapeToken(token);
+      const userData = await getPayloadFromToken(
+        tokenUnescaped,
+        SERVER.SECRET_TOKEN_RECOVERY_PASSWORD
+      );
+      const fullUser = await UserService.UserModel.findOne({
+        email: userData.email,
+      });
+
+      fullUser.password = password;
+      await fullUser.save();
+
+      success(res, {
+        message: "La contraseña fue cambiada",
+        fullUser,
+      });
+    } catch (err) {
+      console.log(err);
       next(err);
     }
   }
